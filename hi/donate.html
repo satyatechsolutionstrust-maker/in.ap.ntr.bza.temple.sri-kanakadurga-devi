@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>दान - श्री कनक दुर्गा देवी मंदिर</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <audio id="mantraAudio" loop preload="auto" src="../assets/audio/mantra.mp3"></audio>
+  <button id="audioToggle" class="audio-toggle muted" title="Toggle Durga Mantra"><span id="audioIcon">🔇</span></button>
+
+  <div class="top-bar"><div class="top-bar-inner"><span>🙏 या देवी सर्वभूतेषु शक्तिरूपेण संस्थिता | नमस्तस्यै नमस्तस्यै नमस्तस्यै नमो नमः 🙏</span><span class="top-contact">📞 VRDS प्रसाद: <a href="https://wa.me/918247787529" style="color:#fdd835;">8247787529</a> (WhatsApp)</span></div></div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" class="logo"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Durga_Puja_2017_in_Kolkata_02.jpg/250px-Durga_Puja_2017_in_Kolkata_02.jpg" alt="श्री कनक दुर्गा देवी" class="logo-img"><div><h1>श्री कनक दुर्गा देवी</h1><p class="tagline">ॐ दुं दुर्गायै नमः</p></div></a>
+      <nav class="nav" id="mainNav"><a href="index.html">होम</a><a href="about.html">हमारे बारे में</a><a href="services.html">सेवाएं</a><a href="books.html">ग्रंथ</a><a href="shop.html">दुकान</a><a href="gallery.html">गैलरी</a><a href="puranam.html">Puranam</a><a href="donate.html" class="active">दान</a><a href="contact.html">संपर्क</a></nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    </div>
+  </header>
+
+  <section class="page-banner"><div class="page-banner-overlay"><h2>🙏 मंदिर को दान</h2><p>होम / दान</p></div></section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">🙏 आपका दान धर्म का समर्थन करता है</h2>
+      <p class="section-subtitle">हर योगदान दैनिक पूजा, अन्नदानम, त्योहार और सामुदायिक सेवा को बनाए रखने में मदद करता है।</p>
+      <div class="donate-two-col">
+        <div class="donate-col">
+          <h3 class="donate-col-title">स्कैन और पे (UPI)</h3>
+          <div class="donate-carousel-wrap">
+            <button class="donate-nav donate-prev" id="qrPrev">❮</button>
+            <div class="donate-carousel" id="qrCarousel"></div>
+            <button class="donate-nav donate-next" id="qrNext">❯</button>
+          </div>
+          <div class="donate-dots" id="qrDots"></div>
+          <p class="qr-note">किसी भी UPI ऐप से स्कैन करें</p>
+        </div>
+        <div class="donate-col">
+          <h3 class="donate-col-title">बैंक ट्रांसफर विवरण</h3>
+          <div class="donate-carousel-wrap">
+            <button class="donate-nav donate-prev" id="bankPrev">❮</button>
+            <div class="donate-carousel" id="bankCarousel"></div>
+            <button class="donate-nav donate-next" id="bankNext">❯</button>
+          </div>
+          <div class="donate-dots" id="bankDots"></div>
+        </div>
+      </div>
+      <div class="donate-contact" style="text-align:center;margin-top:30px;">
+        <p>दान रसीद या पूछताछ के लिए:</p>
+        <p><strong>VRDS प्रसाद</strong></p>
+        <a href="https://wa.me/918247787529" target="_blank" class="whatsapp-link">💬 WhatsApp: 8247787529</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt-bg">
+    <div class="container">
+      <h2 class="section-title">🪔 आपका दान सहायता करता है</h2>
+      <div class="donate-purpose-grid">
+        <div class="donate-purpose-card"><div class="donate-purpose-icon">🪔</div><h4>दैनिक पूजा</h4><p>दैनिक पूजा, अभिषेकम और आरती का संचालन</p></div>
+        <div class="donate-purpose-card"><div class="donate-purpose-icon">🍚</div><h4>अन्नदानम</h4><p>प्रतिदिन 500+ भक्तों और जरूरतमंदों को मुफ्त भोजन</p></div>
+        <div class="donate-purpose-card"><div class="donate-purpose-icon">🎊</div><h4>त्योहार</h4><p>भव्य नवरात्रि, दशहरा, दीपावली उत्सव</p></div>
+        <div class="donate-purpose-card"><div class="donate-purpose-icon">🏛️</div><h4>मंदिर रखरखाव</h4><p>मंदिर की देखभाल और सौंदर्यीकरण</p></div>
+        <div class="donate-purpose-card"><div class="donate-purpose-icon">📖</div><h4>वैदिक शिक्षा</h4><p>बच्चों के लिए वेद सीखने की मुफ्त कक्षाएं</p></div>
+        <div class="donate-purpose-card"><div class="donate-purpose-icon">❤️</div><h4>सामुदायिक सेवा</h4><p>स्वास्थ्य शिविर और वंचितों के लिए सहायता</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-box">
+      <h2>🙏 हर रुपया मायने रखता है</h2>
+      <p>सर्वमंगल मांगल्ये शिवे सर्वार्थ साधिके — आपकी उदारता के लिए देवी दुर्गा आपको आशीर्वाद दें।</p>
+      <a href="https://wa.me/918247787529" target="_blank" class="cta-btn">📱 दान के लिए संपर्क करें 🙏</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div><h3>🕉️ श्री कनक दुर्गा देवी</h3><p class="footer-address">📍 रामराज्य नगर, उप्परबावी वीधि,<br>चानुमोलु वेंकटराव फ्लाईओवर के पास,<br>NTR जिला, विजयवाड़ा - 520012</p><p class="footer-phone">📞 VRDS प्रसाद: <a href="tel:+918247787529">8247787529</a> (WhatsApp)</p><p class="footer-mantra">ॐ दुं दुर्गायै नमः</p></div>
+        <div><h4>त्वरित लिंक</h4><a href="index.html">होम</a><a href="about.html">हमारे बारे में</a><a href="services.html">सेवाएं</a><a href="books.html">ग्रंथ</a><a href="shop.html">दुकान</a><a href="gallery.html">गैलरी</a><a href="puranam.html">Puranam</a><a href="donate.html">दान</a><a href="contact.html">संपर्क</a></div>
+        <div><h4>हमें फॉलो करें</h4><div class="social-links"><a href="#">Facebook</a><a href="#">YouTube</a><a href="#">Instagram</a></div></div>
+      </div>
+      <div class="footer-bottom"><p>© 2024 श्री कनक दुर्गा देवी मंदिर, विजयवाड़ा। सर्वाधिकार सुरक्षित।</p></div>
+    </div>
+  </footer>
+  <script src="../site-config.js"></script>
+  <script src="../translations.js"></script>
+  <script src="../donate-config.js"></script>
+  <script src="../extras-config.js"></script><script src="../ads-config.js"></script><script src="../script.js"></script>
+</body>
+</html>
