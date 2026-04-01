@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin.html
+Disallow: /admin-modules/
+Disallow: /image-compressor.html
+Disallow: /sitemap-generator.html
+Disallow: /robots-generator.html
+Disallow: /dev-tools.html
+
+Sitemap: sitemap.xml

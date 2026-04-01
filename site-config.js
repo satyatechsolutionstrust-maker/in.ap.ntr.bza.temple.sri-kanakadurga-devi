@@ -1,0 +1,269 @@
+var SITE_CONFIG = {
+
+  siteName: "Sri Kanaka Durga Devi",
+  siteTagline: "Om Dum Durgayei Namah",
+  siteTitle: "Sri Kanaka Durga Devi Temple - Vijayawada",
+  logoImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Durga_Puja_2017_in_Kolkata_02.jpg/250px-Durga_Puja_2017_in_Kolkata_02.jpg",
+
+  contactName: "VRDS Prasad",
+  phone: "8247787529",
+  whatsapp: "918247787529",
+
+  developerName: "Satya",
+  companyName: "Satya Tech Solutions",
+  companyUrl: "",
+  stamp: "assets/branding/satya.jpg",
+  watermarkOpacity: 0.25,
+  watermarkPosition: "bottom-right",
+  watermarkSize: 15,
+
+  pages: {
+    home: "show",
+    about: "show",
+    services: "show",
+    grandhas: "hide",
+    shop: "coming-soon",
+    gallery: "show",
+    puranam: "hide",
+    events: "hide",
+    panchangam: "hide",
+    blog: "hide",
+    team: "hide",
+    pricing: "hide",
+    booking: "hide",
+    donate: "show",
+    contact: "show",
+  },
+
+  comingSoonMessages: {
+    grandhas: { en: "Sacred Grandhas coming soon!" },
+    shop: { en: "Pooja Items Shop coming soon!" },
+    puranam: { en: "Temple Legend coming soon!" },
+    gallery: { en: "Photo Gallery coming soon!" }
+  },
+
+  theme: "temple",
+  industry: "temple",
+  customLabels: {
+    services: "Services",
+    grandhas: "Resources",
+    shop: "Shop",
+    gallery: "Gallery",
+    puranam: "Our Story",
+    events: "Events",
+    panchangam: "Calendar",
+    donate: "Donate",
+    contact: "Contact"
+  },
+
+  languages: ["en", "te", "hi", "sa"],
+  defaultLanguage: "en",
+
+  social: { facebook: "#", youtube: "#", instagram: "#" },
+
+  templateName: "Temple Divine",
+  templateVersion: "1.0",
+  templateAuthor: "Satya Tech Solutions",
+
+  footer: {
+    showAddress: true,
+    address: "Ramarajya Nagar, Upparabaavi Veedi, Beside Chanumolu Venkatrao Flyover, NTR District, Vijayawada - 520012",
+    showPhone: true,
+    phone: "8247787529",
+    showWhatsapp: true,
+    whatsapp: "918247787529",
+    showEmail: false,
+    email: "",
+    showMantra: true,
+    mantra: "Om Dum Durgayei Namah",
+    showQuickLinks: true,
+    quickLinks: [
+      { label: "Home", href: "index.html", enabled: true },
+      { label: "About", href: "about.html", enabled: true },
+      { label: "Services", href: "services.html", enabled: true },
+      { label: "Grandhas", href: "books.html", enabled: false },
+      { label: "Shop", href: "shop.html", enabled: true },
+      { label: "Gallery", href: "gallery.html", enabled: true },
+      { label: "Puranam", href: "puranam.html", enabled: false },
+      { label: "Donate", href: "donate.html", enabled: true },
+      { label: "Contact", href: "contact.html", enabled: true }
+    ],
+    showSocial: true,
+    social: [
+      { platform: "Facebook", url: "#", enabled: false },
+      { platform: "YouTube", url: "#", enabled: false },
+      { platform: "Instagram", url: "#", enabled: false },
+      { platform: "Twitter", url: "#", enabled: false },
+      { platform: "WhatsApp", url: "https://wa.me/918247787529", enabled: true }
+    ],
+    showDevCredit: true,
+    showCopyright: true,
+    copyrightText: "Copyright 2024 Sri Kanaka Durga Devi Temple, Vijayawada. All Rights Reserved."
+  },
+
+  donatePage: {
+    showQR: true,
+    showBank: false
+  },
+
+    features: {
+    floatingWhatsapp: 918247787529,
+    backToTop: true,
+    copyProtection: true,
+    scrollProgress: true,
+    breadcrumb: true,
+    backButton: false,
+    lastUpdated: true,
+    pageLoader: false,
+    loaderStyle: "spinner",
+    loaderText: "",
+    scrollAnimations: true,
+    animationStyle: "fade-up",
+    parallaxBanners: true,
+    animatedCounters: true,
+    blurLazyLoad: false,
+    darkModeToggle: false,
+    colorPreset: "temple",
+    fontSizeControls: true,
+    rtlSupport: false,
+    testimonials: false,
+    testimonialsCarousel: false,
+    videoTestimonials: false,
+    faqSection: true,
+    shareButtons: false,
+    printPage: false,
+    stickyCTA: false,
+    bookmarkEnabled: false,
+    searchEnabled: false,
+    qrGenerator: false,
+    pdfExport: false,
+    readingTime: true,
+    tableOfContents: true,
+    popupNotification: false,
+    popupDelay: 3000,
+    popupMessage: "",
+    popupLink: "",
+    popupLinkText: "",
+    announcementText: "",
+    announcementLink: "",
+    cookieConsent: true,
+    partnersSection: false,
+    timelineSection: false,
+    beforeAfterGallery: false,
+    liveStreamEnabled: false,
+    liveStreamUrl: "",
+    liveStreamTitle: "Live Darshan",
+    googleAnalytics: false,
+    gaTrackingId: "",
+    seoMetaTags: true,
+    newsletterEnabled: false,
+    newsletterGoogleSheetUrl: "",
+    visitorCounter: false,
+    liveChatEnabled: false,
+    liveChatProvider: "tawk",
+    liveChatId: "",
+    imageOptimization: "local",
+    imageQuality: 80,
+    imageMaxWidth: 1200,
+    adminPassword: "admin123",
+    maintenanceMode: false,
+    maintenanceMessage: "We are updating our website. Please check back soon."
+  },
+
+  header: {
+    showTopBar: true,
+    topBarMantra: "Ya Devi Sarva Bhuteshu Shakti Rupena Sansthita | Namastasyai Namastasyai Namastasyai Namo Namah",
+    showTopBarContact: true,
+    showLogo: true,
+    showSiteName: true,
+    showTagline: true,
+    showMantraTicker: true,
+    showAudioToggle: true,
+    showAudioPrompt: true,
+    showLanguageSwitcher: true,
+    stickyHeader: true,
+    logoStyle: "image-text",
+    logoShape: "circle",
+    logoWidth: 55,
+    logoHeight: 55
+  },
+
+  homePage: {
+    showCarousel: true,
+    showMantraTicker: true,
+    showHighlightCards: true,
+    highlightCards: [
+      { icon: "\ud83e\ude94", title: "Daily Pooja", text: "Morning & evening aarti with special abhishekam", link: "services.html", linkText: "View Services \u2192", enabled: true },
+      { icon: "\ud83d\udcda", title: "Sacred Grandhas", text: "Free Vedic scriptures to read & download", link: "books.html", linkText: "Browse Grandhas \u2192", enabled: true },
+      { icon: "\ud83d\udcf8", title: "Gallery", text: "View photos from our festivals & celebrations", link: "gallery.html", linkText: "View Gallery \u2192", enabled: true },
+      { icon: "\ud83d\ude4f", title: "Get in Touch", text: "Reach out for pooja bookings & inquiries", link: "contact.html", linkText: "Contact Us \u2192", enabled: true }
+    ]
+  },
+
+  aboutPage: {
+    showHistory: true,
+    showMission: true,
+    showStats: true,
+    missionCards: [
+      { icon: "\ud83d\ude4f", title: "Devotion", text: "Fostering deep spiritual connection through daily worship, meditation, and sacred rituals.", enabled: true },
+      { icon: "\ud83e\udd1d", title: "Community", text: "Building a united community rooted in compassion, service, and mutual respect.", enabled: true },
+      { icon: "\ud83d\udcd6", title: "Education", text: "Preserving and teaching Vedic knowledge, Sanskrit, and ancient scriptures.", enabled: true },
+      { icon: "\u2764\ufe0f", title: "Seva", text: "Selfless service through Annadanam, healthcare camps, and support for the underprivileged.", enabled: true }
+    ],
+    stats: [
+      { number: "25+", label: "Years of Service", enabled: true },
+      { number: "1000+", label: "Daily Devotees", enabled: true },
+      { number: "50+", label: "Annual Events", enabled: true },
+      { number: "10+", label: "Charitable Programs", enabled: true }
+    ]
+  },
+
+  servicesPage: {
+    showServices: true,
+    showTimings: true,
+    showCTA: true,
+    services: [
+      { icon: "\ud83e\ude94", title: "Daily Pooja", text: "Morning and evening aarti with special abhishekam performed by our learned priests.", enabled: true },
+      { icon: "\ud83d\udcff", title: "Archana", text: "Personalized archana with Sahasranama, Lalitha Sahasranama, and Durga Saptashati.", enabled: true },
+      { icon: "\ud83c\udf8a", title: "Festivals", text: "Grand celebrations for Navaratri, Dussehra, Deepavali, Ugadi, and other major festivals.", enabled: true },
+      { icon: "\ud83c\udf5a", title: "Annadanam", text: "Free food distribution to devotees and the needy every day as part of our seva program.", enabled: true },
+      { icon: "\ud83d\udc92", title: "Weddings", text: "Traditional Hindu wedding ceremonies conducted with full Vedic rituals and customs.", enabled: true },
+      { icon: "\ud83d\udcd6", title: "Vedic Classes", text: "Learn Vedas, Shlokas, Sanskrit scriptures, and Bhagavad Gita from experienced scholars.", enabled: true }
+    ]
+  },
+
+  contactPage: {
+    showOwnerProfile: true,
+    ownerName: "VRDS Prasad",
+    ownerTitle: "Founder & Chairman",
+    ownerPhoto: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop",
+    showOwnerQuote: true,
+    ownerQuote: "Service is the highest Dharma.",
+    showAchievements: true,
+    showContactCards: true,
+    contactCards: [
+      { icon: "\ud83d\udccd", title: "Address", enabled: true },
+      { icon: "\u23f0", title: "Temple Timings", enabled: true },
+      { icon: "\ud83d\udcde", title: "Phone & WhatsApp", enabled: true },
+      { icon: "\ud83d\uddfa\ufe0f", title: "Location", enabled: true }
+    ],
+    showMap: true
+  },
+
+  galleryPage: {
+    showFilters: true,
+    showPagination: true,
+    showLightbox: true,
+    itemsPerPage: 6
+  },
+
+  shopPage: {
+    style: "categories",
+    showFilters: true,
+    showPagination: true,
+    itemsPerPage: 8,
+    showCTA: true,
+    ctaTitle: "Need Help Selecting Pooja Items?",
+    ctaText: "Contact us on WhatsApp for guidance on selecting the right items for your pooja or ceremony."
+  }
+};
