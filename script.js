@@ -1,8 +1,4 @@
-// ============================================
-// WATERMARK - your photo stamped on all images
-// ============================================
 if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.stamp) {
-  // Fix path for language subfolders
   var stampPath = SITE_CONFIG.stamp;
   var pathParts = window.location.pathname.split('/');
   for (var lp = 0; lp < pathParts.length; lp++) {
@@ -36,7 +32,6 @@ if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.stamp) {
           wrapper.style.overflow = 'hidden';
           img.parentElement.insertBefore(wrapper, img);
           wrapper.appendChild(img);
-
           var stamp = document.createElement('img');
           stamp.src = stampPath;
           stamp.className = 'wm-stamp';
@@ -47,24 +42,18 @@ if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.stamp) {
           stamp.style.pointerEvents = 'none';
           stamp.style.zIndex = '3';
           stamp.draggable = false;
-
           var pos = SITE_CONFIG.watermarkPosition || 'bottom-right';
           if (pos === 'center') { stamp.style.top = '50%'; stamp.style.left = '50%'; stamp.style.transform = 'translate(-50%, -50%)'; }
           else if (pos === 'bottom-right') { stamp.style.bottom = '10px'; stamp.style.right = '10px'; }
           else if (pos === 'bottom-left') { stamp.style.bottom = '10px'; stamp.style.left = '10px'; }
           else if (pos === 'top-right') { stamp.style.top = '10px'; stamp.style.right = '10px'; }
           else if (pos === 'top-left') { stamp.style.top = '10px'; stamp.style.left = '10px'; }
-
           wrapper.appendChild(stamp);
         }
       })(allImgs[w]);
     }
   };
 }
-
-// ============================================
-// LOGO - set from config
-// ============================================
 if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.logoImage) {
   var logoPath = SITE_CONFIG.logoImage;
   var pp = window.location.pathname.split('/');
@@ -77,10 +66,6 @@ if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.logoImage) {
   var logoImg = document.querySelector('.logo-img');
   if (logoImg) logoImg.src = logoPath;
 }
-
-// ============================================
-// FOOTER SOCIAL - respect showSocial + enabled flags
-// ============================================
 if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.footer) {
   var socialDiv = document.querySelector('.social-links');
   if (socialDiv) {
@@ -104,16 +89,11 @@ if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.footer) {
     }
   }
 }
-
-// ============================================
-// DEVELOPER CREDIT STAMP - from site-config.js
-// ============================================
 if (typeof SITE_CONFIG !== 'undefined') {
   var footerBottom = document.querySelector('.footer-bottom');
   if (footerBottom) {
     var credit = document.createElement('div');
     credit.className = 'dev-credit';
-
     var inner = '';
     if (SITE_CONFIG.stamp) {
       inner += '<img src="' + stampPath + '" alt="' + SITE_CONFIG.developerName + '" class="dev-photo">';
@@ -125,15 +105,10 @@ if (typeof SITE_CONFIG !== 'undefined') {
       inner += ' | ' + SITE_CONFIG.companyName;
     }
     inner += '</span>';
-
     credit.innerHTML = inner;
     footerBottom.appendChild(credit);
   }
 }
-
-// ============================================
-// LANGUAGE - auto-detect from URL path, swap text
-// ============================================
 var currentLang = 'en';
 var pathParts = window.location.pathname.split('/');
 for (var lp = 0; lp < pathParts.length; lp++) {
@@ -142,32 +117,22 @@ for (var lp = 0; lp < pathParts.length; lp++) {
     break;
   }
 }
-
-// Fix relative paths for language subfolders - handled in HTML files directly
-
-// Build language dropdown
 if (typeof TRANSLATIONS !== 'undefined') {
   var header = document.querySelector('.header-inner');
   if (header) {
     var switcher = document.createElement('div');
     switcher.className = 'lang-switcher';
-
     var langs = TRANSLATIONS.languages;
     var currentLangName = 'English';
     for (var cl = 0; cl < langs.length; cl++) {
       if (langs[cl].code === currentLang) { currentLangName = langs[cl].nativeName; break; }
     }
-
-    // Current language button
     var current = document.createElement('div');
     current.className = 'lang-current';
     current.innerHTML = '🌐 ' + currentLangName + ' ▾';
     switcher.appendChild(current);
-
-    // Dropdown
     var dropdown = document.createElement('div');
     dropdown.className = 'lang-dropdown';
-
     for (var ls = 0; ls < langs.length; ls++) {
       var langBtn = document.createElement('a');
       langBtn.className = 'lang-btn' + (langs[ls].code === currentLang ? ' active' : '');
@@ -181,28 +146,18 @@ if (typeof TRANSLATIONS !== 'undefined') {
       dropdown.appendChild(langBtn);
     }
     switcher.appendChild(dropdown);
-
-    // Toggle dropdown on click
     current.onclick = function(e) {
       e.stopPropagation();
       dropdown.className = dropdown.className.indexOf('open') > -1 ? 'lang-dropdown' : 'lang-dropdown open';
     };
-    // Close on outside click
     document.onclick = function() { dropdown.className = 'lang-dropdown'; };
-
     header.insertBefore(switcher, document.getElementById('mobileMenuBtn'));
   }
-
-  // Swap tagline under logo
   var taglineMap = { en: 'Om Dum Durgayei Namah', te: 'ॐ దుం దుర్గాయై నమః', hi: 'ॐ दुं दुर्गायै नमः', sa: 'ॐ दुं दुर्गायै नमः' };
   var tagline = document.querySelector('.tagline');
   if (tagline && taglineMap[currentLang]) tagline.textContent = taglineMap[currentLang];
-
-  // Swap footer mantra
   var footerMantra = document.querySelector('.footer-mantra');
   if (footerMantra && taglineMap[currentLang]) footerMantra.textContent = taglineMap[currentLang];
-
-  // Swap nav text - match by href, not position
   var navT = TRANSLATIONS.nav[currentLang];
   if (navT) {
     var hrefToKey = { 'index.html':'home', 'about.html':'about', 'services.html':'services', 'books.html':'grandhas', 'shop.html':'shop', 'gallery.html':'gallery', 'puranam.html':'puranam', 'events.html':'events', 'panchangam.html':'panchangam', 'blog.html':'blog', 'team.html':'team', 'pricing.html':'pricing', 'booking.html':'booking', 'donate.html':'donate', 'contact.html':'contact' };
@@ -216,14 +171,10 @@ if (typeof TRANSLATIONS !== 'undefined') {
       }
     }
   }
-
-  // Swap top bar
   var topBarSpan = document.querySelector('.top-bar-inner > span:first-child');
   if (topBarSpan && TRANSLATIONS.topBar[currentLang]) {
     topBarSpan.textContent = TRANSLATIONS.topBar[currentLang];
   }
-
-  // Swap section titles by matching English text
   if (TRANSLATIONS.sectionTitles && currentLang !== 'en') {
     var allTitles = document.querySelectorAll('.section-title, .cta-box h2');
     for (var ti = 0; ti < allTitles.length; ti++) {
@@ -233,8 +184,6 @@ if (typeof TRANSLATIONS !== 'undefined') {
       }
     }
   }
-
-  // Swap banner title based on current page
   var bannerH2 = document.querySelector('.page-banner-overlay h2');
   if (bannerH2 && TRANSLATIONS.pageText['.page-banner-overlay h2'] && currentLang !== 'en') {
     var pageName2 = (window.location.pathname.split('/').pop() || 'index.html').replace('.html','');
@@ -244,8 +193,6 @@ if (typeof TRANSLATIONS !== 'undefined') {
       bannerH2.textContent = bannerMap[pageName2];
     }
   }
-
-  // Swap subtitles / paragraphs
   if (TRANSLATIONS.subtitles && currentLang !== 'en') {
     var allP = document.querySelectorAll('.section-subtitle, .cta-box p, .donate-grid p');
     for (var pi = 0; pi < allP.length; pi++) {
@@ -255,8 +202,6 @@ if (typeof TRANSLATIONS !== 'undefined') {
       }
     }
   }
-
-  // Swap buttons
   if (TRANSLATIONS.buttons && currentLang !== 'en') {
     var allBtns = document.querySelectorAll('.cta-btn, #enableAudio, #skipAudio, .audio-prompt-inner p:nth-child(3)');
     for (var bi = 0; bi < allBtns.length; bi++) {
@@ -266,8 +211,6 @@ if (typeof TRANSLATIONS !== 'undefined') {
       }
     }
   }
-
-  // Swap highlight cards on home page
   if (TRANSLATIONS.pageText && currentLang !== 'en') {
     for (var selector in TRANSLATIONS.pageText) {
       if (selector === '.page-banner-overlay h2') continue; // handled above
@@ -278,8 +221,6 @@ if (typeof TRANSLATIONS !== 'undefined') {
       }
     }
   }
-
-  // Swap footer
   var footerT = TRANSLATIONS.footer[currentLang];
   if (footerT) {
     var qlH4 = document.querySelectorAll('.footer h4');
@@ -289,18 +230,11 @@ if (typeof TRANSLATIONS !== 'undefined') {
     if (fbP) fbP.textContent = footerT.copyright;
   }
 }
-
-// ============================================
-// PAGE VISIBILITY + COMING SOON
-// ============================================
 if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.pages) {
   var pageName = (window.location.pathname.split('/').pop() || 'index.html').replace('.html', '');
   if (pageName === 'index') pageName = 'home';
   if (pageName === 'books') pageName = 'grandhas';
-
   var pageStatus = SITE_CONFIG.pages[pageName];
-
-  // Hide nav links for hidden pages
   var allNavLinks = document.querySelectorAll('.nav a, .footer a[href$=".html"]');
   var pageFileMap = { home: 'index.html', about: 'about.html', services: 'services.html', grandhas: 'books.html', shop: 'shop.html', gallery: 'gallery.html', puranam: 'puranam.html', events: 'events.html', panchangam: 'panchangam.html', blog: 'blog.html', team: 'team.html', pricing: 'pricing.html', booking: 'booking.html', donate: 'donate.html', contact: 'contact.html' };
   for (var pk in SITE_CONFIG.pages) {
@@ -315,8 +249,6 @@ if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.pages) {
       }
     }
   }
-
-  // Show coming-soon overlay
   if (pageStatus === 'coming-soon') {
     var csMsg = 'Coming Soon!';
     if (SITE_CONFIG.comingSoonMessages && SITE_CONFIG.comingSoonMessages[pageName]) {
@@ -334,14 +266,8 @@ if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.pages) {
     document.body.appendChild(overlay);
   }
 }
-
-// ============================================
-// FLOATING WHATSAPP + BACK TO TOP + LOADER
-// ============================================
 if (typeof SITE_CONFIG !== 'undefined') {
   var F = SITE_CONFIG.features || {};
-
-  // Page loader (premium feature)
   if (F.pageLoader !== false) {
     var loader = document.createElement('div');
     loader.className = 'page-loader';
@@ -375,8 +301,6 @@ if (typeof SITE_CONFIG !== 'undefined') {
     document.body.appendChild(loader);
     window.addEventListener('load', function() { setTimeout(function() { loader.className = 'page-loader hide'; setTimeout(function() { loader.remove(); }, 500); }, 600); });
   }
-
-  // Floating WhatsApp
   if (F.floatingWhatsapp !== false && SITE_CONFIG.whatsapp) {
     var wa = document.createElement('a');
     wa.className = 'float-wa';
@@ -386,8 +310,6 @@ if (typeof SITE_CONFIG !== 'undefined') {
     wa.innerHTML = '<svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>';
     document.body.appendChild(wa);
   }
-
-  // Back to top
   if (F.backToTop !== false) {
     var btt = document.createElement('button');
   btt.className = 'back-top';
@@ -398,12 +320,7 @@ if (typeof SITE_CONFIG !== 'undefined') {
     btt.className = window.scrollY > 300 ? 'back-top visible' : 'back-top';
   });
 }
-
 }
-
-// ============================================
-// COPY PROTECTION
-// ============================================
 var cpEnabled = true;
 if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.features && SITE_CONFIG.features.copyProtection === false) cpEnabled = false;
 if (cpEnabled) {
@@ -418,18 +335,12 @@ document.onkeydown = function(e) {
   if (e.key === 'F12') return false;
 };
 }
-
-// ============================================
-// AUDIO
-// ============================================
 var audio = document.getElementById('mantraAudio');
 var btn = document.getElementById('audioToggle');
 var icon = document.getElementById('audioIcon');
 var prompt = document.getElementById('audioPrompt');
 var playing = false;
-
 if (audio) audio.volume = 0.15;
-
 function startPlaying() {
   if (!audio) return;
   audio.play();
@@ -438,7 +349,6 @@ function startPlaying() {
   btn.className = 'audio-toggle';
   localStorage.setItem('mantraPlaying', '1');
 }
-
 function stopPlaying() {
   if (!audio) return;
   audio.pause();
@@ -447,7 +357,6 @@ function stopPlaying() {
   btn.className = 'audio-toggle muted';
   localStorage.setItem('mantraPlaying', '0');
 }
-
 if (prompt) {
   if (localStorage.getItem('mantraAnswered')) {
     prompt.style.display = 'none';
@@ -456,7 +365,6 @@ if (prompt) {
 } else {
   if (localStorage.getItem('mantraPlaying') === '1') startPlaying();
 }
-
 var enableBtn = document.getElementById('enableAudio');
 if (enableBtn) {
   enableBtn.onclick = function() {
@@ -465,7 +373,6 @@ if (enableBtn) {
     startPlaying();
   };
 }
-
 var skipBtn = document.getElementById('skipAudio');
 if (skipBtn) {
   skipBtn.onclick = function() {
@@ -474,20 +381,14 @@ if (skipBtn) {
     stopPlaying();
   };
 }
-
 if (btn) {
   btn.onclick = function() {
     if (playing) stopPlaying();
     else startPlaying();
   };
 }
-
-// ============================================
-// CAROUSEL
-// ============================================
 var carouselEl = document.getElementById('carousel');
 var indicatorsContainer = document.getElementById('indicators');
-
 if (carouselEl && indicatorsContainer && typeof CAROUSEL_SLIDES !== 'undefined' && CAROUSEL_SLIDES.length) {
   for (var s = 0; s < CAROUSEL_SLIDES.length; s++) {
     var slideData = CAROUSEL_SLIDES[s];
@@ -518,18 +419,15 @@ if (carouselEl && indicatorsContainer && typeof CAROUSEL_SLIDES !== 'undefined' 
     slide.appendChild(overlay);
     carouselEl.appendChild(slide);
   }
-
   var slides = carouselEl.querySelectorAll('.carousel-slide');
   var currentSlide = 0;
   var autoplayTimer;
-
   for (var i = 0; i < slides.length; i++) {
     var dot = document.createElement('span');
     dot.className = i === 0 ? 'dot active' : 'dot';
     (function(idx) { dot.onclick = function() { goToSlide(idx); }; })(i);
     indicatorsContainer.appendChild(dot);
   }
-
   function goToSlide(index) {
     var oldVid = slides[currentSlide].querySelector('video');
     if (oldVid) oldVid.pause();
@@ -543,17 +441,12 @@ if (carouselEl && indicatorsContainer && typeof CAROUSEL_SLIDES !== 'undefined' 
     clearInterval(autoplayTimer);
     autoplayTimer = setInterval(function() { goToSlide(currentSlide + 1); }, 5000);
   }
-
   autoplayTimer = setInterval(function() { goToSlide(currentSlide + 1); }, 5000);
   var prevBtn = document.getElementById('prevBtn');
   var nextBtn = document.getElementById('nextBtn');
   if (prevBtn) prevBtn.onclick = function() { goToSlide(currentSlide - 1); };
   if (nextBtn) nextBtn.onclick = function() { goToSlide(currentSlide + 1); };
 }
-
-// ============================================
-// SERVICE CARDS - built from servicesPage.services config
-// ============================================
 var svcGrid = document.getElementById('servicesGrid');
 if (svcGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.servicesPage && SITE_CONFIG.servicesPage.services) {
   var svcs = SITE_CONFIG.servicesPage.services;
@@ -566,10 +459,113 @@ if (svcGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.servicesPage &&
     svcGrid.appendChild(sCard);
   }
 }
-
-// ============================================
-// MISSION CARDS + STATS - built from aboutPage config
-// ============================================
+(function(){
+  if(typeof SITE_CONFIG==='undefined'||typeof SERVICES_SECTIONS==='undefined')return;
+  var SP=SITE_CONFIG.servicesPage||{};
+  if(SP.servicesStyle!=='sections')return;
+  var grid=document.getElementById('servicesGrid');
+  if(!grid)return;
+  grid.innerHTML='';
+  grid.className='svc-sections-wrap';
+  var SC=SERVICES_SECTIONS;
+  var lang='en';
+  var pp=window.location.pathname.split('/');
+  for(var i=0;i<pp.length;i++){if(pp[i]==='te'||pp[i]==='hi'||pp[i]==='sa'){lang=pp[i];break;}}
+  function txt(obj){if(!obj)return '';if(typeof obj==='string')return obj;return obj[lang]||obj.en||'';}
+  function buildCard(s,whatsapp){
+    var h='<div class="svc-sec-card">';
+    if(s.image)h+='<img src="'+s.image+'" alt="'+txt(s.title)+'" class="svc-card-img">';
+    else if(s.icon)h+='<div class="svc-card-icon">'+s.icon+'</div>';
+    h+='<h4>'+txt(s.title)+'</h4>';
+    h+='<p>'+txt(s.desc)+'</p>';
+    if(s.price)h+='<div class="svc-price">'+s.price+'</div>';
+    var bk=s.bookingLink||('https://wa.me/'+whatsapp+'?text='+encodeURIComponent('I want to book '+txt(s.title)));
+    h+='<a href="'+bk+'" target="_blank" class="svc-book-btn">Book Now</a>';
+    h+='</div>';
+    return h;
+  }
+  function buildPlain(s,whatsapp){
+    var h='<div class="svc-plain-item">';
+    if(s.icon)h+='<div class="svc-plain-icon">'+s.icon+'</div>';
+    h+='<div class="svc-plain-info"><h4>'+txt(s.title)+'</h4><p>'+txt(s.desc)+'</p></div>';
+    h+='<div class="svc-plain-right">';
+    if(s.price)h+='<div class="svc-price">'+s.price+'</div>';
+    var bk=s.bookingLink||('https://wa.me/'+whatsapp+'?text='+encodeURIComponent('I want to book '+txt(s.title)));
+    h+='<a href="'+bk+'" target="_blank" class="svc-book-btn">Book</a>';
+    h+='</div></div>';
+    return h;
+  }
+  function renderSection(sec,whatsapp){
+    var svcs=sec.services||[];
+    var style=sec.displayStyle||'grid';
+    var h='';
+    var wrapClass=style==='carousel'?'svc-sec-carousel':style==='plain'?'svc-sec-plain':'svc-sec-grid';
+    h+='<div class="'+wrapClass+'">';
+    for(var j=0;j<svcs.length;j++){
+      if(svcs[j].enabled===false)continue;
+      if(style==='plain')h+=buildPlain(svcs[j],whatsapp);
+      else h+=buildCard(svcs[j],whatsapp);
+    }
+    h+='</div>';
+    return h;
+  }
+  var whatsapp=SITE_CONFIG.whatsapp||'';
+  var secs=SC.sections||[];
+  var layout=SC.pageLayout||'headers';
+  if(layout==='tabs'){
+    var tabNav='<div class="svc-tabs-nav">';
+    var tabContent='';
+    var first=true;
+    for(var i=0;i<secs.length;i++){
+      if(secs[i].enabled===false)continue;
+      tabNav+='<button class="svc-tab-btn'+(first?' active':'')+'" data-tab="svctab'+i+'">'+(secs[i].icon||'')+' '+txt(secs[i].title)+'</button>';
+      tabContent+='<div class="svc-tab-content'+(first?' active':'')+'" id="svctab'+i+'">'+renderSection(secs[i],whatsapp)+'</div>';
+      first=false;
+    }
+    tabNav+='</div>';
+    grid.innerHTML=tabNav+tabContent;
+    var btns=grid.querySelectorAll('.svc-tab-btn');
+    for(var b=0;b<btns.length;b++){
+      btns[b].onclick=function(){
+        var tabs=grid.querySelectorAll('.svc-tab-content');
+        var allBtns=grid.querySelectorAll('.svc-tab-btn');
+        for(var t=0;t<tabs.length;t++){tabs[t].className='svc-tab-content';allBtns[t].className='svc-tab-btn';}
+        document.getElementById(this.getAttribute('data-tab')).className='svc-tab-content active';
+        this.className='svc-tab-btn active';
+      };
+    }
+  } else if(layout==='accordion'){
+    var accH='';
+    for(var i=0;i<secs.length;i++){
+      if(secs[i].enabled===false)continue;
+      accH+='<div class="svc-acc-header" data-acc="svcacc'+i+'">';
+      accH+='<span class="svc-acc-icon">'+(secs[i].icon||'')+'</span>';
+      accH+='<h3>'+txt(secs[i].title)+'</h3>';
+      accH+='<span class="svc-acc-arrow">▼</span></div>';
+      accH+='<div class="svc-acc-body" id="svcacc'+i+'">'+renderSection(secs[i],whatsapp)+'</div>';
+    }
+    grid.innerHTML=accH;
+    var accBtns=grid.querySelectorAll('.svc-acc-header');
+    for(var a=0;a<accBtns.length;a++){
+      accBtns[a].onclick=function(){
+        var body=document.getElementById(this.getAttribute('data-acc'));
+        var isOpen=this.className.indexOf('open')>-1;
+        this.className=isOpen?'svc-acc-header':'svc-acc-header open';
+        body.className=isOpen?'svc-acc-body':'svc-acc-body open';
+      };
+    }
+  } else {
+    var secH='';
+    for(var i=0;i<secs.length;i++){
+      if(secs[i].enabled===false)continue;
+      secH+='<div class="svc-section">';
+      secH+='<div class="svc-section-header"><span class="svc-sec-icon">'+(secs[i].icon||'')+'</span><h3>'+txt(secs[i].title)+'</h3></div>';
+      secH+=renderSection(secs[i],whatsapp);
+      secH+='</div>';
+    }
+    grid.innerHTML=secH;
+  }
+})();
 var misGrid = document.getElementById('missionGrid');
 if (misGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.aboutPage && SITE_CONFIG.aboutPage.missionCards) {
   var mcs = SITE_CONFIG.aboutPage.missionCards;
@@ -594,10 +590,6 @@ if (stRow && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.aboutPage && SITE
     stRow.appendChild(sBox);
   }
 }
-
-// ============================================
-// HIGHLIGHT CARDS - built from homePage.highlightCards config
-// ============================================
 var hlGrid = document.getElementById('highlightsGrid');
 if (hlGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.homePage && SITE_CONFIG.homePage.highlightCards) {
   var hlCards = SITE_CONFIG.homePage.highlightCards;
@@ -612,10 +604,6 @@ if (hlGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.homePage && SITE
     hlGrid.appendChild(card);
   }
 }
-
-// ============================================
-// MOBILE MENU
-// ============================================
 var menuBtn = document.getElementById('mobileMenuBtn');
 var nav = document.getElementById('mainNav');
 if (menuBtn && nav) {
@@ -627,10 +615,6 @@ if (menuBtn && nav) {
     links[j].onclick = function() { nav.className = 'nav'; };
   }
 }
-
-// ============================================
-// GALLERY - folder-based from gallery-config.js
-// ============================================
 var ITEMS_PER_PAGE = 6;
 var galleryGrid = document.getElementById('galleryGrid');
 var filtersDiv = document.getElementById('galleryFilters');
@@ -638,7 +622,6 @@ var pagDiv = document.getElementById('pagination');
 var allItems = [];
 var curFilter = 'all';
 var curPage = 1;
-
 if (galleryGrid && typeof GALLERY_FOLDERS !== 'undefined' && GALLERY_FOLDERS.length) {
   if (filtersDiv) {
     var allBtn = document.createElement('button');
@@ -647,12 +630,10 @@ if (galleryGrid && typeof GALLERY_FOLDERS !== 'undefined' && GALLERY_FOLDERS.len
     allBtn.textContent = 'All';
     filtersDiv.appendChild(allBtn);
   }
-
   for (var f = 0; f < GALLERY_FOLDERS.length; f++) {
     var folderData = GALLERY_FOLDERS[f];
     var folderName = folderData.folder;
     var basePath = 'assets/images/gallery/' + folderName + '/';
-
     if (filtersDiv) {
       var catBtn = document.createElement('button');
       catBtn.className = 'filter-btn';
@@ -660,12 +641,10 @@ if (galleryGrid && typeof GALLERY_FOLDERS !== 'undefined' && GALLERY_FOLDERS.len
       catBtn.textContent = folderName.charAt(0).toUpperCase() + folderName.slice(1);
       filtersDiv.appendChild(catBtn);
     }
-
     for (var gi = 0; gi < folderData.images.length; gi++) {
       var fileName = folderData.images[gi];
       var caption = fileName.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
       caption = caption.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-
       var item = document.createElement('div');
       item.className = 'gallery-item';
       item.setAttribute('data-category', folderName);
@@ -681,10 +660,8 @@ if (galleryGrid && typeof GALLERY_FOLDERS !== 'undefined' && GALLERY_FOLDERS.len
       galleryGrid.appendChild(item);
     }
   }
-
   allItems = galleryGrid.querySelectorAll('.gallery-item');
   var filters = filtersDiv ? filtersDiv.querySelectorAll('.filter-btn') : [];
-
   for (var ff = 0; ff < filters.length; ff++) {
     (function(filterBtn) {
       filterBtn.onclick = function() {
@@ -698,7 +675,6 @@ if (galleryGrid && typeof GALLERY_FOLDERS !== 'undefined' && GALLERY_FOLDERS.len
   }
   showGallery();
 }
-
 function getFiltered() {
   var arr = [];
   for (var i = 0; i < allItems.length; i++) {
@@ -706,7 +682,6 @@ function getFiltered() {
   }
   return arr;
 }
-
 function showGallery() {
   var filtered = getFiltered();
   var total = Math.ceil(filtered.length / ITEMS_PER_PAGE);
@@ -717,7 +692,6 @@ function showGallery() {
   for (var j = start; j < end && j < filtered.length; j++) filtered[j].style.display = '';
   buildPagination(total);
 }
-
 function buildPagination(total) {
   if (!pagDiv) return;
   pagDiv.innerHTML = '';
@@ -742,10 +716,6 @@ function buildPagination(total) {
   next.onclick = function() { curPage++; showGallery(); };
   pagDiv.appendChild(next);
 }
-
-// ============================================
-// SHOP - auto-detect vendor from URL, images from vendor CDN
-// ============================================
 function detectStore(url) {
   var u = url.toLowerCase();
   var known = [
@@ -775,7 +745,6 @@ function detectStore(url) {
     return { name: domain.charAt(0).toUpperCase() + domain.slice(1), color: '#555' };
   } catch(e) { return { name: 'Buy Online', color: '#555' }; }
 }
-
 var shopGrid = document.getElementById('shopGrid');
 var shopFiltersDiv = document.getElementById('shopFilters');
 var shopPagDiv = document.getElementById('shopPagination');
@@ -783,14 +752,9 @@ var shopItems = [];
 var shopFilter = 'all';
 var shopPage = 1;
 var SHOP_PER_PAGE = 8;
-
-// Detect shop style from config
 var shopStyle = 'products';
 if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.shopPage) shopStyle = SITE_CONFIG.shopPage.style || 'products';
-
 if (shopGrid) {
-
-  // === STYLE 2: Categories ===
   if (shopStyle === 'categories' && typeof SHOP_CATEGORIES !== 'undefined' && SHOP_CATEGORIES.length) {
     shopGrid.className = 'shop-cat-grid';
     for (var ci = 0; ci < SHOP_CATEGORIES.length; ci++) {
@@ -806,8 +770,6 @@ if (shopGrid) {
       shopGrid.appendChild(card);
     }
   }
-
-  // === STYLE 3: Collections ===
   else if (shopStyle === 'collections' && typeof SHOP_COLLECTIONS !== 'undefined' && SHOP_COLLECTIONS.length) {
     shopGrid.className = 'shop-coll-grid';
     for (var co = 0; co < SHOP_COLLECTIONS.length; co++) {
@@ -826,8 +788,6 @@ if (shopGrid) {
       shopGrid.appendChild(card);
     }
   }
-
-  // === STYLE 4: Compare ===
   else if (shopStyle === 'compare' && typeof SHOP_COMPARE !== 'undefined' && SHOP_COMPARE.length) {
     shopGrid.className = 'shop-comp-grid';
     for (var cm = 0; cm < SHOP_COMPARE.length; cm++) {
@@ -844,15 +804,11 @@ if (shopGrid) {
       shopGrid.appendChild(card);
     }
   }
-
-  // === STYLE 1: Products (default) ===
   else if (typeof SHOP_ITEMS !== 'undefined' && SHOP_ITEMS.length) {
-
   var shopCats = [];
   for (var si = 0; si < SHOP_ITEMS.length; si++) {
     if (shopCats.indexOf(SHOP_ITEMS[si].cat) === -1) shopCats.push(SHOP_ITEMS[si].cat);
   }
-
   if (shopFiltersDiv) {
     var allShopBtn = document.createElement('button');
     allShopBtn.className = 'filter-btn active';
@@ -867,47 +823,38 @@ if (shopGrid) {
       shopFiltersDiv.appendChild(scBtn);
     }
   }
-
   for (var p = 0; p < SHOP_ITEMS.length; p++) {
     var prod = SHOP_ITEMS[p];
     var store = detectStore(prod.url);
-
     var card = document.createElement('a');
     card.className = 'shop-card';
     card.href = prod.url;
     card.target = '_blank';
     card.rel = 'noopener noreferrer nofollow';
     card.setAttribute('data-category', prod.cat);
-
     var pImg = document.createElement('img');
     pImg.className = 'shop-card-img';
     pImg.src = prod.img;
     pImg.alt = prod.name;
     pImg.loading = 'lazy';
     card.appendChild(pImg);
-
     var body = document.createElement('div');
     body.className = 'shop-card-body';
-
     var nameEl = document.createElement('div');
     nameEl.className = 'shop-card-name';
     nameEl.textContent = prod.name;
     body.appendChild(nameEl);
-
     var buyBtn = document.createElement('div');
     buyBtn.className = 'shop-buy-btn';
     buyBtn.style.background = store.color;
     buyBtn.style.color = '#fff';
     buyBtn.textContent = 'Buy on ' + store.name;
     body.appendChild(buyBtn);
-
     card.appendChild(body);
     shopGrid.appendChild(card);
   }
-
   shopItems = shopGrid.querySelectorAll('.shop-card');
   var shopFilterBtns = shopFiltersDiv ? shopFiltersDiv.querySelectorAll('.filter-btn') : [];
-
   function getShopFiltered() {
     var arr = [];
     for (var i = 0; i < shopItems.length; i++) {
@@ -915,7 +862,6 @@ if (shopGrid) {
     }
     return arr;
   }
-
   function showShop() {
     var filtered = getShopFiltered();
     var total = Math.ceil(filtered.length / SHOP_PER_PAGE);
@@ -926,7 +872,6 @@ if (shopGrid) {
     for (var j = start; j < end && j < filtered.length; j++) filtered[j].style.display = '';
     buildShopPag(total);
   }
-
   function buildShopPag(total) {
     if (!shopPagDiv) return;
     shopPagDiv.innerHTML = '';
@@ -951,7 +896,6 @@ if (shopGrid) {
     next.onclick = function() { shopPage++; showShop(); };
     shopPagDiv.appendChild(next);
   }
-
   for (var sf = 0; sf < shopFilterBtns.length; sf++) {
     (function(sbtn) {
       sbtn.onclick = function() {
@@ -963,14 +907,9 @@ if (shopGrid) {
       };
     })(shopFilterBtns[sf]);
   }
-
   showShop();
   }
 }
-
-// ============================================
-// GRANDHAS (Sacred Books) - auto-built from grandhas-config.js
-// ============================================
 var grandhaGrid = document.getElementById('grandhaGrid');
 var grandhaFiltersDiv = document.getElementById('grandhaFilters');
 var grandhaPagDiv = document.getElementById('grandhaPagination');
@@ -978,14 +917,11 @@ var grandhaItems = [];
 var grandhaFilter = 'all';
 var grandhaPage = 1;
 var GRANDHA_PER_PAGE = 8;
-
 if (grandhaGrid && typeof GRANDHAS !== 'undefined' && GRANDHAS.length) {
-
   var grandhaCats = [];
   for (var gi = 0; gi < GRANDHAS.length; gi++) {
     if (grandhaCats.indexOf(GRANDHAS[gi].cat) === -1) grandhaCats.push(GRANDHAS[gi].cat);
   }
-
   if (grandhaFiltersDiv) {
     var allGBtn = document.createElement('button');
     allGBtn.className = 'filter-btn active';
@@ -1000,65 +936,51 @@ if (grandhaGrid && typeof GRANDHAS !== 'undefined' && GRANDHAS.length) {
       grandhaFiltersDiv.appendChild(gcBtn);
     }
   }
-
   for (var gb = 0; gb < GRANDHAS.length; gb++) {
     var book = GRANDHAS[gb];
-
     var card = document.createElement('div');
     card.className = 'grandha-card';
     card.setAttribute('data-category', book.cat);
-
     var coverImg = document.createElement('img');
     coverImg.className = 'grandha-cover';
     coverImg.src = book.cover;
     coverImg.alt = book.name;
     coverImg.loading = 'lazy';
     card.appendChild(coverImg);
-
     var body = document.createElement('div');
     body.className = 'grandha-body';
-
     var catTag = document.createElement('span');
     catTag.className = 'grandha-cat';
     catTag.textContent = book.cat.replace(/-/g, ' ');
     body.appendChild(catTag);
-
     var nameEl = document.createElement('div');
     nameEl.className = 'grandha-name';
     nameEl.textContent = book.name;
     body.appendChild(nameEl);
-
     var actions = document.createElement('div');
     actions.className = 'grandha-actions';
-
     var readBtn = document.createElement('a');
     readBtn.className = 'grandha-btn read';
     readBtn.href = book.pdf;
     readBtn.target = '_blank';
     readBtn.textContent = '📖 Read';
     actions.appendChild(readBtn);
-
     var dlBtn = document.createElement('a');
     dlBtn.className = 'grandha-btn download';
     dlBtn.href = book.pdf;
     dlBtn.setAttribute('download', '');
     dlBtn.textContent = '⬇ Download';
     actions.appendChild(dlBtn);
-
     body.appendChild(actions);
-
     var freeTag = document.createElement('div');
     freeTag.className = 'grandha-free';
     freeTag.textContent = '🙏 Free — Temple Seva';
     body.appendChild(freeTag);
-
     card.appendChild(body);
     grandhaGrid.appendChild(card);
   }
-
   grandhaItems = grandhaGrid.querySelectorAll('.grandha-card');
   var grandhaFilterBtns = grandhaFiltersDiv ? grandhaFiltersDiv.querySelectorAll('.filter-btn') : [];
-
   function getGrandhaFiltered() {
     var arr = [];
     for (var i = 0; i < grandhaItems.length; i++) {
@@ -1066,7 +988,6 @@ if (grandhaGrid && typeof GRANDHAS !== 'undefined' && GRANDHAS.length) {
     }
     return arr;
   }
-
   function showGrandhas() {
     var filtered = getGrandhaFiltered();
     var total = Math.ceil(filtered.length / GRANDHA_PER_PAGE);
@@ -1077,7 +998,6 @@ if (grandhaGrid && typeof GRANDHAS !== 'undefined' && GRANDHAS.length) {
     for (var j = start; j < end && j < filtered.length; j++) filtered[j].style.display = '';
     buildGrandhaPag(total);
   }
-
   function buildGrandhaPag(total) {
     if (!grandhaPagDiv) return;
     grandhaPagDiv.innerHTML = '';
@@ -1102,7 +1022,6 @@ if (grandhaGrid && typeof GRANDHAS !== 'undefined' && GRANDHAS.length) {
     next.onclick = function() { grandhaPage++; showGrandhas(); };
     grandhaPagDiv.appendChild(next);
   }
-
   for (var gf = 0; gf < grandhaFilterBtns.length; gf++) {
     (function(gbtn) {
       gbtn.onclick = function() {
@@ -1114,25 +1033,18 @@ if (grandhaGrid && typeof GRANDHAS !== 'undefined' && GRANDHAS.length) {
       };
     })(grandhaFilterBtns[gf]);
   }
-
   showGrandhas();
 }
-
-// ============================================
-// DONATE - Two separate carousels: QR + Bank
-// ============================================
 function buildDonateCarousel(items, containerId, dotsId, prevId, nextId, buildSlide) {
   var container = document.getElementById(containerId);
   var dotsEl = document.getElementById(dotsId);
   if (!container || !items || !items.length) return;
-
   var idx = 0;
   for (var i = 0; i < items.length; i++) {
     var slide = document.createElement('div');
     slide.className = i === 0 ? 'donate-slide active' : 'donate-slide';
     slide.innerHTML = buildSlide(items[i]);
     container.appendChild(slide);
-
     if (dotsEl) {
       var dot = document.createElement('span');
       dot.className = i === 0 ? 'donate-dot active' : 'donate-dot';
@@ -1140,10 +1052,8 @@ function buildDonateCarousel(items, containerId, dotsId, prevId, nextId, buildSl
       dotsEl.appendChild(dot);
     }
   }
-
   var slides = container.querySelectorAll('.donate-slide');
   var dots = dotsEl ? dotsEl.querySelectorAll('.donate-dot') : [];
-
   function show(n) {
     slides[idx].className = 'donate-slide';
     if (dots[idx]) dots[idx].className = 'donate-dot';
@@ -1151,80 +1061,77 @@ function buildDonateCarousel(items, containerId, dotsId, prevId, nextId, buildSl
     slides[idx].className = 'donate-slide active';
     if (dots[idx]) dots[idx].className = 'donate-dot active';
   }
-
   var prev = document.getElementById(prevId);
   var next = document.getElementById(nextId);
   if (prev) prev.onclick = function() { show(idx - 1); };
   if (next) next.onclick = function() { show(idx + 1); };
-
   if (items.length <= 1) {
     if (prev) prev.style.display = 'none';
     if (next) next.style.display = 'none';
     if (dotsEl) dotsEl.style.display = 'none';
   }
 }
-
-// QR label translations
 var upiLabel = { en: 'UPI ID:', te: 'UPI ID:', hi: 'UPI ID:', sa: 'UPI सङ्केतः:' };
 var uL = upiLabel[currentLang] || upiLabel['en'];
-
-// Donate page visibility
 var donateShowQR = true;
 var donateShowBank = true;
 if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.donatePage) {
   donateShowQR = SITE_CONFIG.donatePage.showQR !== false;
   donateShowBank = SITE_CONFIG.donatePage.showBank !== false;
 }
-
-// Hide QR column if disabled
 var qrColEl = document.getElementById('qrCarousel');
 if (qrColEl && !donateShowQR) {
   var qrSection = qrColEl.parentElement;
   while (qrSection && qrSection.className.indexOf('donate-col') === -1) qrSection = qrSection.parentElement;
   if (qrSection) qrSection.style.display = 'none';
 }
-
-// Hide Bank column if disabled
 var bankColEl = document.getElementById('bankCarousel');
 if (bankColEl && !donateShowBank) {
   var bankSection = bankColEl.parentElement;
   while (bankSection && bankSection.className.indexOf('donate-col') === -1) bankSection = bankSection.parentElement;
   if (bankSection) bankSection.style.display = 'none';
 }
-
-// If only one column visible, make it full width
 var twoCol = document.querySelector('.donate-two-col');
 if (twoCol && (!donateShowQR || !donateShowBank)) {
   twoCol.style.gridTemplateColumns = '1fr';
   twoCol.style.maxWidth = '500px';
   twoCol.style.margin = '0 auto';
 }
-
-// QR Carousel
 if (typeof DONATE_QR !== 'undefined' && donateShowQR) {
   var waNum = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG.whatsapp || '' : '';
   var verifyLabels = {
-    en: { name: 'Account Name:', verify: '⚠️ Please verify the name shown on your UPI app matches the above before sending money.', confirm: '💬 Confirm on WhatsApp before paying' },
-    te: { name: 'ఖాతా పేరు:', verify: '⚠️ డబ్బు పంపే ముందు మీ UPI యాప్‌లో చూపిన పేరు పైన ఉన్న పేరుతో సరిపోలుతుందో ధృవీకరించండి.', confirm: '💬 చెల్లించే ముందు WhatsAppలో నిర్ధారించండి' },
-    hi: { name: 'खाता नाम:', verify: '⚠️ पैसे भेजने से पहले कृपया सुनिश्चित करें कि आपके UPI ऐप पर दिखाया गया नाम ऊपर दिए गए नाम से मेल खाता है।', confirm: '💬 भुगतान से पहले WhatsApp पर पुष्टि करें' },
-    sa: { name: 'खातनाम:', verify: '⚠️ धनप्रेषणात् पूर्वं कृपया UPI अनुप्रयोगे प्रदर्शितं नाम उपरिलिखितेन सह मिलति इति सुनिश्चितं कुर्वन्तु।', confirm: '💬 भुगतानात् पूर्वं WhatsApp इत्यत्र पुष्टिं कुर्वन्तु' }
+    en: { name: 'Account Name:', verify: '⚠️ Please verify the name shown on your UPI app matches the above before sending money.', confirm: '💬 Confirm on WhatsApp before paying', cautions: ['🔒 Always verify UPI ID and account name before payment.', '⚠️ Do not scan QR codes shared via unknown WhatsApp groups or social media.', '📞 If in doubt, call the temple directly to confirm.', '🚫 Temple will never ask for donations via personal phone calls or SMS.', '✅ After payment, take a screenshot and share on WhatsApp for confirmation.'] },
+    te: { name: 'ఖాతా పేరు:', verify: '⚠️ డబ్బు పంపే ముందు మీ UPI యాప్‌లో చూపిన పేరు పైన ఉన్న పేరుతో సరిపోలుతుందో ధృవీకరించండి.', confirm: '💬 చెల్లించే ముందు WhatsAppలో నిర్ధారించండి', cautions: ['🔒 చెల్లింపు చేసే ముందు UPI ID మరియు ఖాతా పేరును ధృవీకరించండి.', '⚠️ తెలియని WhatsApp గ్రూపులు లేదా సోషల్ మీడియా ద్వారా షేర్ చేసిన QR కోడ్లను స్కాన్ చేయకండి.', '📞 సందేహం ఉంటే, నిర్ధారించడానికి నేరుగా ఆలయానికి కాల్ చేయండి.', '🚫 ఆలయం వ్యక్తిగత ఫోన్ కాల్స్ లేదా SMS ద్వారా విరాళాలు అడగదు.', '✅ చెల్లింపు తర్వాత స్క్రీన్షాట్ తీసి నిర్ధారణ కోసం WhatsAppలో షేర్ చేయండి.'] },
+    hi: { name: 'खाता नाम:', verify: '⚠️ पैसे भेजने से पहले कृपया सुनिश्चित करें कि आपके UPI ऐप पर दिखाया गया नाम ऊपर दिए गए नाम से मेल खाता है।', confirm: '💬 भुगतान से पहले WhatsApp पर पुष्टि करें', cautions: ['🔒 भुगतान करने से पहले हमेशा UPI ID और खाता नाम सत्यापित करें।', '⚠️ अज्ञात WhatsApp ग्रुप या सोशल मीडिया से साझा किए गए QR कोड स्कैन न करें।', '📞 संदेह होने पर पुष्टि के लिए सीधे मंदिर को कॉल करें।', '🚫 मंदिर कभी भी व्यक्तिगत फोन कॉल या SMS के माध्यम से दान नहीं मांगता।', '✅ भुगतान के बाद स्क्रीनशॉट लें और WhatsApp पर साझा करें।'] },
+    sa: { name: 'खातनाम:', verify: '⚠️ धनप्रेषणात् पूर्वं कृपया UPI अनुप्रयोगे प्रदर्शितं नाम उपरिलिखितेन सह मिलति इति सुनिश्चितं कुर्वन्तु।', confirm: '💬 भुगतानात् पूर्वं WhatsApp इत्यत्र पुष्टिं कुर्वन्तु', cautions: ['🔒 भुगतानात् पूर्वं UPI ID खातनाम च सत्यापयतु।', '⚠️ अज्ञातस्थानेभ्यः QR कोडान् न स्कैनयतु।', '📞 सन्देहे सति मन्दिरं सम्पर्कं कुरुत।', '🚫 मन्दिरं वैयक्तिकमाध्यमेन दानं न याचते।', '✅ भुगतानानन्तरं WhatsApp माध्यमेन पुष्टिं कुरुत।'] }
   };
   var vL = verifyLabels[currentLang] || verifyLabels['en'];
   buildDonateCarousel(DONATE_QR, 'qrCarousel', 'qrDots', 'qrPrev', 'qrNext', function(item) {
     var t = (typeof item.title === 'object') ? (item.title[currentLang] || item.title['en']) : item.title;
     var h = '<div class="donate-slide-title">' + t + '</div>' +
-      '<div class="qr-box"><img src="' + item.qrImage + '" alt="QR Code" class="qr-image"></div>' +
-      '<div class="upi-id-box"><span>' + uL + '</span><strong>' + item.upiId + '</strong></div>';
-    if (item.accountName) {
+      '<div class="qr-box"><img src="' + item.qrImage + '" alt="QR Code" class="qr-image"></div>';
+    if (item.showUpiId !== false) {
+      h += '<div class="upi-id-box"><span>' + uL + '</span><strong>' + item.upiId + '</strong></div>';
+    }
+    if (item.accountName && item.showAccountName !== false) {
       h += '<div class="qr-account-name"><span>' + vL.name + '</span> <strong>' + item.accountName + '</strong></div>';
+    }
+    if (item.showVerifyWarning !== false) {
       h += '<div class="qr-verify-warning">' + vL.verify + '</div>';
-      if (waNum) h += '<a href="https://wa.me/' + waNum + '?text=' + encodeURIComponent('I want to confirm before donating to: ' + item.accountName + ' (' + item.upiId + ')') + '" target="_blank" class="qr-confirm-btn">' + vL.confirm + '</a>';
+    }
+    if (vL.cautions && item.showCautions !== false) {
+      h += '<div class="qr-cautions">';
+      for (var ci = 0; ci < vL.cautions.length; ci++) {
+        h += '<div class="qr-caution-item">' + vL.cautions[ci] + '</div>';
+      }
+      h += '</div>';
+    }
+    if (item.showWhatsappConfirm !== false && waNum) {
+      h += '<a href="https://wa.me/' + waNum + '?text=' + encodeURIComponent('I want to confirm before donating to: ' + (item.accountName || t) + ' (' + item.upiId + ')') + '" target="_blank" class="qr-confirm-btn">' + vL.confirm + '</a>';
     }
     return h;
   });
 }
-
-// Bank label translations
 var bankLabels = {
   en: { accountName: 'Account Name', accountNumber: 'Account Number', bankName: 'Bank Name', branch: 'Branch', ifsc: 'IFSC Code', accountType: 'Account Type' },
   te: { accountName: 'ఖాతా పేరు', accountNumber: 'ఖాతా నంబర్', bankName: 'బ్యాంక్ పేరు', branch: 'శాఖ', ifsc: 'IFSC కోడ్', accountType: 'ఖాతా రకం' },
@@ -1232,8 +1139,6 @@ var bankLabels = {
   sa: { accountName: 'खातनाम', accountNumber: 'खातसङ्ख्या', bankName: 'कोषागारनाम', branch: 'शाखा', ifsc: 'IFSC सङ्केतः', accountType: 'खातप्रकारः' }
 };
 var bL = bankLabels[currentLang] || bankLabels['en'];
-
-// Bank Carousel
 if (typeof DONATE_BANKS !== 'undefined' && donateShowBank) {
   buildDonateCarousel(DONATE_BANKS, 'bankCarousel', 'bankDots', 'bankPrev', 'bankNext', function(item) {
     var t = (typeof item.title === 'object') ? (item.title[currentLang] || item.title['en']) : item.title;
@@ -1248,10 +1153,6 @@ if (typeof DONATE_BANKS !== 'undefined' && donateShowBank) {
       '</div>';
   });
 }
-
-// ============================================
-// STALA PURANAM - content blocks from puranam-config.js
-// ============================================
 var puranamEl = document.getElementById('puranamContent');
 if (puranamEl && typeof STALA_PURANAM !== 'undefined' && STALA_PURANAM.length) {
   var singleTheme = (typeof PURANAM_PAGE_THEME !== 'undefined' && PURANAM_PAGE_THEME !== 'mixed') ? PURANAM_PAGE_THEME : null;
@@ -1264,7 +1165,6 @@ if (puranamEl && typeof STALA_PURANAM !== 'undefined' && STALA_PURANAM.length) {
     var html = '';
     var titleHtml = block.title ? '<h2 class="pb-title">' + block.title + '</h2>' : '';
     var textHtml = '<div class="pb-text">' + block.text + '</div>';
-
     if (theme === 'paragraph') {
       html = titleHtml + textHtml;
     }
@@ -1296,11 +1196,8 @@ if (puranamEl && typeof STALA_PURANAM !== 'undefined' && STALA_PURANAM.length) {
       var cid3 = 'pbcar' + carouselCount++;
       html = titleHtml + buildPBCarousel(cid3, block.media) + textHtml;
     }
-
     div.innerHTML = html;
     puranamEl.appendChild(div);
-
-    // Insert inline ads between blocks
     if (typeof ADS_CONFIG !== 'undefined' && ADS_CONFIG.enabled) {
       var inlineAds = getAdsFor('inline', 'puranam');
       if (inlineAds.length && pi === Math.floor(STALA_PURANAM.length / 2) - 1) {
@@ -1311,11 +1208,8 @@ if (puranamEl && typeof STALA_PURANAM !== 'undefined' && STALA_PURANAM.length) {
       }
     }
   }
-
-  // Init all puranam carousels
   initPBCarousels();
 }
-
 function buildPBCarousel(id, items) {
   var h = '<div class="pb-carousel" id="' + id + '"><div class="pb-carousel-inner">';
   for (var i = 0; i < items.length; i++) {
@@ -1330,7 +1224,6 @@ function buildPBCarousel(id, items) {
   h += '</div></div>';
   return h;
 }
-
 var pbIndexes = {};
 function initPBCarousels() {
   var cars = document.querySelectorAll('.pb-carousel');
@@ -1346,10 +1239,6 @@ function goToPB(id, idx) {
   document.querySelector('#'+id+' .pb-carousel-inner').style.transform = 'translateX(-' + (idx*100) + '%)';
   for (var d = 0; d < dots.length; d++) dots[d].className = d===idx ? 'active' : '';
 }
-
-// ============================================
-// ADVERTISEMENTS - site-wide from ads-config.js
-// ============================================
 function getAdsFor(placement, page) {
   if (typeof ADS_CONFIG === 'undefined' || !ADS_CONFIG.enabled) return [];
   var now = new Date().toISOString().split('T')[0];
@@ -1369,7 +1258,6 @@ function getAdsFor(placement, page) {
   }
   return results;
 }
-
 function renderAd(ad) {
   var h = '';
   if (ad.type === 'video') {
@@ -1382,14 +1270,10 @@ function renderAd(ad) {
   if (ad.type === 'campaign') h += '<div class="ad-label">Campaign</div>';
   return h;
 }
-
-// Place ads on current page - create containers dynamically if needed
 if (typeof ADS_CONFIG !== 'undefined' && ADS_CONFIG.enabled) {
   var curPageName = (window.location.pathname.split('/').pop() || 'index.html').replace('.html', '');
   if (curPageName === 'index') curPageName = 'home';
   if (curPageName === 'books') curPageName = 'grandhas';
-
-  // Banner top - inject before first section
   var topAds = getAdsFor('banner-top', curPageName);
   if (topAds.length) {
     var topEl = document.getElementById('adBannerTop');
@@ -1401,8 +1285,6 @@ if (typeof ADS_CONFIG !== 'undefined' && ADS_CONFIG.enabled) {
     }
     if (topEl) { topEl.className = 'ad-banner'; topEl.innerHTML = renderAd(topAds[0]); }
   }
-
-  // Banner bottom - inject before footer
   var botAds = getAdsFor('banner-bottom', curPageName);
   if (botAds.length) {
     var botEl = document.getElementById('adBannerBottom');
@@ -1414,8 +1296,6 @@ if (typeof ADS_CONFIG !== 'undefined' && ADS_CONFIG.enabled) {
     }
     if (botEl) { botEl.className = 'ad-banner'; botEl.innerHTML = renderAd(botAds[0]); }
   }
-
-  // Sidebar left
   var leftAds = getAdsFor('sidebar-left', curPageName);
   var leftEl = document.getElementById('adSidebarLeft');
   if (leftEl && leftAds.length) {
@@ -1423,8 +1303,6 @@ if (typeof ADS_CONFIG !== 'undefined' && ADS_CONFIG.enabled) {
       var ld = document.createElement('div'); ld.className = 'ad-sidebar'; ld.innerHTML = renderAd(leftAds[la]); leftEl.appendChild(ld);
     }
   }
-
-  // Sidebar right
   var rightAds = getAdsFor('sidebar-right', curPageName);
   var rightEl = document.getElementById('adSidebarRight');
   if (rightEl && rightAds.length) {
@@ -1432,8 +1310,6 @@ if (typeof ADS_CONFIG !== 'undefined' && ADS_CONFIG.enabled) {
       var rd = document.createElement('div'); rd.className = 'ad-sidebar'; rd.innerHTML = renderAd(rightAds[ra]); rightEl.appendChild(rd);
     }
   }
-
-  // Inline ads - inject between sections
   var inlineAds = getAdsFor('inline', curPageName);
   if (inlineAds.length) {
     var sections = document.querySelectorAll('.section');
@@ -1446,22 +1322,16 @@ if (typeof ADS_CONFIG !== 'undefined' && ADS_CONFIG.enabled) {
     }
   }
 }
-
-// ============================================
-// EVENTS - auto-built from events-config.js
-// ============================================
 var eventsGrid = document.getElementById('eventsGrid');
 if (eventsGrid && typeof EVENTS_CONFIG !== 'undefined' && EVENTS_CONFIG.events.length) {
   var today = new Date(); today.setHours(0,0,0,0);
   var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   var evFilter = 'all';
-
   function getEventDate(ev) {
     var d = new Date(ev.date);
     if (ev.recurring === 'yearly') { d.setFullYear(today.getFullYear()); if (d < today) d.setFullYear(today.getFullYear() + 1); }
     return d;
   }
-
   function renderEvents() {
     var upcoming = [], past = [];
     for (var i = 0; i < EVENTS_CONFIG.events.length; i++) {
@@ -1472,8 +1342,6 @@ if (eventsGrid && typeof EVENTS_CONFIG !== 'undefined' && EVENTS_CONFIG.events.l
     }
     upcoming.sort(function(a,b){return a.date-b.date;});
     past.sort(function(a,b){return b.date-a.date;});
-
-    // Filters
     var types = ['all'];
     for (var i = 0; i < EVENTS_CONFIG.events.length; i++) {
       if (types.indexOf(EVENTS_CONFIG.events[i].type) === -1) types.push(EVENTS_CONFIG.events[i].type);
@@ -1489,8 +1357,6 @@ if (eventsGrid && typeof EVENTS_CONFIG !== 'undefined' && EVENTS_CONFIG.events.l
         fEl.appendChild(b);
       }
     }
-
-    // Countdown
     var cdEl = document.getElementById('eventCountdown');
     if (cdEl && EVENTS_CONFIG.showCountdown && upcoming.length) {
       var next = upcoming[0];
@@ -1498,8 +1364,6 @@ if (eventsGrid && typeof EVENTS_CONFIG !== 'undefined' && EVENTS_CONFIG.events.l
       var days = Math.ceil(diff / 86400000);
       cdEl.innerHTML = '<div class="event-countdown"><h3>🙏 Next: ' + next.ev.name + '</h3><div class="countdown-boxes"><div class="countdown-box"><span class="num">' + days + '</span><span class="lbl">Days</span></div><div class="countdown-box"><span class="num">' + next.date.getDate() + '</span><span class="lbl">' + months[next.date.getMonth()] + '</span></div></div></div>';
     }
-
-    // Upcoming
     eventsGrid.innerHTML = '';
     var shown = 0;
     for (var i = 0; i < upcoming.length; i++) {
@@ -1508,8 +1372,6 @@ if (eventsGrid && typeof EVENTS_CONFIG !== 'undefined' && EVENTS_CONFIG.events.l
       shown++;
     }
     if (!shown) eventsGrid.innerHTML = '<p style="text-align:center;color:#888">No upcoming events in this category.</p>';
-
-    // Past
     var pastEl = document.getElementById('pastEventsGrid');
     var pastSec = document.getElementById('pastEventsSection');
     if (pastEl && EVENTS_CONFIG.showPastEvents && past.length) {
@@ -1521,33 +1383,24 @@ if (eventsGrid && typeof EVENTS_CONFIG !== 'undefined' && EVENTS_CONFIG.events.l
       }
     }
   }
-
   function buildEventCard(ev, d) {
     return '<div class="event-card">' +
       '<div class="event-date-box"><span class="day">' + d.getDate() + '</span><span class="month">' + months[d.getMonth()] + ' ' + d.getFullYear() + '</span></div>' +
       '<div class="event-body"><span class="event-type-badge event-type-' + ev.type + '">' + ev.type + '</span><h3>' + ev.name + '</h3><p>' + ev.description + '</p></div>' +
       '</div>';
   }
-
   renderEvents();
 }
-
-// ============================================
-// PANCHANGAM - embed widget
-// ============================================
 var panchangamEl = document.getElementById('panchangamContent');
 if (panchangamEl && typeof PANCHANGAM_CONFIG !== 'undefined') {
   var P = PANCHANGAM_CONFIG;
   var h = '';
-
   if (P.showQuote && P.dailyQuote) {
     h += '<div class="panch-quote"><p>' + P.dailyQuote + '</p></div>';
   }
-
   if (P.showEmbed && P.embedUrl) {
     h += '<div class="panch-embed"><iframe src="' + P.embedUrl + '" width="100%" height="500" style="border:none;border-radius:12px" loading="lazy"></iframe></div>';
   }
-
   if (P.showTodayInfo) {
     h += '<div class="panchangam-today"><h3>\ud83d\udcc5 Today\'s Panchangam</h3><div class="panch-grid">';
     var fields = P.fields || [];
@@ -1558,17 +1411,11 @@ if (panchangamEl && typeof PANCHANGAM_CONFIG !== 'undefined') {
     }
     h += '</div></div>';
   }
-
   if (P.showRecommendation && P.recommendation) {
     h += '<div class="cta-box" style="margin-top:20px"><h2>\ud83e\ude94 ' + P.recommendation.title + '</h2><p>' + P.recommendation.text + '</p></div>';
   }
-
   panchangamEl.innerHTML = h;
 }
-
-// ============================================
-// LIGHTBOX
-// ============================================
 var lb = document.getElementById('lightbox');
 var lbImg = document.getElementById('lightboxImg');
 var lbClose = document.getElementById('lightboxClose');
@@ -1577,13 +1424,11 @@ var lbNext = document.getElementById('lightboxNext');
 var lbCounter = document.getElementById('lightboxCounter');
 var lbItems = [];
 var lbIdx = 0;
-
 function showLB() {
   var img = lbItems[lbIdx].querySelector('img');
   lbImg.src = img.src;
   if (lbCounter) lbCounter.textContent = (lbIdx + 1) + ' / ' + lbItems.length;
 }
-
 if (lb && allItems.length) {
   var grid = document.getElementById('galleryGrid');
   if (grid) {
@@ -1602,22 +1447,14 @@ if (lb && allItems.length) {
       lb.style.display = 'flex';
     };
   }
-
   if (lbClose) lbClose.onclick = function() { lb.style.display = 'none'; };
   if (lbPrev) lbPrev.onclick = function() { lbIdx = (lbIdx - 1 + lbItems.length) % lbItems.length; showLB(); };
   if (lbNext) lbNext.onclick = function() { lbIdx = (lbIdx + 1) % lbItems.length; showLB(); };
   lb.onclick = function(e) { if (e.target === lb) lb.style.display = 'none'; };
 }
-
-
-// ============================================
-// PREMIUM FEATURES
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var F = SITE_CONFIG.features || {};
-
-  // Scroll Animations
   if (F.scrollAnimations) {
     var animStyle = F.animationStyle || 'fade-up';
     var animEls = document.querySelectorAll('.service-card, .mission-card, .highlight-card, .stat-box, .donate-purpose-card, .shop-card, .grandha-card, .event-card, .testimonial-card, .faq-item, .pb');
@@ -1627,14 +1464,10 @@ if (lb && allItems.length) {
     }, { threshold: 0.1 });
     for (var ao = 0; ao < animEls.length; ao++) animObs.observe(animEls[ao]);
   }
-
-  // Parallax Banners
   if (F.parallaxBanners) {
     var banners = document.querySelectorAll('.page-banner');
     for (var bi = 0; bi < banners.length; bi++) banners[bi].classList.add('parallax');
   }
-
-  // Animated Counters
   if (F.animatedCounters) {
     var counters = document.querySelectorAll('.stat-num');
     var counterObs = new IntersectionObserver(function(entries) {
@@ -1656,8 +1489,6 @@ if (lb && allItems.length) {
     }, { threshold: 0.5 });
     for (var ci = 0; ci < counters.length; ci++) counterObs.observe(counters[ci]);
   }
-
-  // Popup Notification
   if (F.popupNotification && F.popupMessage && !sessionStorage.getItem('popupClosed')) {
     var popup = document.createElement('div');
     popup.className = 'popup-notif';
@@ -1669,8 +1500,6 @@ if (lb && allItems.length) {
     setTimeout(function() { popup.classList.add('show'); }, F.popupDelay || 3000);
     setTimeout(function() { popup.classList.remove('show'); }, (F.popupDelay || 3000) + 10000);
   }
-
-  // Cookie Consent
   if (F.cookieConsent && !localStorage.getItem('cookieAccepted')) {
     var cookie = document.createElement('div');
     cookie.className = 'cookie-bar';
@@ -1678,8 +1507,6 @@ if (lb && allItems.length) {
     document.body.appendChild(cookie);
     setTimeout(function() { cookie.classList.add('show'); }, 1500);
   }
-
-  // Share Buttons
   if (F.shareButtons) {
     var shareBar = document.createElement('div');
     shareBar.className = 'share-bar';
@@ -1693,8 +1520,6 @@ if (lb && allItems.length) {
     var ftr = document.querySelector('.footer');
     if (ftr) ftr.parentNode.insertBefore(shareBar, ftr);
   }
-
-  // Google Analytics
   if (F.googleAnalytics && F.gaTrackingId) {
     var gaScript = document.createElement('script');
     gaScript.async = true;
@@ -1704,8 +1529,6 @@ if (lb && allItems.length) {
     gaInit.textContent = 'window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","' + F.gaTrackingId + '");';
     document.head.appendChild(gaInit);
   }
-
-  // Testimonials
   if (F.testimonials && typeof TESTIMONIALS !== 'undefined' && TESTIMONIALS.length) {
     var tSec = document.createElement('section');
     tSec.className = 'section testimonials-section';
@@ -1721,8 +1544,6 @@ if (lb && allItems.length) {
     var ft1 = document.querySelector('.footer');
     if (ft1) ft1.parentNode.insertBefore(tSec, ft1);
   }
-
-  // FAQ
   if (F.faqSection && typeof FAQ_ITEMS !== 'undefined' && FAQ_ITEMS.length) {
     var fSec = document.createElement('section');
     fSec.className = 'section alt-bg faq-section';
@@ -1739,8 +1560,6 @@ if (lb && allItems.length) {
     var ft2 = document.querySelector('.footer');
     if (ft2) ft2.parentNode.insertBefore(fSec, ft2);
   }
-
-  // SEO Meta Tags
   if (F.seoMetaTags) {
     var addMeta = function(n, c) { var m = document.createElement('meta'); m.name = n; m.content = c; document.head.appendChild(m); };
     addMeta('description', (SITE_CONFIG.siteName || '') + ' - Temple in Vijayawada. Daily poojas, festivals, Annadanam.');
@@ -1753,44 +1572,30 @@ if (lb && allItems.length) {
     if (SITE_CONFIG.logoImage) addOG('og:image', SITE_CONFIG.logoImage);
   }
 })();
-
-
-// ============================================
-// IMAGE OPTIMIZATION - CDN auto-compress
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var F = SITE_CONFIG.features || {};
   if (!F.imageOptimization || F.imageOptimization === 'local') return;
-
   var q = F.imageQuality || 80;
   var w = F.imageMaxWidth || 1200;
   var provider = F.cdnProvider || 'statically';
-
   function optimizeUrl(src) {
     if (!src || src.indexOf('data:') === 0) return src;
     if (src.indexOf('cdn.statically.io') > -1) return src; // already optimized
-
     if (provider === 'statically') {
-      // Statically works with hosted URLs only
       if (src.indexOf('http') === 0) {
         return 'https://cdn.statically.io/img/' + src.replace(/^https?:\/\//, '') + '?w=' + w + '&q=' + q;
       }
       return src; // local files can't use statically
     }
-
     if (provider === 'cloudinary' && F.cdnBaseUrl) {
       return F.cdnBaseUrl + '/image/fetch/w_' + w + ',q_' + q + ',f_auto/' + src;
     }
-
     if (provider === 'custom' && F.cdnBaseUrl) {
       return F.cdnBaseUrl + '?url=' + encodeURIComponent(src) + '&w=' + w + '&q=' + q;
     }
-
     return src;
   }
-
-  // Optimize all images on page
   var allImgs = document.querySelectorAll('img:not(.logo-img):not(.dev-photo):not(.wm-stamp)');
   for (var i = 0; i < allImgs.length; i++) {
     var img = allImgs[i];
@@ -1803,55 +1608,32 @@ if (lb && allItems.length) {
       }
     }
   }
-
-  // Make function available globally for dynamically added images
   window.optimizeImageUrl = optimizeUrl;
 })();
-
-
-// ============================================
-// PICTURE TAG HELPER - WebP with fallback
-// ============================================
-// Usage: createPicture(src, alt, className)
-// If src is .webp, adds JPEG fallback
-// If src is .jpg/.png, adds WebP source
-// Works with both local and remote images
 function createPicture(src, alt, className) {
   if (!src) return '';
   var ext = src.split('.').pop().split('?')[0].toLowerCase();
   var basePath = src.replace(/\.[^.]+$/, '');
-
-  // If already using picture tag or SVG/ICO, return simple img
   if (ext === 'svg' || ext === 'ico' || ext === 'gif') {
     return '<img src="' + src + '" alt="' + (alt||'') + '"' + (className ? ' class="' + className + '"' : '') + ' loading="lazy">';
   }
-
-  // For remote URLs (http), just use img with loading lazy
   if (src.indexOf('http') === 0) {
     return '<img src="' + src + '" alt="' + (alt||'') + '"' + (className ? ' class="' + className + '"' : '') + ' loading="lazy">';
   }
-
-  // For local files, create picture with WebP source + original fallback
   var webpSrc = basePath + '.webp';
   var fallbackSrc = src;
-
   if (ext === 'webp') {
-    // WebP is primary, add jpg fallback
     fallbackSrc = basePath + '.jpg';
     return '<picture>' +
       '<source srcset="' + src + '" type="image/webp">' +
       '<img src="' + fallbackSrc + '" alt="' + (alt||'') + '"' + (className ? ' class="' + className + '"' : '') + ' loading="lazy">' +
       '</picture>';
   }
-
-  // JPG/PNG is primary, add WebP source
   return '<picture>' +
     '<source srcset="' + webpSrc + '" type="image/webp">' +
     '<img src="' + src + '" alt="' + (alt||'') + '"' + (className ? ' class="' + className + '"' : '') + ' loading="lazy">' +
     '</picture>';
 }
-
-// Also add favicon support
 (function(){
   if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.logoImage) {
     var link = document.querySelector('link[rel="icon"]');
@@ -1864,61 +1646,6 @@ function createPicture(src, alt, className) {
     }
   }
 })();
-
-
-// ============================================
-// AUTO-CONVERT IMG TO PICTURE TAGS
-// ============================================
-// Runs after all builders finish, converts existing <img> to <picture> with WebP
-(function(){
-  if (typeof SITE_CONFIG === 'undefined') return;
-  var F = SITE_CONFIG.features || {};
-  // Only run if image optimization is not "local"
-  // For local files, user should provide both .webp and .jpg versions
-  
-  // Wait for all dynamic content to load
-  setTimeout(function(){
-    var imgs = document.querySelectorAll('img:not(.logo-img):not(.dev-photo):not(.wm-stamp):not(.qr-image)');
-    for (var i = 0; i < imgs.length; i++) {
-      var img = imgs[i];
-      var src = img.getAttribute('src');
-      if (!src || src.indexOf('data:') === 0) continue;
-      if (img.parentElement && img.parentElement.tagName === 'PICTURE') continue; // already wrapped
-      
-      var ext = src.split('.').pop().split('?')[0].toLowerCase();
-      // Skip SVG, GIF, ICO, remote URLs
-      if (ext === 'svg' || ext === 'ico' || ext === 'gif') continue;
-      if (src.indexOf('http') === 0) continue;
-      
-      // Create picture wrapper
-      var picture = document.createElement('picture');
-      var source = document.createElement('source');
-      var basePath = src.replace(/\.[^.]+$/, '');
-      source.srcset = basePath + '.webp';
-      source.type = 'image/webp';
-      
-      // Copy img attributes
-      var newImg = img.cloneNode(true);
-      newImg.setAttribute('loading', 'lazy');
-      
-      picture.appendChild(source);
-      picture.appendChild(newImg);
-      
-      // Copy img's inline styles to picture
-      if (img.style.cssText) picture.style.cssText = img.style.cssText;
-      
-      // Replace img with picture
-      if (img.parentElement) {
-        img.parentElement.replaceChild(picture, img);
-      }
-    }
-  }, 1500); // Wait 1.5s for all dynamic content to render
-})();
-
-
-// ============================================
-// BLOG / NEWS
-// ============================================
 (function(){
   var grid = document.getElementById('blogGrid');
   if (!grid || typeof BLOG_POSTS === 'undefined') return;
@@ -1926,7 +1653,6 @@ function createPicture(src, alt, className) {
   var cats = ['all'];
   for (var i = 0; i < posts.length; i++) if (cats.indexOf(posts[i].category) === -1) cats.push(posts[i].category);
   var filter = 'all';
-
   function render(){
     var fEl = document.getElementById('blogFilters');
     if (fEl) {
@@ -1955,10 +1681,6 @@ function createPicture(src, alt, className) {
   }
   render();
 })();
-
-// ============================================
-// TEAM
-// ============================================
 (function(){
   var grid = document.getElementById('teamGrid');
   if (!grid || typeof TEAM_MEMBERS === 'undefined') return;
@@ -1970,10 +1692,6 @@ function createPicture(src, alt, className) {
     grid.innerHTML += '<div class="team-card">'+avatar+'<div class="team-name">'+m.name+'</div><div class="team-role">'+m.role+'</div><p class="team-bio">'+m.bio+'</p></div>';
   }
 })();
-
-// ============================================
-// PRICING
-// ============================================
 (function(){
   var grid = document.getElementById('pricingGrid');
   if (!grid || typeof PRICING_PLANS === 'undefined') return;
@@ -1991,20 +1709,14 @@ function createPicture(src, alt, className) {
       '<a class="pricing-cta" href="'+p.link+'" target="_blank">'+p.cta+' \ud83d\ude4f</a></div>';
   }
 })();
-
-// ============================================
-// BOOKING FORM (sends to WhatsApp)
-// ============================================
 (function(){
   var formEl = document.getElementById('bookingForm');
   if (!formEl || typeof BOOKING_CONFIG === 'undefined' || !BOOKING_CONFIG.enabled) return;
   var B = BOOKING_CONFIG;
-
   var serviceOpts = '';
   for (var i = 0; i < B.services.length; i++) {
     serviceOpts += '<option value="'+B.services[i].name+' ('+B.services[i].price+')">'+B.services[i].name+' - '+B.services[i].price+'</option>';
   }
-
   formEl.innerHTML = '<div class="booking-form">' +
     '<label>Your Name *</label><input id="bk_name" required placeholder="Enter your full name">' +
     '<label>Phone Number *</label><input id="bk_phone" type="tel" required placeholder="Your phone number">' +
@@ -2015,7 +1727,6 @@ function createPicture(src, alt, className) {
     '<label>Special Requests / Gothram</label><textarea id="bk_notes" rows="3" placeholder="Any special requests, gothram, nakshatram..."></textarea>' +
     '<button class="booking-submit" onclick="submitBooking()">\ud83d\udcf1 Book via WhatsApp</button>' +
     '</div>';
-
   window.submitBooking = function(){
     var name = document.getElementById('bk_name').value;
     var phone = document.getElementById('bk_phone').value;
@@ -2025,7 +1736,6 @@ function createPicture(src, alt, className) {
     var time = document.getElementById('bk_time').value || 'Not specified';
     var people = document.getElementById('bk_people').value || '1';
     var notes = document.getElementById('bk_notes').value || 'None';
-
     var msg = '*New Pooja Booking*\n\n';
     msg += '*Name:* ' + name + '\n';
     msg += '*Phone:* ' + phone + '\n';
@@ -2034,15 +1744,9 @@ function createPicture(src, alt, className) {
     msg += '*Time:* ' + time + '\n';
     msg += '*People:* ' + people + '\n';
     msg += '*Notes:* ' + notes;
-
     window.open('https://wa.me/' + B.whatsappNumber + '?text=' + encodeURIComponent(msg), '_blank');
   };
 })();
-
-
-// ============================================
-// ADMIN PASSWORD PROTECTION
-// ============================================
 (function(){
   if (window.location.pathname.indexOf('admin') === -1) return;
   if (typeof SITE_CONFIG === 'undefined') return;
@@ -2056,10 +1760,6 @@ function createPicture(src, alt, className) {
     document.body.innerHTML = '<div style="text-align:center;padding:100px;font-family:sans-serif"><h1 style="color:#c62828">Access Denied</h1><p>Invalid password.</p><a href="index.html">Back to Site</a></div>';
   }
 })();
-
-// ============================================
-// MAINTENANCE MODE
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var F = SITE_CONFIG.features || {};
@@ -2071,24 +1771,16 @@ function createPicture(src, alt, className) {
     '<p style="color:#666;max-width:400px;margin-bottom:20px">' + (F.maintenanceMessage || 'We are updating our website.') + '</p>' +
     '<p style="color:#888;font-size:0.85rem">Contact: ' + (SITE_CONFIG.phone || '') + '</p></div>';
 })();
-
-// ============================================
-// DARK MODE TOGGLE
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var F = SITE_CONFIG.features || {};
   if (!F.darkModeToggle) return;
-
   var isDark = localStorage.getItem('darkMode') === '1';
-
   var darkCSS = 'body.dark-mode{background:#1a1a2e;color:#ddd} .dark-mode .header{background:#16213e} .dark-mode .card,.dark-mode .service-card,.dark-mode .highlight-card,.dark-mode .mission-card,.dark-mode .stat-box,.dark-mode .donate-purpose-card,.dark-mode .shop-card,.dark-mode .grandha-card,.dark-mode .event-card,.dark-mode .testimonial-card,.dark-mode .faq-item,.dark-mode .booking-form,.dark-mode .pricing-card,.dark-mode .team-card,.dark-mode .blog-card,.dark-mode .donate-col,.dark-mode .panchangam-today{background:#16213e;border-color:#2a2a4a;color:#ddd} .dark-mode .section-title,.dark-mode h3,.dark-mode h4,.dark-mode .pricing-name,.dark-mode .team-name{color:#f9a825} .dark-mode p,.dark-mode .about-text p,.dark-mode .pb-text{color:#bbb} .dark-mode .footer{background:#0f0f23} .dark-mode .alt-bg{background:#12122a} .dark-mode input,.dark-mode select,.dark-mode textarea{background:#1a1a2e;color:#ddd;border-color:#2a2a4a}';
   var style = document.createElement('style');
   style.textContent = darkCSS;
   document.head.appendChild(style);
-
   if (isDark) document.body.classList.add('dark-mode');
-
   var btn = document.createElement('button');
   btn.style.cssText = 'position:fixed;bottom:90px;left:25px;z-index:998;width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;font-size:1.2rem;box-shadow:0 3px 10px rgba(0,0,0,0.2);transition:0.3s;background:'+(isDark?'#f9a825':'#1a1a2e')+';color:'+(isDark?'#333':'#fff');
   btn.textContent = isDark ? '☀️' : '🌙';
@@ -2102,18 +1794,12 @@ function createPicture(src, alt, className) {
   };
   document.body.appendChild(btn);
 })();
-
-// ============================================
-// FONT SIZE CONTROLS (A- A A+)
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var F = SITE_CONFIG.features || {};
   if (!F.fontSizeControls) return;
-
   var size = parseInt(localStorage.getItem('fontSize') || '15');
   document.body.style.fontSize = size + 'px';
-
   var bar = document.createElement('div');
   bar.style.cssText = 'position:fixed;top:50%;right:0;transform:translateY(-50%);z-index:998;display:flex;flex-direction:column;gap:2px;';
   var mkBtn = function(label, delta){
@@ -2129,15 +1815,10 @@ function createPicture(src, alt, className) {
   bar.children[1].onclick = function(){ size = 15; document.body.style.fontSize = '15px'; localStorage.setItem('fontSize', '15'); };
   document.body.appendChild(bar);
 })();
-
-// ============================================
-// LIVE CHAT WIDGET
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var F = SITE_CONFIG.features || {};
   if (!F.liveChatEnabled || !F.liveChatId) return;
-
   if (F.liveChatProvider === 'tawk') {
     var s = document.createElement('script');
     s.async = true;
@@ -2154,15 +1835,10 @@ function createPicture(src, alt, className) {
     document.body.appendChild(s);
   }
 })();
-
-// ============================================
-// NEWSLETTER SIGNUP (Google Sheets)
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var F = SITE_CONFIG.features || {};
   if (!F.newsletterEnabled) return;
-
   var bar = document.createElement('div');
   bar.style.cssText = 'background:linear-gradient(135deg,#7f0000,#b71c1c);padding:20px;text-align:center;';
   bar.innerHTML = '<div style="max-width:500px;margin:0 auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center">' +
@@ -2171,7 +1847,6 @@ function createPicture(src, alt, className) {
     '<button onclick="submitNewsletter()" style="padding:8px 18px;background:#f9a825;color:#333;border:none;border-radius:5px;font-weight:700;cursor:pointer;font-size:0.85rem">Subscribe</button></div>';
   var footer = document.querySelector('.footer');
   if (footer) footer.parentNode.insertBefore(bar, footer);
-
   window.submitNewsletter = function(){
     var email = document.getElementById('nlEmail').value;
     if (!email || email.indexOf('@') === -1) { alert('Please enter a valid email.'); return; }
@@ -2185,10 +1860,6 @@ function createPicture(src, alt, className) {
     }
   };
 })();
-
-// ============================================
-// VISITOR COUNTER
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var F = SITE_CONFIG.features || {};
@@ -2201,19 +1872,12 @@ function createPicture(src, alt, className) {
   var fb = document.querySelector('.footer-bottom');
   if (fb) fb.appendChild(el);
 })();
-
-// ============================================
-// LIVE STREAM EMBED
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var F = SITE_CONFIG.features || {};
   if (!F.liveStreamEnabled || !F.liveStreamUrl) return;
-
-  // Add to home page only
   var pageName = (window.location.pathname.split('/').pop() || 'index.html').replace('.html','');
   if (pageName !== 'index' && pageName !== '') return;
-
   var sec = document.createElement('section');
   sec.className = 'section alt-bg';
   sec.innerHTML = '<div class="container"><h2 class="section-title">📺 ' + (F.liveStreamTitle || 'Live Stream') + '</h2>' +
@@ -2222,10 +1886,6 @@ function createPicture(src, alt, className) {
   var footer = document.querySelector('.footer');
   if (footer) footer.parentNode.insertBefore(sec, footer);
 })();
-
-// ============================================
-// RTL SUPPORT
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var F = SITE_CONFIG.features || {};
@@ -2235,17 +1895,10 @@ function createPicture(src, alt, className) {
   s.textContent = '[dir=rtl] .nav{flex-direction:row-reverse} [dir=rtl] .about-grid,[dir=rtl] .contact-grid,[dir=rtl] .donate-two-col{direction:rtl} [dir=rtl] .footer-grid{direction:rtl}';
   document.head.appendChild(s);
 })();
-
-
-// ============================================
-// PWA - Service Worker Registration
-// ============================================
 if ('serviceWorker' in navigator) {
   var swPath = window.location.pathname.indexOf('/te/') > -1 || window.location.pathname.indexOf('/hi/') > -1 || window.location.pathname.indexOf('/sa/') > -1 ? '../sw.js' : 'sw.js';
   navigator.serviceWorker.register(swPath).catch(function(){});
 }
-
-// Add manifest link
 (function(){
   var link = document.querySelector('link[rel="manifest"]');
   if (!link) {
@@ -2255,7 +1908,6 @@ if ('serviceWorker' in navigator) {
     link.href = mPath;
     document.head.appendChild(link);
   }
-  // Theme color meta
   var tc = document.querySelector('meta[name="theme-color"]');
   if (!tc) {
     tc = document.createElement('meta');
@@ -2264,11 +1916,6 @@ if ('serviceWorker' in navigator) {
     document.head.appendChild(tc);
   }
 })();
-
-
-// ============================================
-// COLOR PRESET
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var F = SITE_CONFIG.features || {};
@@ -2276,23 +1923,14 @@ if ('serviceWorker' in navigator) {
     document.body.classList.add('preset-' + F.colorPreset);
   }
 })();
-
-
-// ============================================
-// LOGO STYLE CONFIGURATOR
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined' || !SITE_CONFIG.header) return;
   var H = SITE_CONFIG.header;
   var logoImg = document.querySelector('.logo-img');
   var logoH1 = document.querySelector('.logo h1');
   var logoTag = document.querySelector('.logo .tagline');
-
   if (!logoImg) return;
-
-  // Logo style: "image-only", "text-only", "image-text", "full-image"
   var style = H.logoStyle || 'image-text';
-
   if (style === 'image-only') {
     if (logoH1) logoH1.style.display = 'none';
     if (logoTag) logoTag.style.display = 'none';
@@ -2308,60 +1946,39 @@ if ('serviceWorker' in navigator) {
     if (logoH1) logoH1.style.display = 'none';
     if (logoTag) logoTag.style.display = 'none';
   }
-
-  // Logo shape: "circle", "square", "rounded", "none"
   var shape = H.logoShape || 'circle';
   if (shape === 'circle') logoImg.style.borderRadius = '50%';
   else if (shape === 'square') logoImg.style.borderRadius = '0';
   else if (shape === 'rounded') logoImg.style.borderRadius = '12px';
   else if (shape === 'none') { logoImg.style.borderRadius = '0'; logoImg.style.border = 'none'; logoImg.style.boxShadow = 'none'; }
-
-  // Logo size
   if (H.logoWidth && style !== 'full-image') {
     logoImg.style.width = H.logoWidth + 'px';
     logoImg.style.height = H.logoHeight + 'px';
   }
-
-  // Hide elements based on config
   if (H.showSiteName === false && logoH1) logoH1.style.display = 'none';
   if (H.showTagline === false && logoTag) logoTag.style.display = 'none';
   if (H.showLogo === false) logoImg.style.display = 'none';
-
-  // Sticky header
   if (H.stickyHeader === false) {
     var header = document.querySelector('.header');
     if (header) { header.style.position = 'relative'; header.style.top = 'auto'; }
   }
-
-  // Top bar
   if (H.showTopBar === false) {
     var topBar = document.querySelector('.top-bar');
     if (topBar) topBar.style.display = 'none';
   }
-
-  // Audio toggle
   if (H.showAudioToggle === false) {
     var audioBtn = document.getElementById('audioToggle');
     if (audioBtn) audioBtn.style.display = 'none';
   }
-
-  // Audio prompt
   if (H.showAudioPrompt === false) {
     var prompt = document.getElementById('audioPrompt');
     if (prompt) prompt.style.display = 'none';
   }
-
-  // Mantra ticker
   if (H.showMantraTicker === false) {
     var ticker = document.querySelector('.mantra-ticker');
     if (ticker) ticker.style.display = 'none';
   }
 })();
-
-
-// ============================================
-// SCROLL PROGRESS BAR
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2370,10 +1987,6 @@ if ('serviceWorker' in navigator) {
   var bar=document.createElement('div');bar.className='scroll-progress';document.body.appendChild(bar);
   window.addEventListener('scroll',function(){var h=document.documentElement.scrollHeight-window.innerHeight;if(h>0)bar.style.width=(window.scrollY/h*100)+'%';});
 })();
-
-// ============================================
-// BREADCRUMB
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2387,10 +2000,6 @@ if ('serviceWorker' in navigator) {
   var banner=document.querySelector('.page-banner');
   if(banner&&banner.nextSibling)banner.parentNode.insertBefore(bc,banner.nextSibling);
 })();
-
-// ============================================
-// TABLE OF CONTENTS (for puranam/blog)
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2408,10 +2017,6 @@ if ('serviceWorker' in navigator) {
   h+='</ul>';toc.innerHTML=h;
   content.parentNode.insertBefore(toc,content);
 })();
-
-// ============================================
-// IMAGE BLUR LAZY LOAD
-// ============================================
 (function(){
   var imgs=document.querySelectorAll('img[loading="lazy"]');
   for(var i=0;i<imgs.length;i++){
@@ -2420,10 +2025,6 @@ if ('serviceWorker' in navigator) {
     if(imgs[i].complete)imgs[i].classList.add('loaded');
   }
 })();
-
-// ============================================
-// STICKY CTA BAR
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2439,10 +2040,6 @@ if ('serviceWorker' in navigator) {
   document.body.appendChild(bar);
   window.addEventListener('scroll',function(){bar.className=window.scrollY>500?'sticky-cta visible':'sticky-cta';});
 })();
-
-// ============================================
-// ANNOUNCEMENT BAR
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2452,10 +2049,6 @@ if ('serviceWorker' in navigator) {
     '<button class="announce-close" onclick="this.parentElement.remove();sessionStorage.setItem(\'announceClosed\',\'1\')">×</button>';
   document.body.insertBefore(bar,document.body.firstChild);
 })();
-
-// ============================================
-// SEARCH (Ctrl+K)
-// ============================================
 (function(){
   var pages=[
     {title:'Home',url:'index.html',desc:'Welcome to the temple'},
@@ -2474,17 +2067,14 @@ if ('serviceWorker' in navigator) {
     {title:'Shop',url:'shop.html',desc:'Recommended pooja items'},
     {title:'Grandhas',url:'books.html',desc:'Sacred books and scriptures'}
   ];
-
   var overlay=document.createElement('div');overlay.className='search-overlay';
   overlay.innerHTML='<div class="search-box"><input id="searchInput" placeholder="🔍 Search pages... (Esc to close)" autocomplete="off"><div class="search-results" id="searchResults"></div><div class="search-hint">Press Ctrl+K to search anytime</div></div>';
   document.body.appendChild(overlay);
   overlay.onclick=function(e){if(e.target===overlay)overlay.className='search-overlay';};
-
   document.addEventListener('keydown',function(e){
     if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();overlay.className='search-overlay open';document.getElementById('searchInput').focus();document.getElementById('searchInput').value='';document.getElementById('searchResults').innerHTML='';}
     if(e.key==='Escape')overlay.className='search-overlay';
   });
-
   document.getElementById('searchInput').addEventListener('input',function(){
     var q=this.value.toLowerCase();
     var res=document.getElementById('searchResults');
@@ -2499,10 +2089,6 @@ if ('serviceWorker' in navigator) {
     res.innerHTML=found?h:'<p style="text-align:center;color:#999;padding:15px">No results found</p>';
   });
 })();
-
-// ============================================
-// BOOKMARK / SAVE PAGE
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2521,11 +2107,6 @@ if ('serviceWorker' in navigator) {
   };
   document.body.appendChild(btn);
 })();
-
-// ============================================
-// QR CODE GENERATOR (for current page URL)
-// ============================================
-// Uses simple QR via API - works when hosted online
 (function(){
   var shareBar=document.querySelector('.share-bar');
   if(!shareBar)return;
@@ -2543,10 +2124,6 @@ if ('serviceWorker' in navigator) {
   };
   shareBar.appendChild(qrBtn);
 })();
-
-// ============================================
-// PDF EXPORT
-// ============================================
 (function(){
   var shareBar=document.querySelector('.share-bar');
   if(!shareBar)return;
@@ -2557,10 +2134,6 @@ if ('serviceWorker' in navigator) {
   pdfBtn.onclick=function(){window.print();};
   shareBar.appendChild(pdfBtn);
 })();
-
-// ============================================
-// READING TIME (for blog/puranam)
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2574,10 +2147,6 @@ if ('serviceWorker' in navigator) {
   el.textContent='📖 '+mins+' min read • '+words+' words';
   content.parentNode.insertBefore(el,content);
 })();
-
-// ============================================
-// LAST UPDATED TIMESTAMP
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2588,10 +2157,6 @@ if ('serviceWorker' in navigator) {
   el.textContent='Last updated: '+new Date(document.lastModified).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
   footer.appendChild(el);
 })();
-
-// ============================================
-// BACK TO PREVIOUS PAGE
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2606,11 +2171,6 @@ if ('serviceWorker' in navigator) {
   btn.onmouseleave=function(){this.style.opacity='0.6';};
   document.body.appendChild(btn);
 })();
-
-
-// ============================================
-// PARTNERS / SPONSORS SECTION
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2625,10 +2185,6 @@ if ('serviceWorker' in navigator) {
   var ftr=document.querySelector('.footer');
   if(ftr)ftr.parentNode.insertBefore(sec,ftr);
 })();
-
-// ============================================
-// TIMELINE / HISTORY SECTION
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2642,10 +2198,6 @@ if ('serviceWorker' in navigator) {
   var ftr=document.querySelector('.footer');
   if(ftr)ftr.parentNode.insertBefore(sec,ftr);
 })();
-
-// ============================================
-// BEFORE / AFTER GALLERY
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2661,10 +2213,6 @@ if ('serviceWorker' in navigator) {
   var ftr=document.querySelector('.footer');
   if(ftr)ftr.parentNode.insertBefore(sec,ftr);
 })();
-
-// ============================================
-// VIDEO TESTIMONIALS
-// ============================================
 (function(){
   if(typeof SITE_CONFIG==='undefined')return;
   var F=SITE_CONFIG.features||{};
@@ -2684,30 +2232,18 @@ if ('serviceWorker' in navigator) {
   var ftr=document.querySelector('.footer');
   if(ftr)ftr.parentNode.insertBefore(sec,ftr);
 })();
-
-
-// ============================================
-// SKIP TO CONTENT (Accessibility)
-// ============================================
 (function(){
   var skip = document.createElement('a');
   skip.className = 'skip-link';
   skip.href = '#main-content';
   skip.textContent = 'Skip to content';
   document.body.insertBefore(skip, document.body.firstChild);
-  // Add id to first section
   var main = document.querySelector('.section') || document.querySelector('.carousel-section');
   if (main && !main.id) main.id = 'main-content';
 })();
-
-// ============================================
-// STRUCTURED DATA (JSON-LD for Google Rich Results)
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var S = SITE_CONFIG;
-
-  // Organization schema
   var org = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -2720,8 +2256,6 @@ if ('serviceWorker' in navigator) {
       "contactType": "customer service"
     }
   };
-
-  // LocalBusiness schema (for temples/businesses with address)
   var biz = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
@@ -2737,18 +2271,14 @@ if ('serviceWorker' in navigator) {
       "addressCountry": "IN"
     }
   };
-
   var script1 = document.createElement('script');
   script1.type = 'application/ld+json';
   script1.textContent = JSON.stringify(org);
   document.head.appendChild(script1);
-
   var script2 = document.createElement('script');
   script2.type = 'application/ld+json';
   script2.textContent = JSON.stringify(biz);
   document.head.appendChild(script2);
-
-  // BreadcrumbList schema
   var pageName = (window.location.pathname.split('/').pop() || 'index.html').replace('.html', '');
   if (pageName !== 'index' && pageName !== '') {
     var names = {about:'About',services:'Services',books:'Grandhas',shop:'Shop',gallery:'Gallery',puranam:'Temple Legends',events:'Events',panchangam:'Panchangam',donate:'Donate',contact:'Contact',blog:'News',team:'Team',pricing:'Pricing',booking:'Booking'};
@@ -2766,20 +2296,13 @@ if ('serviceWorker' in navigator) {
     document.head.appendChild(script3);
   }
 })();
-
-// ============================================
-// OPEN GRAPH IMAGE + TWITTER CARDS
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var S = SITE_CONFIG;
-
-  // OG Image (use logo or first carousel image)
   var ogImage = S.logoImage || '';
   if (typeof CAROUSEL_SLIDES !== 'undefined' && CAROUSEL_SLIDES.length) {
     ogImage = CAROUSEL_SLIDES[0].image || ogImage;
   }
-
   var addMeta = function(prop, content) {
     if (!content) return;
     var existing = document.querySelector('meta[property="'+prop+'"]') || document.querySelector('meta[name="'+prop+'"]');
@@ -2790,34 +2313,23 @@ if ('serviceWorker' in navigator) {
     m.content = content;
     document.head.appendChild(m);
   };
-
-  // Open Graph
   addMeta('og:title', document.title);
   addMeta('og:description', (S.siteName || '') + ' - ' + (S.siteTagline || ''));
   addMeta('og:image', ogImage);
   addMeta('og:url', window.location.href);
   addMeta('og:type', 'website');
   addMeta('og:site_name', S.siteName || '');
-
-  // Twitter Cards
   addMeta('twitter:card', 'summary_large_image');
   addMeta('twitter:title', document.title);
   addMeta('twitter:description', (S.siteName || '') + ' - ' + (S.siteTagline || ''));
   addMeta('twitter:image', ogImage);
 })();
-
-// ============================================
-// KEYBOARD NAVIGATION ENHANCEMENTS
-// ============================================
 (function(){
-  // Tab index on interactive elements
   var cards = document.querySelectorAll('.highlight-card, .service-card, .mission-card, .event-card, .shop-card, .grandha-card, .testimonial-card, .pricing-card, .team-card, .blog-card');
   for (var i = 0; i < cards.length; i++) {
     cards[i].setAttribute('tabindex', '0');
     cards[i].setAttribute('role', 'article');
   }
-
-  // Enter key activates links inside focused cards
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && document.activeElement) {
       var link = document.activeElement.querySelector('a');
@@ -2825,13 +2337,7 @@ if ('serviceWorker' in navigator) {
     }
   });
 })();
-
-
-// ============================================
-// AUTO CARD COUNT + CARD STYLE
-// ============================================
 (function(){
-  // Auto-detect card count and set data-count attribute
   var grids = ['.highlights-grid', '.services-grid', '.mission-grid', '.donate-purpose-grid', '.team-grid', '.pricing-grid'];
   for (var i = 0; i < grids.length; i++) {
     var grid = document.querySelector(grids[i]);
@@ -2840,8 +2346,6 @@ if ('serviceWorker' in navigator) {
       grid.setAttribute('data-count', count);
     }
   }
-
-  // Apply card style from config
   if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.features) {
     var cardStyle = SITE_CONFIG.features.cardStyle || 'default';
     if (cardStyle !== 'default') {
@@ -2849,11 +2353,6 @@ if ('serviceWorker' in navigator) {
     }
   }
 })();
-
-
-// ============================================
-// ICON RENDERER - supports emoji + Font Awesome (fa:icon-name)
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined') return;
   var F = SITE_CONFIG.features || {};
@@ -2865,6 +2364,9 @@ if ('serviceWorker' in navigator) {
       var cls = txt.replace('fa:', '');
       iconEls[i].innerHTML = '<i class="fa-solid ' + cls + '"></i>';
       usesFA = true;
+    } else if (txt.indexOf('img:') === 0) {
+      var imgSrc = txt.replace('img:', '');
+      iconEls[i].innerHTML = '<img src="' + imgSrc + '" alt="icon">';
     }
   }
   if (usesFA || F.iconLibrary === 'fontawesome' || F.iconLibrary === 'both') {
@@ -2874,10 +2376,6 @@ if ('serviceWorker' in navigator) {
     document.head.appendChild(link);
   }
 })();
-
-// ============================================
-// PAGE STYLES - per-page grid, hover, shape
-// ============================================
 (function(){
   if (typeof SITE_CONFIG === 'undefined' || !SITE_CONFIG.pageStyles) return;
   var pageName = (window.location.pathname.split('/').pop() || 'index.html').replace('.html', '');
@@ -2890,45 +2388,30 @@ if ('serviceWorker' in navigator) {
   if (ps.hoverEffect && ps.hoverEffect !== 'default') b.classList.add('ps-hover-' + ps.hoverEffect);
   if (ps.imageShape && ps.imageShape !== 'default') b.classList.add('ps-shape-' + ps.imageShape);
 })();
-
-// ============================================
-// PAGE TRANSITIONS - No Flash
-// ============================================
 (function(){
-  // Hide body immediately
   document.body.classList.add('loading');
-
-  // Get transition style from config
   var transition = 'fade';
   if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.features) {
     transition = SITE_CONFIG.features.pageTransition || 'fade';
   }
-
-  // Show body with transition after everything loads
   function showPage() {
     document.body.classList.remove('loading');
     document.body.classList.add('loaded');
     document.body.classList.add('transition-' + transition);
   }
-
-  // Wait for DOM + images
   if (document.readyState === 'complete') {
     showPage();
   } else {
     window.addEventListener('load', showPage);
   }
-
-  // Smooth navigation between pages
   var navLinks = document.querySelectorAll('.nav a, .footer a[href$=".html"], .highlight-link');
   for (var i = 0; i < navLinks.length; i++) {
     navLinks[i].addEventListener('click', function(e) {
       var href = this.getAttribute('href');
       if (!href || href.indexOf('#') === 0 || href.indexOf('http') === 0 || href.indexOf('javascript') === 0) return;
-
       e.preventDefault();
       document.body.style.transition = 'opacity 0.3s ease';
       document.body.style.opacity = '0';
-
       setTimeout(function() {
         window.location.href = href;
       }, 300);

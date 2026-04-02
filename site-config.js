@@ -1,14 +1,11 @@
 var SITE_CONFIG = {
-
   siteName: "Sri Kanaka Durga Devi",
   siteTagline: "Om Dum Durgayei Namah",
   siteTitle: "Sri Kanaka Durga Devi Temple - Vijayawada",
   logoImage: "assets/images/logo.png",
-
   contactName: "VRDS Prasad",
   phone: "8247787529",
   whatsapp: "918247787529",
-
   developerName: "Satya",
   companyName: "Satya Tech Solutions Trust",
   companyUrl: "",
@@ -25,13 +22,12 @@ var SITE_CONFIG = {
     owner: false,
     qr: false
   },
-
   pages: {
     home: "show",
     about: "show",
     services: "show",
     grandhas: "hide",
-    shop: "coming-soon",
+    shop: "show",
     gallery: "show",
     puranam: "hide",
     events: "hide",
@@ -43,14 +39,12 @@ var SITE_CONFIG = {
     donate: "show",
     contact: "show",
   },
-
   comingSoonMessages: {
     grandhas: { en: "Sacred Grandhas coming soon!" },
     shop: { en: "Pooja Items Shop coming soon!" },
     puranam: { en: "Temple Legend coming soon!" },
     gallery: { en: "Photo Gallery coming soon!" }
   },
-
   theme: "temple",
   industry: "temple",
   customLabels: {
@@ -64,16 +58,12 @@ var SITE_CONFIG = {
     donate: "Donate",
     contact: "Contact"
   },
-
   languages: ["en", "te", "hi", "sa"],
   defaultLanguage: "en",
-
   social: { facebook: "#", youtube: "#", instagram: "#" },
-
   templateName: "Temple Divine",
   templateVersion: "1.0",
   templateAuthor: "Satya Tech Solutions",
-
   footer: {
     showAddress: true,
     address: "Ramarajya Nagar, Upparabaavi Veedi, Beside Chanumolu Venkatrao Flyover, NTR District, Vijayawada - 520012",
@@ -109,12 +99,10 @@ var SITE_CONFIG = {
     showCopyright: true,
     copyrightText: "Copyright 2024 Sri Kanaka Durga Devi Temple, Vijayawada. All Rights Reserved."
   },
-
   donatePage: {
     showQR: true,
     showBank: false
   },
-
     features: {
     floatingWhatsapp: 918247787529,
     backToTop: true,
@@ -179,7 +167,6 @@ var SITE_CONFIG = {
     maintenanceMessage: "We are updating our website. Please check back soon.",
     iconLibrary: "emoji"
   },
-
   header: {
     showTopBar: true,
     topBarMantra: "Ya Devi Sarva Bhuteshu Shakti Rupena Sansthita | Namastasyai Namastasyai Namastasyai Namo Namah",
@@ -197,7 +184,6 @@ var SITE_CONFIG = {
     logoWidth: 55,
     logoHeight: 55
   },
-
   homePage: {
     showCarousel: true,
     showMantraTicker: true,
@@ -209,7 +195,6 @@ var SITE_CONFIG = {
       { icon: "\ud83d\ude4f", title: "Get in Touch", text: "Reach out for pooja bookings & inquiries", link: "contact.html", linkText: "Contact Us \u2192", enabled: true }
     ]
   },
-
   aboutPage: {
     showHistory: true,
     showMission: true,
@@ -227,11 +212,11 @@ var SITE_CONFIG = {
       { number: "10+", label: "Charitable Programs", enabled: true }
     ]
   },
-
   servicesPage: {
     showServices: true,
     showTimings: true,
     showCTA: true,
+    servicesStyle: "default",
     services: [
       { icon: "\ud83e\ude94", title: "Daily Pooja", text: "Morning and evening aarti with special abhishekam performed by our learned priests.", enabled: true },
       { icon: "\ud83d\udcff", title: "Archana", text: "Personalized archana with Sahasranama, Lalitha Sahasranama, and Durga Saptashati.", enabled: true },
@@ -241,12 +226,11 @@ var SITE_CONFIG = {
       { icon: "\ud83d\udcd6", title: "Vedic Classes", text: "Learn Vedas, Shlokas, Sanskrit scriptures, and Bhagavad Gita from experienced scholars.", enabled: false }
     ]
   },
-
   contactPage: {
     showOwnerProfile: true,
     ownerName: "VRDS Prasad",
     ownerTitle: "Founder & Chairman",
-    ownerPhoto: "assets/images/owner.jpg",
+    ownerPhoto: "assets/images/owner/owner.jpg",
     showOwnerQuote: true,
     ownerQuote: "Service is the highest Dharma.",
     showAchievements: true,
@@ -259,14 +243,12 @@ var SITE_CONFIG = {
     ],
     showMap: true
   },
-
   galleryPage: {
     showFilters: true,
     showPagination: true,
     showLightbox: true,
     itemsPerPage: 6
   },
-
   shopPage: {
     style: "categories",
     showFilters: true,
@@ -276,7 +258,6 @@ var SITE_CONFIG = {
     ctaTitle: "Need Help Selecting Pooja Items?",
     ctaText: "Contact us on WhatsApp for guidance on selecting the right items for your pooja or ceremony."
   },
-
   pageStyles: {
     gallery:  { gridStyle: "default", hoverEffect: "default", imageShape: "default" },
     shop:     { gridStyle: "default", hoverEffect: "default", imageShape: "default" },
