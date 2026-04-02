@@ -176,7 +176,8 @@ var SITE_CONFIG = {
     imageMaxWidth: 1200,
     adminPassword: "admin123",
     maintenanceMode: false,
-    maintenanceMessage: "We are updating our website. Please check back soon."
+    maintenanceMessage: "We are updating our website. Please check back soon.",
+    iconLibrary: "emoji"
   },
 
   header: {
@@ -203,7 +204,7 @@ var SITE_CONFIG = {
     showHighlightCards: true,
     highlightCards: [
       { icon: "\ud83e\ude94", title: "Daily Pooja", text: "Morning & evening aarti with special abhishekam", link: "services.html", linkText: "View Services \u2192", enabled: true },
-      { icon: "\ud83d\udcda", title: "Sacred Grandhas", text: "Free Vedic scriptures to read & download", link: "books.html", linkText: "Browse Grandhas \u2192", enabled: true },
+      { icon: "\ud83e\ude99", title: "Temple Hundi", text: "Support daily poojas, Annadanam & temple seva", link: "donate.html", linkText: "Donate Now \u2192", enabled: true },
       { icon: "\ud83d\udcf8", title: "Gallery", text: "View photos from our festivals & celebrations", link: "gallery.html", linkText: "View Gallery \u2192", enabled: true },
       { icon: "\ud83d\ude4f", title: "Get in Touch", text: "Reach out for pooja bookings & inquiries", link: "contact.html", linkText: "Contact Us \u2192", enabled: true }
     ]
@@ -221,8 +222,8 @@ var SITE_CONFIG = {
     ],
     stats: [
       { number: "25+", label: "Years of Service", enabled: true },
-      { number: "1000+", label: "Daily Devotees", enabled: true },
-      { number: "50+", label: "Annual Events", enabled: true },
+      { number: "250+", label: "Daily Devotees", enabled: true },
+      { number: "30+", label: "Annual Events", enabled: true },
       { number: "10+", label: "Charitable Programs", enabled: true }
     ]
   },
@@ -237,7 +238,7 @@ var SITE_CONFIG = {
       { icon: "\ud83c\udf8a", title: "Festivals", text: "Grand celebrations for Navaratri, Dussehra, Deepavali, Ugadi, and other major festivals.", enabled: true },
       { icon: "\ud83c\udf5a", title: "Annadanam", text: "Free food distribution to devotees and the needy every day as part of our seva program.", enabled: true },
       { icon: "\ud83d\udc92", title: "Weddings", text: "Traditional Hindu wedding ceremonies conducted with full Vedic rituals and customs.", enabled: true },
-      { icon: "\ud83d\udcd6", title: "Vedic Classes", text: "Learn Vedas, Shlokas, Sanskrit scriptures, and Bhagavad Gita from experienced scholars.", enabled: true }
+      { icon: "\ud83d\udcd6", title: "Vedic Classes", text: "Learn Vedas, Shlokas, Sanskrit scriptures, and Bhagavad Gita from experienced scholars.", enabled: false }
     ]
   },
 
@@ -274,5 +275,17 @@ var SITE_CONFIG = {
     showCTA: true,
     ctaTitle: "Need Help Selecting Pooja Items?",
     ctaText: "Contact us on WhatsApp for guidance on selecting the right items for your pooja or ceremony."
+  },
+
+  pageStyles: {
+    gallery:  { gridStyle: "default", hoverEffect: "default", imageShape: "default" },
+    shop:     { gridStyle: "default", hoverEffect: "default", imageShape: "default" },
+    services: { gridStyle: "default", hoverEffect: "default", imageShape: "default" },
+    about:    { gridStyle: "default", hoverEffect: "default", imageShape: "default" },
+    home:     { gridStyle: "default", hoverEffect: "default", imageShape: "default" },
+    donate:   { gridStyle: "default", hoverEffect: "default", imageShape: "default" },
+    team:     { gridStyle: "default", hoverEffect: "default", imageShape: "default" },
+    blog:     { gridStyle: "default", hoverEffect: "default", imageShape: "default" },
+    contact:  { gridStyle: "default", hoverEffect: "default", imageShape: "default" }
   }
 };

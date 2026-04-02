@@ -493,11 +493,25 @@ if (carouselEl && indicatorsContainer && typeof CAROUSEL_SLIDES !== 'undefined' 
     var slideData = CAROUSEL_SLIDES[s];
     var slide = document.createElement('div');
     slide.className = s === 0 ? 'carousel-slide active' : 'carousel-slide';
-    var img = document.createElement('img');
-    img.src = slideData.image;
-    img.alt = slideData.title;
-    img.loading = s === 0 ? 'eager' : 'lazy';
-    slide.appendChild(img);
+    if (slideData.video) {
+      var vid = document.createElement('video');
+      vid.src = slideData.video;
+      vid.muted = true;
+      vid.loop = true;
+      vid.playsInline = true;
+      vid.setAttribute('playsinline', '');
+      vid.preload = s === 0 ? 'auto' : 'none';
+      vid.style.cssText = 'width:100%;height:100%;object-fit:cover';
+      if (s === 0) vid.autoplay = true;
+      slide.appendChild(vid);
+      slide.setAttribute('data-video', '1');
+    } else {
+      var img = document.createElement('img');
+      img.src = slideData.image;
+      img.alt = slideData.title;
+      img.loading = s === 0 ? 'eager' : 'lazy';
+      slide.appendChild(img);
+    }
     var overlay = document.createElement('div');
     overlay.className = 'carousel-overlay';
     overlay.innerHTML = '<h2>' + slideData.title + '</h2><p>' + slideData.text + '</p>';
@@ -517,11 +531,15 @@ if (carouselEl && indicatorsContainer && typeof CAROUSEL_SLIDES !== 'undefined' 
   }
 
   function goToSlide(index) {
+    var oldVid = slides[currentSlide].querySelector('video');
+    if (oldVid) oldVid.pause();
     slides[currentSlide].className = 'carousel-slide';
     indicatorsContainer.children[currentSlide].className = 'dot';
     currentSlide = (index + slides.length) % slides.length;
     slides[currentSlide].className = 'carousel-slide active';
     indicatorsContainer.children[currentSlide].className = 'dot active';
+    var newVid = slides[currentSlide].querySelector('video');
+    if (newVid) { newVid.currentTime = 0; newVid.play(); }
     clearInterval(autoplayTimer);
     autoplayTimer = setInterval(function() { goToSlide(currentSlide + 1); }, 5000);
   }
@@ -531,6 +549,68 @@ if (carouselEl && indicatorsContainer && typeof CAROUSEL_SLIDES !== 'undefined' 
   var nextBtn = document.getElementById('nextBtn');
   if (prevBtn) prevBtn.onclick = function() { goToSlide(currentSlide - 1); };
   if (nextBtn) nextBtn.onclick = function() { goToSlide(currentSlide + 1); };
+}
+
+// ============================================
+// SERVICE CARDS - built from servicesPage.services config
+// ============================================
+var svcGrid = document.getElementById('servicesGrid');
+if (svcGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.servicesPage && SITE_CONFIG.servicesPage.services) {
+  var svcs = SITE_CONFIG.servicesPage.services;
+  for (var si = 0; si < svcs.length; si++) {
+    var sv = svcs[si];
+    if (sv.enabled === false) continue;
+    var sCard = document.createElement('div');
+    sCard.className = 'service-card';
+    sCard.innerHTML = '<div class="service-icon">' + sv.icon + '</div><h3>' + sv.title + '</h3><p>' + sv.text + '</p>';
+    svcGrid.appendChild(sCard);
+  }
+}
+
+// ============================================
+// MISSION CARDS + STATS - built from aboutPage config
+// ============================================
+var misGrid = document.getElementById('missionGrid');
+if (misGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.aboutPage && SITE_CONFIG.aboutPage.missionCards) {
+  var mcs = SITE_CONFIG.aboutPage.missionCards;
+  for (var mi = 0; mi < mcs.length; mi++) {
+    var mc = mcs[mi];
+    if (mc.enabled === false) continue;
+    var mCard = document.createElement('div');
+    mCard.className = 'mission-card';
+    mCard.innerHTML = '<div class="mission-icon">' + mc.icon + '</div><h3>' + mc.title + '</h3><p>' + mc.text + '</p>';
+    misGrid.appendChild(mCard);
+  }
+}
+var stRow = document.getElementById('statsRow');
+if (stRow && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.aboutPage && SITE_CONFIG.aboutPage.stats) {
+  var sts = SITE_CONFIG.aboutPage.stats;
+  for (var sti = 0; sti < sts.length; sti++) {
+    var st = sts[sti];
+    if (st.enabled === false) continue;
+    var sBox = document.createElement('div');
+    sBox.className = 'stat-box';
+    sBox.innerHTML = '<span class="stat-num">' + st.number + '</span><span>' + st.label + '</span>';
+    stRow.appendChild(sBox);
+  }
+}
+
+// ============================================
+// HIGHLIGHT CARDS - built from homePage.highlightCards config
+// ============================================
+var hlGrid = document.getElementById('highlightsGrid');
+if (hlGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.homePage && SITE_CONFIG.homePage.highlightCards) {
+  var hlCards = SITE_CONFIG.homePage.highlightCards;
+  for (var hi = 0; hi < hlCards.length; hi++) {
+    var hc = hlCards[hi];
+    if (hc.enabled === false) continue;
+    var card = document.createElement('div');
+    card.className = 'highlight-card';
+    card.innerHTML = '<div class="highlight-icon">' + hc.icon + '</div>' +
+      '<h3>' + hc.title + '</h3><p>' + hc.text + '</p>' +
+      '<a href="' + hc.link + '" class="highlight-link">' + hc.linkText + '</a>';
+    hlGrid.appendChild(card);
+  }
 }
 
 // ============================================
@@ -1122,11 +1202,25 @@ if (twoCol && (!donateShowQR || !donateShowBank)) {
 
 // QR Carousel
 if (typeof DONATE_QR !== 'undefined' && donateShowQR) {
+  var waNum = (typeof SITE_CONFIG !== 'undefined') ? SITE_CONFIG.whatsapp || '' : '';
+  var verifyLabels = {
+    en: { name: 'Account Name:', verify: '⚠️ Please verify the name shown on your UPI app matches the above before sending money.', confirm: '💬 Confirm on WhatsApp before paying' },
+    te: { name: 'ఖాతా పేరు:', verify: '⚠️ డబ్బు పంపే ముందు మీ UPI యాప్‌లో చూపిన పేరు పైన ఉన్న పేరుతో సరిపోలుతుందో ధృవీకరించండి.', confirm: '💬 చెల్లించే ముందు WhatsAppలో నిర్ధారించండి' },
+    hi: { name: 'खाता नाम:', verify: '⚠️ पैसे भेजने से पहले कृपया सुनिश्चित करें कि आपके UPI ऐप पर दिखाया गया नाम ऊपर दिए गए नाम से मेल खाता है।', confirm: '💬 भुगतान से पहले WhatsApp पर पुष्टि करें' },
+    sa: { name: 'खातनाम:', verify: '⚠️ धनप्रेषणात् पूर्वं कृपया UPI अनुप्रयोगे प्रदर्शितं नाम उपरिलिखितेन सह मिलति इति सुनिश्चितं कुर्वन्तु।', confirm: '💬 भुगतानात् पूर्वं WhatsApp इत्यत्र पुष्टिं कुर्वन्तु' }
+  };
+  var vL = verifyLabels[currentLang] || verifyLabels['en'];
   buildDonateCarousel(DONATE_QR, 'qrCarousel', 'qrDots', 'qrPrev', 'qrNext', function(item) {
     var t = (typeof item.title === 'object') ? (item.title[currentLang] || item.title['en']) : item.title;
-    return '<div class="donate-slide-title">' + t + '</div>' +
+    var h = '<div class="donate-slide-title">' + t + '</div>' +
       '<div class="qr-box"><img src="' + item.qrImage + '" alt="QR Code" class="qr-image"></div>' +
       '<div class="upi-id-box"><span>' + uL + '</span><strong>' + item.upiId + '</strong></div>';
+    if (item.accountName) {
+      h += '<div class="qr-account-name"><span>' + vL.name + '</span> <strong>' + item.accountName + '</strong></div>';
+      h += '<div class="qr-verify-warning">' + vL.verify + '</div>';
+      if (waNum) h += '<a href="https://wa.me/' + waNum + '?text=' + encodeURIComponent('I want to confirm before donating to: ' + item.accountName + ' (' + item.upiId + ')') + '" target="_blank" class="qr-confirm-btn">' + vL.confirm + '</a>';
+    }
+    return h;
   });
 }
 
@@ -2756,6 +2850,46 @@ if ('serviceWorker' in navigator) {
   }
 })();
 
+
+// ============================================
+// ICON RENDERER - supports emoji + Font Awesome (fa:icon-name)
+// ============================================
+(function(){
+  if (typeof SITE_CONFIG === 'undefined') return;
+  var F = SITE_CONFIG.features || {};
+  var usesFA = false;
+  var iconEls = document.querySelectorAll('.highlight-icon,.service-icon,.mission-icon,.donate-purpose-icon,.contact-card-icon,.shop-cat-icon');
+  for (var i = 0; i < iconEls.length; i++) {
+    var txt = iconEls[i].textContent.trim();
+    if (txt.indexOf('fa:') === 0) {
+      var cls = txt.replace('fa:', '');
+      iconEls[i].innerHTML = '<i class="fa-solid ' + cls + '"></i>';
+      usesFA = true;
+    }
+  }
+  if (usesFA || F.iconLibrary === 'fontawesome' || F.iconLibrary === 'both') {
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css';
+    document.head.appendChild(link);
+  }
+})();
+
+// ============================================
+// PAGE STYLES - per-page grid, hover, shape
+// ============================================
+(function(){
+  if (typeof SITE_CONFIG === 'undefined' || !SITE_CONFIG.pageStyles) return;
+  var pageName = (window.location.pathname.split('/').pop() || 'index.html').replace('.html', '');
+  if (pageName === 'index' || pageName === '') pageName = 'home';
+  if (pageName === 'books') pageName = 'grandhas';
+  var ps = SITE_CONFIG.pageStyles[pageName];
+  if (!ps) return;
+  var b = document.body;
+  if (ps.gridStyle && ps.gridStyle !== 'default') b.classList.add('ps-grid-' + ps.gridStyle);
+  if (ps.hoverEffect && ps.hoverEffect !== 'default') b.classList.add('ps-hover-' + ps.hoverEffect);
+  if (ps.imageShape && ps.imageShape !== 'default') b.classList.add('ps-shape-' + ps.imageShape);
+})();
 
 // ============================================
 // PAGE TRANSITIONS - No Flash

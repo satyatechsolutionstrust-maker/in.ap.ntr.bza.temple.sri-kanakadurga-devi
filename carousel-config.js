@@ -1,16 +1,18 @@
 // ============================================
-// CAROUSEL CONFIG - Edit this to add/remove images
+// CAROUSEL CONFIG - Edit this to add/remove slides
 // ============================================
-// Just add objects to this array. No limit on number of images.
-// Put your images in: assets/images/carousel/
-//
-// Image naming: any name works (slide1.jpg, durga.jpg, temple.png, etc.)
-// Recommended size: 1920 x 700 px, JPG/WEBP, under 300KB
+// Just add objects to this array. No limit on number of slides.
+// Put your files in: assets/images/carousel/ or assets/videos/
 //
 // Each slide needs:
-//   image  - file path (relative to index.html)
+//   image  - file path for image slides (1920x700 px, JPG/WEBP)
+//   video  - file path for video slides (MP4, use instead of image)
 //   title  - heading text on the slide
 //   text   - subtitle text on the slide
+//
+// Examples:
+//   Image slide: { image: "assets/images/carousel/slide1.jpg", title: "...", text: "..." }
+//   Video slide: { video: "assets/videos/intro.mp4", title: "...", text: "..." }
 
 var CAROUSEL_SLIDES = [
   {
