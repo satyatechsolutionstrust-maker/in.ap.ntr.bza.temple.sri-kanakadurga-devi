@@ -117,6 +117,10 @@ for (var lp = 0; lp < pathParts.length; lp++) {
     break;
   }
 }
+function fixPath(p) {
+  if (!p || p.indexOf('http') === 0 || p.indexOf('../') === 0 || p.indexOf('data:') === 0) return p;
+  return currentLang !== 'en' ? '../' + p : p;
+}
 if (typeof TRANSLATIONS !== 'undefined') {
   var header = document.querySelector('.header-inner');
   if (header) {
@@ -474,7 +478,7 @@ if (svcGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.servicesPage &&
   function txt(obj){if(!obj)return '';if(typeof obj==='string')return obj;return obj[lang]||obj.en||'';}
   function buildCard(s,whatsapp){
     var h='<div class="svc-sec-card">';
-    if(s.image)h+='<img src="'+s.image+'" alt="'+txt(s.title)+'" class="svc-card-img">';
+    if(s.image)h+='<img src="'+fixPath(s.image)+'" alt="'+txt(s.title)+'" class="svc-card-img">';
     else if(s.icon)h+='<div class="svc-card-icon">'+s.icon+'</div>';
     h+='<h4>'+txt(s.title)+'</h4>';
     h+='<p>'+txt(s.desc)+'</p>';
@@ -1109,7 +1113,7 @@ if (typeof DONATE_QR !== 'undefined' && donateShowQR) {
   buildDonateCarousel(DONATE_QR, 'qrCarousel', 'qrDots', 'qrPrev', 'qrNext', function(item) {
     var t = (typeof item.title === 'object') ? (item.title[currentLang] || item.title['en']) : item.title;
     var h = '<div class="donate-slide-title">' + t + '</div>' +
-      '<div class="qr-box"><img src="' + item.qrImage + '" alt="QR Code" class="qr-image"></div>';
+      '<div class="qr-box"><img src="' + fixPath(item.qrImage) + '" alt="QR Code" class="qr-image"></div>';
     if (item.showUpiId !== false) {
       h += '<div class="upi-id-box"><span>' + uL + '</span><strong>' + item.upiId + '</strong></div>';
     }
