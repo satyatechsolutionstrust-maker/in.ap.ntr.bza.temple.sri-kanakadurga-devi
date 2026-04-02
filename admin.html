@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',sans-serif;background:#f5f5f5;color:#333;overflow:hidden;height:100vh}
+    .admin-header{background:linear-gradient(135deg,#7f0000,#b71c1c);color:#fff;padding:12px 25px;display:flex;justify-content:space-between;align-items:center}
+    .admin-header h1{font-size:1.2rem}.admin-header a{color:#fdd835;font-size:0.82rem;text-decoration:none}
+    .admin-body{display:flex;height:calc(100vh - 48px)}
+    .sidebar{width:200px;background:#1a1a2e;padding:15px 0;overflow-y:auto;flex-shrink:0}
+    .sidebar a{display:block;padding:10px 20px;color:#aaa;text-decoration:none;font-size:0.82rem;border-left:3px solid transparent;transition:0.2s;cursor:pointer}
+    .sidebar a:hover,.sidebar a.active{background:rgba(249,168,37,0.08);color:#f9a825;border-left-color:#f9a825}
+    .sidebar .sep{border-top:1px solid rgba(255,255,255,0.05);margin:8px 0}
+    .sidebar .label{padding:8px 20px 4px;font-size:0.65rem;color:#555;text-transform:uppercase;letter-spacing:1px}
+    .admin-main{flex:1;overflow-y:auto;padding:25px}
+    .sec{display:none}.sec.active{display:block}
+    .card{background:#fff;border-radius:10px;padding:22px;margin-bottom:18px;box-shadow:0 1px 8px rgba(0,0,0,0.04)}
+    .card h2{font-size:1.1rem;color:#7f0000;margin-bottom:12px;border-bottom:2px solid #f9a825;padding-bottom:6px}
+    .note{background:#fff8e1;padding:8px 12px;border-radius:6px;border-left:3px solid #f9a825;margin-bottom:12px;font-size:0.78rem;color:#777}
+    .form-row{display:grid;grid-template-columns:160px 1fr;gap:8px;align-items:center;margin-bottom:8px}
+    .form-row label{font-size:0.78rem;color:#666;font-weight:600}
+    input,select,textarea{padding:6px 10px;border:1px solid #ddd;border-radius:5px;font-size:0.83rem;font-family:inherit;width:100%}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:#f9a825;box-shadow:0 0 0 2px rgba(249,168,37,0.12)}
+    textarea{min-height:70px;resize:vertical}
+    .item{border:1px solid #eee;border-radius:8px;padding:12px;margin-bottom:10px;position:relative;background:#fafafa}
+    .item-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .item-num{background:#b71c1c;color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0}
+    .item-remove{position:absolute;top:8px;right:10px;background:#c62828;color:#fff;border:none;width:22px;height:22px;border-radius:50%;cursor:pointer;font-size:0.8rem}
+    .item-remove:hover{background:#7f0000}
+    .item-move{position:absolute;top:8px;right:40px;display:flex;gap:2px}
+    .item-move button{background:#666;color:#fff;border:none;width:20px;height:20px;border-radius:3px;cursor:pointer;font-size:0.7rem}
+    .item-move button:hover{background:#333}
+    .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.68rem;font-weight:600}
+    .badge-show{background:#e8f5e9;color:#2e7d32}.badge-coming{background:#fff3e0;color:#e65100}.badge-hide{background:#fce4ec;color:#c62828}
+    .badge-click{background:#e3f2fd;color:#1565c0}.badge-campaign{background:#fff3e0;color:#e65100}.badge-video{background:#f3e5f5;color:#7b1fa2}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+    label{display:block;font-size:0.72rem;color:#888;margin-top:6px;margin-bottom:2px}
+    .img-list{display:flex;flex-wrap:wrap;gap:4px;margin:5px 0}
+    .img-tag{background:#e3f2fd;padding:3px 8px;border-radius:3px;font-size:0.7rem;display:flex;align-items:center;gap:3px}
+    .img-tag button{background:none;border:none;color:#c62828;cursor:pointer;font-size:0.75rem}
+    .add-row{display:flex;gap:6px;margin-top:5px}
+    .add-row input{flex:1}.add-row button{padding:5px 12px;background:#1565c0;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:0.78rem;white-space:nowrap}
+    .toggle-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #f0f0f0}
+    .toggle-row>label:first-child{font-size:0.85rem;font-weight:600;width:140px}
+    .toggle{position:relative;width:44px;height:22px;cursor:pointer;display:inline-block}
+    .toggle input{opacity:0;width:0;height:0}
+    .toggle .sl{position:absolute;inset:0;background:#ccc;border-radius:22px;transition:0.3s}
+    .toggle .sl:before{content:'';position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:0.3s}
+    .toggle input:checked+.sl{background:#388e3c}
+    .toggle input:checked+.sl:before{transform:translateX(22px)}
+    .page-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid #f5f5f5}
+    .page-name{width:110px;font-weight:600;font-size:0.85rem}
+    .page-row select{width:140px}
+    .media-fields{background:#f0f7ff;padding:10px;border-radius:6px;margin-top:8px;border:1px dashed #90caf9}
+    .media-fields h4{font-size:0.78rem;color:#1565c0;margin-bottom:6px}
+    .folder{border:1px solid #eee;border-radius:8px;padding:12px;margin-bottom:10px;background:#fafafa;position:relative}
+    .folder-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+    .folder-name{font-weight:700;font-size:0.9rem;color:#7f0000}
+    .folder-count{font-size:0.72rem;color:#888}
+    .schedule-box{background:#fff8e1;padding:8px;border-radius:5px;margin-top:6px;border:1px dashed #f9a825}
+    .pages-check{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+    .pages-check label{display:flex;align-items:center;gap:3px;font-size:0.72rem;cursor:pointer;background:#f5f5f5;padding:2px 6px;border-radius:3px}
+    .pages-check input[type=checkbox]{width:auto}
+    .btn{padding:8px 18px;border:none;border-radius:5px;font-size:0.82rem;cursor:pointer;font-family:inherit;transition:0.2s;margin-right:6px;margin-top:8px}
+    .btn-add{background:#1565c0;color:#fff}.btn-add:hover{background:#0d47a1}
+    .btn-export{background:#f9a825;color:#333}.btn-export:hover{background:#f57f17}
+    .btn-copy{background:#388e3c;color:#fff}.btn-copy:hover{background:#2e7d32}
+    .btn-reset{background:#eee;color:#333}.btn-reset:hover{background:#ddd}
+    .code-box{background:#1a1a2e;color:#a5d6a7;padding:12px;border-radius:6px;font-family:monospace;font-size:0.72rem;max-height:250px;overflow-y:auto;white-space:pre-wrap;margin-top:10px;display:none}
+    .success{background:#e8f5e9;color:#2e7d32;padding:6px 12px;border-radius:5px;font-size:0.78rem;margin-top:8px;display:none}
+    .filter-bar{display:flex;gap:5px;margin-bottom:10px;flex-wrap:wrap}
+    .filter-bar button{padding:4px 12px;border:1px solid #ddd;border-radius:15px;background:#fff;font-size:0.75rem;cursor:pointer}
+    .filter-bar button.active{background:#b71c1c;color:#fff;border-color:#b71c1c}
+    .th-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+    .th-row label{font-size:0.75rem;color:#666;width:100px;flex-shrink:0}
+    .th-row input[type=color]{width:35px;height:26px;border:1px solid #ddd;border-radius:3px;cursor:pointer;padding:1px}
+    .th-row input[type=range]{flex:1}
+    .th-row .val{font-size:0.68rem;color:#999;width:35px;text-align:right}
+    .th-section{margin-bottom:12px;border-bottom:1px solid #f0f0f0;padding-bottom:8px}
+    .th-section h4{font-size:0.85rem;color:#7f0000;margin-bottom:8px}
+  </style>
+</head>
+<body>
+
+<div class="admin-header">
+  <h1>🕉️ Admin Panel</h1>
+  <a href="index.html">← Back to Site</a>
+</div>
+
+<div class="admin-body">
+  <div class="sidebar">
+    <a class="active" onclick="show('dashboard',this)">📊 Dashboard</a>
+    <div class="sep"></div>
+    <div class="label">Global</div>
+    <a onclick="show('site',this)">🏛️ Site Settings</a>
+    <a onclick="show('header',this)">📌 Header</a>
+    <a onclick="show('footer',this)">🦶 Footer</a>
+    <a onclick="show('theme',this)">🎨 Theme</a>
+    <a onclick="show('features',this)">⚙️ Features</a>
+    <a onclick="show('ads',this)">📢 Ads</a>
+    <div class="sep"></div>
+    <div class="label">Pages</div>
+    <a onclick="show('homepg',this)">🏠 Home</a>
+    <a onclick="show('aboutpg',this)">📖 About</a>
+    <a onclick="show('servicespg',this)">🪔 Services</a>
+    <a onclick="show('gallery',this)">📸 Gallery</a>
+    <a onclick="show('shop',this)">🛕 Shop</a>
+    <a onclick="show('grandhas',this)">📚 Grandhas</a>
+    <a onclick="show('donate',this)">🙏 Donate</a>
+    <a onclick="show('puranam',this)">📜 Puranam</a>
+    <a onclick="show('eventspg',this)">📅 Events</a>
+    <a onclick="show('blogpg',this)">📰 Blog</a>
+    <a onclick="show('teampg',this)">👥 Team</a>
+    <a onclick="show('pricingpg',this)">💰 Pricing</a>
+    <a onclick="show('bookingpg',this)">💿 Booking</a>
+    <a onclick="show('panchangampg',this)">📆 Panchangam</a>
+    <a onclick="show('contactpg',this)">📞 Contact</a>
+    <a onclick="show('carousel',this)">🎠 Carousel</a>
+  </div>
+
+  <div class="admin-main">
+    <div class="sec active" id="sec-dashboard">
+      <div class="card"><h2>📊 Dashboard</h2><div class="note">Select a section from the sidebar to edit. Generate config → Copy → Paste into config file.</div><div id="dashPages"></div></div>
+      <div class="card"><h2>📁 Config Files</h2><table style="width:100%;border-collapse:collapse"><thead><tr><th style="text-align:left;padding:6px;border-bottom:1px solid #eee;font-size:0.78rem;color:#888">File</th><th style="text-align:left;padding:6px;border-bottom:1px solid #eee;font-size:0.78rem;color:#888">Controls</th></tr></thead><tbody id="dashFiles"></tbody></table></div>
+    </div>
+    <div class="sec" id="sec-site"></div>
+    <div class="sec" id="sec-header"></div>
+    <div class="sec" id="sec-footer"></div>
+    <div class="sec" id="sec-theme"></div>
+    <div class="sec" id="sec-features"></div>
+    <div class="sec" id="sec-ads"></div>
+    <div class="sec" id="sec-homepg"></div>
+    <div class="sec" id="sec-aboutpg"></div>
+    <div class="sec" id="sec-servicespg"></div>
+    <div class="sec" id="sec-gallery"></div>
+    <div class="sec" id="sec-shop"></div>
+    <div class="sec" id="sec-grandhas"></div>
+    <div class="sec" id="sec-donate"></div>
+    <div class="sec" id="sec-puranam"></div>
+    <div class="sec" id="sec-eventspg"></div>
+    <div class="sec" id="sec-blogpg"></div>
+    <div class="sec" id="sec-teampg"></div>
+    <div class="sec" id="sec-pricingpg"></div>
+    <div class="sec" id="sec-bookingpg"></div>
+    <div class="sec" id="sec-panchangampg"></div>
+    <div class="sec" id="sec-contactpg"></div>
+    <div class="sec" id="sec-carousel"></div>
+  </div>
+</div>
+
+<script src="site-config.js"></script>
+<script src="carousel-config.js"></script>
+<script src="shop-config.js"></script>
+<script src="gallery-config.js"></script>
+<script src="grandhas-config.js"></script>
+<script src="donate-config.js"></script>
+<script src="puranam-config.js"></script>
+<script src="events-config.js"></script>
+<script src="panchangam-config.js"></script>
+<script src="pages-config.js"></script>
+<script src="extras-config.js"></script>
+<script src="ads-config.js"></script>
+
+<script>
+function show(id,el){var s=document.querySelectorAll('.sec');for(var i=0;i<s.length;i++)s[i].className='sec';document.getElementById('sec-'+id).className='sec active';var l=document.querySelectorAll('.sidebar a');for(var j=0;j<l.length;j++)l[j].className='';if(el)el.className='active';}
+function esc(s){if(!s)return '';return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function showMsg(id,t){var m=document.getElementById(id);m.textContent=t||'✅ Copied!';m.style.display='block';setTimeout(function(){m.style.display='none'},3000);}
+function copyCode(id,msgId){navigator.clipboard.writeText(document.getElementById(id).textContent).then(function(){showMsg(msgId);});}
+
+if(typeof SITE_CONFIG!=='undefined'&&SITE_CONFIG.pages){var dp='';var pn={home:'Home',about:'About',services:'Services',grandhas:'Grandhas',shop:'Shop',gallery:'Gallery',puranam:'Puranam',donate:'Donate',contact:'Contact'};for(var p in SITE_CONFIG.pages){var s=SITE_CONFIG.pages[p];var bc=s==='show'?'badge-show':(s==='coming-soon'?'badge-coming':'badge-hide');dp+='<span style="display:inline-block;margin:4px 8px 4px 0"><b>'+(pn[p]||p)+'</b> <span class="badge '+bc+'">'+s+'</span></span>';}document.getElementById('dashPages').innerHTML=dp;}
+var files=[['site-config.js','Site, header, footer, pages'],['carousel-config.js','Carousel slides'],['gallery-config.js','Gallery images'],['shop-config.js','Shop products'],['grandhas-config.js','Sacred books'],['donate-config.js','QR + Bank'],['puranam-config.js','Temple legends'],['ads-config.js','Advertisements']];var ft='';for(var f=0;f<files.length;f++)ft+='<tr><td style="padding:5px;border-bottom:1px solid #f5f5f5;font-size:0.82rem"><b>'+files[f][0]+'</b></td><td style="padding:5px;border-bottom:1px solid #f5f5f5;font-size:0.82rem;color:#888">'+files[f][1]+'</td></tr>';document.getElementById('dashFiles').innerHTML=ft;
+</script>
+
+<script src="admin-modules/site.js"></script>
+<script src="admin-modules/header.js"></script>
+<script src="admin-modules/footer.js"></script>
+<script src="admin-modules/theme.js"></script>
+<script src="admin-modules/features.js"></script>
+<script src="admin-modules/ads.js"></script>
+<script src="admin-modules/homepage.js"></script>
+<script src="admin-modules/aboutpage.js"></script>
+<script src="admin-modules/servicespage.js"></script>
+<script src="admin-modules/gallery.js"></script>
+<script src="admin-modules/gallerypage.js"></script>
+<script src="admin-modules/shop.js"></script>
+<script src="admin-modules/shoppage.js"></script>
+<script src="admin-modules/grandhas.js"></script>
+<script src="admin-modules/donate.js"></script>
+<script src="admin-modules/donatepage.js"></script>
+<script src="admin-modules/puranam.js"></script>
+<script src="admin-modules/eventspg.js"></script>
+<script src="admin-modules/blogpg.js"></script>
+<script src="admin-modules/teampg.js"></script>
+<script src="admin-modules/pricingpg.js"></script>
+<script src="admin-modules/bookingpg.js"></script>
+<script src="admin-modules/panchangampg.js"></script>
+<script src="admin-modules/contactpage.js"></script>
+<script src="admin-modules/carousel.js"></script>
+
+<!-- Merge page settings into their parent sections -->
+<script>
+// Merge Gallery Page settings into Gallery section
+var galEl=document.getElementById('sec-gallery');
+var galPgEl=document.getElementById('sec-gallerypg');
+if(galEl&&galPgEl&&galPgEl.innerHTML){galEl.innerHTML+=galPgEl.innerHTML;galPgEl.innerHTML='';}
+
+// Merge Shop Page settings into Shop section
+var shopEl=document.getElementById('sec-shop');
+var shopPgEl=document.getElementById('sec-shoppg');
+if(shopEl&&shopPgEl&&shopPgEl.innerHTML){shopEl.innerHTML+=shopPgEl.innerHTML;shopPgEl.innerHTML='';}
+
+// Merge Donate Page settings into Donate section
+var donEl=document.getElementById('sec-donate');
+var donPgEl=document.getElementById('sec-donatepg');
+if(donEl&&donPgEl&&donPgEl.innerHTML){donEl.innerHTML+=donPgEl.innerHTML;donPgEl.innerHTML='';}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sitemap Generator</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',sans-serif;background:#f5f5f5;padding:30px}
+    .container{max-width:700px;margin:0 auto}
+    h1{color:#7f0000;margin-bottom:20px}
+    .card{background:#fff;border-radius:12px;padding:25px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
+    .card h2{font-size:1.1rem;color:#7f0000;margin-bottom:12px}
+    label{display:block;font-size:0.82rem;color:#666;margin-bottom:4px;font-weight:600}
+    input{width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:6px;font-size:0.9rem;margin-bottom:12px}
+    input:focus{outline:none;border-color:#f9a825}
+    .btn{padding:10px 22px;border:none;border-radius:6px;font-size:0.85rem;cursor:pointer;font-family:inherit;margin-right:8px}
+    .btn-gen{background:#b71c1c;color:#fff}.btn-gen:hover{background:#7f0000}
+    .btn-copy{background:#388e3c;color:#fff}.btn-copy:hover{background:#2e7d32}
+    .btn-dl{background:#1565c0;color:#fff}.btn-dl:hover{background:#0d47a1}
+    .code{background:#1a1a2e;color:#a5d6a7;padding:15px;border-radius:8px;font-family:monospace;font-size:0.78rem;max-height:400px;overflow-y:auto;white-space:pre-wrap;margin-top:15px;display:none}
+    .success{background:#e8f5e9;color:#2e7d32;padding:8px 15px;border-radius:6px;font-size:0.82rem;margin-top:10px;display:none}
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>🗺️ Sitemap Generator</h1>
+  <div class="card">
+    <h2>Site URL</h2>
+    <label>Your website URL (with https://)</label>
+    <input id="siteUrl" value="https://www.example.com" placeholder="https://www.yoursite.com">
+  </div>
+  <div class="card">
+    <button class="btn btn-gen" onclick="generate()">⚡ Generate sitemap.xml</button>
+    <button class="btn btn-copy" onclick="copySitemap()">📋 Copy</button>
+    <button class="btn btn-dl" onclick="downloadSitemap()">⬇️ Download sitemap.xml</button>
+    <div class="success" id="msg"></div>
+    <div class="code" id="output"></div>
+  </div>
+</div>
+<script src="site-config.js"></script>
+<script>
+function generate(){
+  var base = document.getElementById('siteUrl').value.replace(/\/$/,'');
+  var pages = ['index.html','about.html','services.html','books.html','shop.html','gallery.html','puranam.html','events.html','panchangam.html','donate.html','contact.html'];
+  var langs = ['','te/','hi/','sa/'];
+  var today = new Date().toISOString().split('T')[0];
+
+  // Filter out hidden pages
+  var visiblePages = [];
+  if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.pages) {
+    var fileMap = {home:'index.html',about:'about.html',services:'services.html',grandhas:'books.html',shop:'shop.html',gallery:'gallery.html',puranam:'puranam.html',events:'events.html',panchangam:'panchangam.html',donate:'donate.html',contact:'contact.html'};
+    for (var key in SITE_CONFIG.pages) {
+      if (SITE_CONFIG.pages[key] === 'show' && fileMap[key]) visiblePages.push(fileMap[key]);
+    }
+  } else {
+    visiblePages = pages;
+  }
+
+  var xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+  xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n';
+  xml += '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n\n';
+
+  for (var p = 0; p < visiblePages.length; p++) {
+    for (var l = 0; l < langs.length; l++) {
+      var url = base + '/' + langs[l] + visiblePages[p];
+      var priority = visiblePages[p] === 'index.html' ? '1.0' : '0.8';
+      xml += '  <url>\n';
+      xml += '    <loc>' + url + '</loc>\n';
+      xml += '    <lastmod>' + today + '</lastmod>\n';
+      xml += '    <changefreq>weekly</changefreq>\n';
+      xml += '    <priority>' + priority + '</priority>\n';
+      // hreflang alternates
+      for (var a = 0; a < langs.length; a++) {
+        var langCode = langs[a] ? langs[a].replace('/','') : 'en';
+        xml += '    <xhtml:link rel="alternate" hreflang="' + langCode + '" href="' + base + '/' + langs[a] + visiblePages[p] + '"/>\n';
+      }
+      xml += '  </url>\n\n';
+    }
+  }
+
+  xml += '</urlset>';
+  document.getElementById('output').textContent = xml;
+  document.getElementById('output').style.display = 'block';
+}
+
+function copySitemap(){
+  navigator.clipboard.writeText(document.getElementById('output').textContent).then(function(){
+    var m = document.getElementById('msg'); m.textContent = '✅ Copied!'; m.style.display = 'block';
+    setTimeout(function(){m.style.display='none'},3000);
+  });
+}
+
+function downloadSitemap(){
+  var xml = document.getElementById('output').textContent;
+  if (!xml) { generate(); xml = document.getElementById('output').textContent; }
+  var blob = new Blob([xml], {type:'application/xml'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'sitemap.xml';
+  a.click();
+}
+</script>
+</body>
+</html>

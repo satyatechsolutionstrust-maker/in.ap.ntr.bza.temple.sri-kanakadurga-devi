@@ -29,8 +29,8 @@ var FAQ_ITEMS = [
 ];
 
 var PARTNERS = [
-  { name: "Partner 1", logo: "https://via.placeholder.com/150x60?text=Partner+1", url: "#" },
-  { name: "Partner 2", logo: "https://via.placeholder.com/150x60?text=Partner+2", url: "#" }
+  { name: "Partner 1", logo: "assets/images/partner1.png", url: "#" },
+  { name: "Partner 2", logo: "assets/images/partner2.png", url: "#" }
 ];
 
 var TIMELINE = [
@@ -41,9 +41,9 @@ var TIMELINE = [
 ];
 
 var BEFORE_AFTER = [
-  { before: "https://via.placeholder.com/400x250?text=Before", after: "https://via.placeholder.com/400x250?text=After", label: "Temple Entrance" }
+  { before: "assets/images/before.jpg", after: "assets/images/after.jpg", label: "Temple Entrance" }
 ];
 
 var VIDEO_TESTIMONIALS = [
-  { name: "Ramesh Kumar", video: "", poster: "https://via.placeholder.com/400x250?text=Video", text: "The temple changed my life..." }
+  { name: "Ramesh Kumar", video: "", poster: "assets/images/video-poster.jpg", text: "The temple changed my life..." }
 ];

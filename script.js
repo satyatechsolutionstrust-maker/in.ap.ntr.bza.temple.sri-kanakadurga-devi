@@ -14,7 +14,17 @@ if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.stamp) {
   var wmImg = new Image();
   wmImg.src = stampPath;
   wmImg.onload = function() {
-    var allImgs = document.querySelectorAll('.carousel-slide img, .gallery-item img, .grandha-cover, .shop-card-img, .about-image img, .owner-photo, .qr-image');
+    var wmSelectors = [];
+    var wt = SITE_CONFIG.watermarkTargets || {};
+    if (wt.carousel !== false) wmSelectors.push('.carousel-slide img');
+    if (wt.gallery !== false) wmSelectors.push('.gallery-item img');
+    if (wt.grandha !== false) wmSelectors.push('.grandha-cover');
+    if (wt.shop !== false) wmSelectors.push('.shop-card-img');
+    if (wt.about !== false) wmSelectors.push('.about-image img');
+    if (wt.owner !== false) wmSelectors.push('.owner-photo');
+    if (wt.qr !== false) wmSelectors.push('.qr-image');
+    if (!wmSelectors.length) return;
+    var allImgs = document.querySelectorAll(wmSelectors.join(', '));
     for (var w = 0; w < allImgs.length; w++) {
       (function(img) {
         if (img.parentElement.className.indexOf('wm-wrap') === -1) {
@@ -50,6 +60,49 @@ if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.stamp) {
       })(allImgs[w]);
     }
   };
+}
+
+// ============================================
+// LOGO - set from config
+// ============================================
+if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.logoImage) {
+  var logoPath = SITE_CONFIG.logoImage;
+  var pp = window.location.pathname.split('/');
+  for (var li = 0; li < pp.length; li++) {
+    if (pp[li] === 'te' || pp[li] === 'hi' || pp[li] === 'sa') {
+      if (logoPath.indexOf('../') !== 0 && logoPath.indexOf('http') !== 0) logoPath = '../' + logoPath;
+      break;
+    }
+  }
+  var logoImg = document.querySelector('.logo-img');
+  if (logoImg) logoImg.src = logoPath;
+}
+
+// ============================================
+// FOOTER SOCIAL - respect showSocial + enabled flags
+// ============================================
+if (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.footer) {
+  var socialDiv = document.querySelector('.social-links');
+  if (socialDiv) {
+    if (!SITE_CONFIG.footer.showSocial) {
+      socialDiv.parentElement.style.display = 'none';
+    } else {
+      var socialConf = SITE_CONFIG.footer.social;
+      if (socialConf) {
+        socialDiv.innerHTML = '';
+        for (var si = 0; si < socialConf.length; si++) {
+          if (socialConf[si].enabled) {
+            var a = document.createElement('a');
+            a.href = socialConf[si].url;
+            a.target = '_blank';
+            a.textContent = socialConf[si].platform;
+            socialDiv.appendChild(a);
+          }
+        }
+        if (!socialDiv.innerHTML) socialDiv.parentElement.style.display = 'none';
+      }
+    }
+  }
 }
 
 // ============================================

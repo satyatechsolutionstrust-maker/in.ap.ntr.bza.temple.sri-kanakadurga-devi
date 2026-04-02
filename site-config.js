@@ -3,19 +3,28 @@ var SITE_CONFIG = {
   siteName: "Sri Kanaka Durga Devi",
   siteTagline: "Om Dum Durgayei Namah",
   siteTitle: "Sri Kanaka Durga Devi Temple - Vijayawada",
-  logoImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Durga_Puja_2017_in_Kolkata_02.jpg/250px-Durga_Puja_2017_in_Kolkata_02.jpg",
+  logoImage: "assets/images/logo.png",
 
   contactName: "VRDS Prasad",
   phone: "8247787529",
   whatsapp: "918247787529",
 
   developerName: "Satya",
-  companyName: "Satya Tech Solutions",
+  companyName: "Satya Tech Solutions Trust",
   companyUrl: "",
   stamp: "assets/branding/satya.jpg",
   watermarkOpacity: 0.25,
   watermarkPosition: "bottom-right",
   watermarkSize: 15,
+  watermarkTargets: {
+    carousel: false,
+    gallery: false,
+    grandha: false,
+    shop: false,
+    about: false,
+    owner: false,
+    qr: false
+  },
 
   pages: {
     home: "show",
@@ -236,7 +245,7 @@ var SITE_CONFIG = {
     showOwnerProfile: true,
     ownerName: "VRDS Prasad",
     ownerTitle: "Founder & Chairman",
-    ownerPhoto: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop",
+    ownerPhoto: "assets/images/owner.jpg",
     showOwnerQuote: true,
     ownerQuote: "Service is the highest Dharma.",
     showAchievements: true,
