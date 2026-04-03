@@ -64,6 +64,7 @@ var SITE_CONFIG = {
   templateName: "Temple Divine",
   templateVersion: "1.0",
   templateAuthor: "Satya Tech Solutions",
+  lastUpdatedDate: "2026-04-02",
   footer: {
     showAddress: true,
     address: "Ramarajya Nagar, Upparabaavi Veedi, Beside Chanumolu Venkatrao Flyover, NTR District, Vijayawada - 520012",
@@ -186,6 +187,7 @@ var SITE_CONFIG = {
   },
   homePage: {
     showCarousel: true,
+    carouselPauseOnHover: true,
     showMantraTicker: true,
     showHighlightCards: true,
     highlightCards: [

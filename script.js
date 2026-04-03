@@ -400,9 +400,9 @@ if (carouselEl && indicatorsContainer && typeof CAROUSEL_SLIDES !== 'undefined' 
     slide.className = s === 0 ? 'carousel-slide active' : 'carousel-slide';
     if (slideData.video) {
       var vid = document.createElement('video');
-      vid.src = slideData.video;
+      vid.src = fixPath(slideData.video);
       vid.muted = true;
-      vid.loop = true;
+      vid.loop = false;
       vid.playsInline = true;
       vid.setAttribute('playsinline', '');
       vid.preload = s === 0 ? 'auto' : 'none';
@@ -412,14 +412,45 @@ if (carouselEl && indicatorsContainer && typeof CAROUSEL_SLIDES !== 'undefined' 
       slide.setAttribute('data-video', '1');
     } else {
       var img = document.createElement('img');
-      img.src = slideData.image;
-      img.alt = slideData.title;
+      img.src = fixPath(slideData.image);
+      img.alt = (typeof slideData.title === 'object') ? (slideData.title[currentLang] || slideData.title.en || '') : slideData.title;
       img.loading = s === 0 ? 'eager' : 'lazy';
       slide.appendChild(img);
     }
     var overlay = document.createElement('div');
     overlay.className = 'carousel-overlay';
-    overlay.innerHTML = '<h2>' + slideData.title + '</h2><p>' + slideData.text + '</p>';
+    var sd = slideData;
+    var sdTitle = (typeof sd.title === 'object') ? (sd.title[currentLang] || sd.title.en || '') : sd.title;
+    var sdText = (typeof sd.text === 'object') ? (sd.text[currentLang] || sd.text.en || '') : sd.text;
+    var titleH = sd.hideTitle ? '' : '<h2>' + sdTitle + '</h2>';
+    var textP = sd.hideText ? '' : '<p>' + sdText + '</p>';
+    overlay.innerHTML = titleH + textP;
+    var oo = sd.overlayOpacity !== undefined ? sd.overlayOpacity : 0.5;
+    var oc = sd.overlayColor || '0,0,0';
+    if (oc.indexOf('#') === 0) { var hex = oc.replace('#',''); var r = parseInt(hex.substring(0,2),16); var g = parseInt(hex.substring(2,4),16); var b = parseInt(hex.substring(4,6),16); oc = r+','+g+','+b; }
+    overlay.style.background = 'rgba(' + oc + ',' + oo + ')';
+    var tx = sd.textX !== undefined ? sd.textX : 50;
+    var ty = sd.textY !== undefined ? sd.textY : 50;
+    overlay.style.justifyContent = ty <= 25 ? 'flex-start' : ty >= 75 ? 'flex-end' : 'center';
+    overlay.style.alignItems = tx <= 25 ? 'flex-start' : tx >= 75 ? 'flex-end' : 'center';
+    overlay.style.textAlign = sd.textAlign || 'center';
+    if (sd.textOffsetY) { overlay.style.justifyContent = 'flex-end'; overlay.style.paddingBottom = sd.textOffsetY; }
+    if (sd.textMaxWidth) overlay.style.paddingLeft = overlay.style.paddingRight = ((100 - sd.textMaxWidth) / 2) + '%';
+    if (sd.textBg) { var wrap = overlay.querySelector('h2') || overlay.querySelector('p'); if (wrap) { var bg = document.createElement('div'); bg.style.background = sd.textBg; if (sd.textPadding) bg.style.padding = sd.textPadding; if (sd.textBorderRadius) bg.style.borderRadius = sd.textBorderRadius; bg.style.display = 'inline-block'; overlay.innerHTML = ''; bg.innerHTML = titleH + textP; overlay.appendChild(bg); } }
+    if (sd.animation && sd.animation !== 'none') overlay.classList.add('carousel-anim-' + sd.animation);
+    var h2 = overlay.querySelector('h2');
+    var pEl = overlay.querySelector('p');
+    if (h2) {
+      if (sd.titleSize) h2.style.fontSize = sd.titleSize;
+      if (sd.titleColor) h2.style.color = sd.titleColor;
+      if (sd.titleWeight) h2.style.fontWeight = sd.titleWeight;
+      if (sd.textShadow) h2.style.textShadow = sd.textShadow;
+    }
+    if (pEl) {
+      if (sd.textSize) pEl.style.fontSize = sd.textSize;
+      if (sd.textColor) pEl.style.color = sd.textColor;
+      if (sd.textShadow) pEl.style.textShadow = sd.textShadow;
+    }
     slide.appendChild(overlay);
     carouselEl.appendChild(slide);
   }
@@ -434,22 +465,46 @@ if (carouselEl && indicatorsContainer && typeof CAROUSEL_SLIDES !== 'undefined' 
   }
   function goToSlide(index) {
     var oldVid = slides[currentSlide].querySelector('video');
-    if (oldVid) oldVid.pause();
+    if (oldVid) { oldVid.pause(); oldVid.onended = null; }
     slides[currentSlide].className = 'carousel-slide';
     indicatorsContainer.children[currentSlide].className = 'dot';
     currentSlide = (index + slides.length) % slides.length;
     slides[currentSlide].className = 'carousel-slide active';
     indicatorsContainer.children[currentSlide].className = 'dot active';
     var newVid = slides[currentSlide].querySelector('video');
-    if (newVid) { newVid.currentTime = 0; newVid.play(); }
     clearInterval(autoplayTimer);
-    autoplayTimer = setInterval(function() { goToSlide(currentSlide + 1); }, 5000);
+    clearTimeout(autoplayTimer);
+    if (newVid) {
+      newVid.currentTime = 0;
+      newVid.play();
+      newVid.onended = function() { goToSlide(currentSlide + 1); };
+    } else {
+      autoplayTimer = setInterval(function() { goToSlide(currentSlide + 1); }, 5000);
+    }
   }
   autoplayTimer = setInterval(function() { goToSlide(currentSlide + 1); }, 5000);
   var prevBtn = document.getElementById('prevBtn');
   var nextBtn = document.getElementById('nextBtn');
   if (prevBtn) prevBtn.onclick = function() { goToSlide(currentSlide - 1); };
   if (nextBtn) nextBtn.onclick = function() { goToSlide(currentSlide + 1); };
+  var HP = (typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.homePage) ? SITE_CONFIG.homePage : {};
+  if (HP.carouselPauseOnHover !== false) {
+    carouselEl.onmouseenter = function() {
+      clearInterval(autoplayTimer);
+      clearTimeout(autoplayTimer);
+      var vid = slides[currentSlide].querySelector('video');
+      if (vid && !vid.paused && !vid.ended) vid.pause();
+    };
+    carouselEl.onmouseleave = function() {
+      var vid = slides[currentSlide].querySelector('video');
+      if (vid) {
+        if (vid.ended) { goToSlide(currentSlide + 1); }
+        else { vid.play(); }
+      } else {
+        autoplayTimer = setInterval(function() { goToSlide(currentSlide + 1); }, 5000);
+      }
+    };
+  }
 }
 var svcGrid = document.getElementById('servicesGrid');
 if (svcGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.servicesPage && SITE_CONFIG.servicesPage.services) {
@@ -646,6 +701,15 @@ if (galleryGrid && typeof GALLERY_FOLDERS !== 'undefined' && GALLERY_FOLDERS.len
       filtersDiv.appendChild(catBtn);
     }
     for (var gi = 0; gi < folderData.images.length; gi++) {
+      if (folderData.comingSoon) {
+        var csItem = document.createElement('div');
+        csItem.className = 'gallery-item gallery-coming-soon';
+        csItem.setAttribute('data-category', folderName);
+        var csMsg = (typeof folderData.comingSoonText === 'object') ? (folderData.comingSoonText[currentLang] || folderData.comingSoonText.en || 'Coming Soon') : (folderData.comingSoonText || 'Coming Soon');
+        csItem.innerHTML = '<div class="gallery-cs-overlay"><span class="gallery-cs-icon">' + (folderData.comingSoonIcon || '🔜') + '</span><h4>' + csMsg + '</h4></div>';
+        if (galleryGrid) galleryGrid.appendChild(csItem);
+        break;
+      }
       var fileName = folderData.images[gi];
       var caption = fileName.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' ');
       caption = caption.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
@@ -749,6 +813,8 @@ function detectStore(url) {
     return { name: domain.charAt(0).toUpperCase() + domain.slice(1), color: '#555' };
   } catch(e) { return { name: 'Buy Online', color: '#555' }; }
 }
+var shopLabels = { en: { buyOn: 'Buy on', shopCollection: 'Shop This Collection \u2192' }, te: { buyOn: 'కొనండి', shopCollection: 'ఈ సేకరణ చూడండి →' }, hi: { buyOn: 'खरीदें', shopCollection: 'यह संग्रह देखें →' }, sa: { buyOn: 'क्रीणातु', shopCollection: 'एतत् सङ्ग्रहं पश्यतु →' } };
+var sL = shopLabels[currentLang] || shopLabels['en'];
 var shopGrid = document.getElementById('shopGrid');
 var shopFiltersDiv = document.getElementById('shopFilters');
 var shopPagDiv = document.getElementById('shopPagination');
@@ -768,9 +834,9 @@ if (shopGrid) {
       var linksHtml = '';
       for (var li = 0; li < cat.links.length; li++) {
         var st = detectStore(cat.links[li].url);
-        linksHtml += '<a class="shop-cat-link" href="' + cat.links[li].url + '" target="_blank" rel="nofollow" style="background:' + st.color + '">Buy on ' + st.name + '</a>';
+        linksHtml += '<a class="shop-cat-link" href="' + cat.links[li].url + '" target="_blank" rel="nofollow" style="background:' + st.color + '">' + sL.buyOn + ' ' + st.name + '</a>';
       }
-      card.innerHTML = '<div class="shop-cat-icon">' + cat.icon + '</div><h3>' + cat.name + '</h3><p>' + cat.description + '</p><div class="shop-cat-links">' + linksHtml + '</div>';
+      card.innerHTML = '<div class="shop-cat-icon">' + cat.icon + '</div><h3>' + ((typeof cat.name==='object')?(cat.name[currentLang]||cat.name.en||''):cat.name) + '</h3><p>' + ((typeof cat.description==='object')?(cat.description[currentLang]||cat.description.en||''):cat.description) + '</p><div class="shop-cat-links">' + linksHtml + '</div>';
       shopGrid.appendChild(card);
     }
   }
@@ -785,10 +851,10 @@ if (shopGrid) {
       card.href = coll.link;
       card.target = '_blank';
       card.rel = 'nofollow';
-      card.innerHTML = '<img class="shop-coll-img" src="' + coll.image + '" alt="' + coll.name + '">' +
-        '<div class="shop-coll-body"><h3>' + coll.name + '</h3><p>' + coll.description + '</p>' +
+      card.innerHTML = '<img class="shop-coll-img" src="' + coll.image + '" alt="' + ((typeof coll.name==='object')?(coll.name[currentLang]||coll.name.en||''):coll.name) + '">' +
+        '<div class="shop-coll-body"><h3>' + ((typeof coll.name==='object')?(coll.name[currentLang]||coll.name.en||''):coll.name) + '</h3><p>' + ((typeof coll.description==='object')?(coll.description[currentLang]||coll.description.en||''):coll.description) + '</p>' +
         '<div class="shop-coll-items">' + itemsHtml + '</div>' +
-        '<div class="shop-coll-btn">Shop This Collection →</div></div>';
+        '<div class="shop-coll-btn">' + sL.shopCollection + '</div></div>';
       shopGrid.appendChild(card);
     }
   }
@@ -799,12 +865,12 @@ if (shopGrid) {
       var storesHtml = '';
       for (var si = 0; si < comp.stores.length; si++) {
         var st = detectStore(comp.stores[si].url);
-        storesHtml += '<a class="shop-comp-store" href="' + comp.stores[si].url + '" target="_blank" rel="nofollow" style="background:' + st.color + '">Buy on ' + st.name + '</a>';
+        storesHtml += '<a class="shop-comp-store" href="' + comp.stores[si].url + '" target="_blank" rel="nofollow" style="background:' + st.color + '">' + sL.buyOn + ' ' + st.name + '</a>';
       }
       var card = document.createElement('div');
       card.className = 'shop-comp-card';
-      card.innerHTML = '<img class="shop-comp-img" src="' + comp.image + '" alt="' + comp.name + '">' +
-        '<div class="shop-comp-body"><h3>' + comp.name + '</h3><div class="shop-comp-stores">' + storesHtml + '</div></div>';
+      card.innerHTML = '<img class="shop-comp-img" src="' + comp.image + '" alt="' + ((typeof comp.name==='object')?(comp.name[currentLang]||comp.name.en||''):comp.name) + '">' +
+        '<div class="shop-comp-body"><h3>' + ((typeof comp.name==='object')?(comp.name[currentLang]||comp.name.en||''):comp.name) + '</h3><div class="shop-comp-stores">' + storesHtml + '</div></div>';
       shopGrid.appendChild(card);
     }
   }
@@ -839,20 +905,20 @@ if (shopGrid) {
     var pImg = document.createElement('img');
     pImg.className = 'shop-card-img';
     pImg.src = prod.img;
-    pImg.alt = prod.name;
+    pImg.alt = (typeof prod.name === 'object') ? (prod.name[currentLang] || prod.name.en || '') : prod.name;
     pImg.loading = 'lazy';
     card.appendChild(pImg);
     var body = document.createElement('div');
     body.className = 'shop-card-body';
     var nameEl = document.createElement('div');
     nameEl.className = 'shop-card-name';
-    nameEl.textContent = prod.name;
+    nameEl.textContent = (typeof prod.name === 'object') ? (prod.name[currentLang] || prod.name.en || '') : prod.name;
     body.appendChild(nameEl);
     var buyBtn = document.createElement('div');
     buyBtn.className = 'shop-buy-btn';
     buyBtn.style.background = store.color;
     buyBtn.style.color = '#fff';
-    buyBtn.textContent = 'Buy on ' + store.name;
+    buyBtn.textContent = sL.buyOn + ' ' + store.name;
     body.appendChild(buyBtn);
     card.appendChild(body);
     shopGrid.appendChild(card);
@@ -2157,8 +2223,9 @@ if ('serviceWorker' in navigator) {
   if(F.lastUpdated===false)return;
   var footer=document.querySelector('.footer-bottom');
   if(!footer)return;
+  var d = SITE_CONFIG.lastUpdatedDate ? new Date(SITE_CONFIG.lastUpdatedDate) : new Date(document.lastModified);
   var el=document.createElement('div');el.className='last-updated';
-  el.textContent='Last updated: '+new Date(document.lastModified).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
+  el.textContent='Last updated: '+d.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
   footer.appendChild(el);
 })();
 (function(){

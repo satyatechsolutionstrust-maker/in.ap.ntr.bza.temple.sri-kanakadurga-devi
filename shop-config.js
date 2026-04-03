@@ -1,55 +1,29 @@
 var SHOP_ITEMS = [
-  { name: "Brass Pooja Thali Set", img: "https://m.media-amazon.com/images/I/71gXnLqFfIL._SL1500_.jpg", url: "https://www.amazon.in/s?k=brass+pooja+thali+set", cat: "pooja-essentials" },
-  { name: "Pure Camphor for Pooja", img: "https://m.media-amazon.com/images/I/61mIq0jMxvL._SL1000_.jpg", url: "https://www.amazon.in/s?k=pure+camphor+pooja", cat: "pooja-essentials" },
-  { name: "Agarbatti Combo Pack", img: "https://m.media-amazon.com/images/I/71Yz3GNaURL._SL1500_.jpg", url: "https://www.flipkart.com/search?q=agarbatti+combo", cat: "pooja-essentials" },
-  { name: "Goddess Durga Brass Idol", img: "https://m.media-amazon.com/images/I/71Yz3GNaURL._SL1500_.jpg", url: "https://www.amazon.in/s?k=durga+brass+idol", cat: "idols" },
-  { name: "Bhagavad Gita Hindi Sanskrit", img: "https://m.media-amazon.com/images/I/71Yz3GNaURL._SL1500_.jpg", url: "https://www.amazon.in/s?k=bhagavad+gita", cat: "books" },
-  { name: "LED Diya String Lights", img: "https://m.media-amazon.com/images/I/71Yz3GNaURL._SL1500_.jpg", url: "https://www.amazon.in/s?k=led+diya+lights", cat: "decor" }
+  { name: { en: "Brass Pooja Thali Set", te: "ఇత్తడి పూజ తాళి సెట్", hi: "पीतल पूजा थाली सेट", sa: "पीतलपूजाथालिसमुच्चयः" }, img: "https://m.media-amazon.com/images/I/71gXnLqFfIL._SL1500_.jpg", url: "https://www.amazon.in/s?k=brass+pooja+thali+set", cat: "pooja-essentials" },
+  { name: { en: "Pure Camphor for Pooja", te: "పూజ కోసం స్వచ్ఛమైన కర్పూరం", hi: "पूजा के लिए शुद्ध कपूर", sa: "पूजार्थं शुद्धकर्पूरम्" }, img: "https://m.media-amazon.com/images/I/61mIq0jMxvL._SL1000_.jpg", url: "https://www.amazon.in/s?k=pure+camphor+pooja", cat: "pooja-essentials" },
+  { name: { en: "Agarbatti Combo Pack", te: "అగరబత్తి కాంబో ప్యాక్", hi: "अगरबत्ती कॉम्बो पैक", sa: "अगरबत्तीसमुच्चयः" }, img: "https://m.media-amazon.com/images/I/71Yz3GNaURL._SL1500_.jpg", url: "https://www.flipkart.com/search?q=agarbatti+combo", cat: "pooja-essentials" },
+  { name: { en: "Goddess Durga Brass Idol", te: "దుర్గా దేవి ఇత్తడి విగ్రహం", hi: "देवी दुर्गा पीतल मूर्ति", sa: "दुर्गादेवीपीतलविग्रहः" }, img: "https://m.media-amazon.com/images/I/71Yz3GNaURL._SL1500_.jpg", url: "https://www.amazon.in/s?k=durga+brass+idol", cat: "idols" },
+  { name: { en: "Bhagavad Gita Hindi Sanskrit", te: "భగవద్గీత హిందీ సంస్కృతం", hi: "भगवद्गीता हिंदी संस्कृत", sa: "भगवद्गीता हिन्दीसंस्कृतम्" }, img: "https://m.media-amazon.com/images/I/71Yz3GNaURL._SL1500_.jpg", url: "https://www.amazon.in/s?k=bhagavad+gita", cat: "books" },
+  { name: { en: "LED Diya String Lights", te: "LED దీపం స్ట్రింగ్ లైట్లు", hi: "LED दीया स्ट्रिंग लाइट्स", sa: "LED दीपमालिका" }, img: "https://m.media-amazon.com/images/I/71Yz3GNaURL._SL1500_.jpg", url: "https://www.amazon.in/s?k=led+diya+lights", cat: "decor" }
 ];
 var SHOP_CATEGORIES = [
-  { name: "Pooja Thali Sets", icon: "🏵️", description: "Complete brass and silver pooja thali sets with all accessories", links: [
-    { store: "amazon", url: "https://amzn.to/4ckbqdb" }
-  ]},
-  { name: "Brass Diyas & Lamps", icon: "🪔", description: "Traditional brass oil lamps, diyas, and deepam stands", links: [
-    { store: "amazon", url: "https://amzn.to/4c0F8mp" }
-  ]},
-  { name: "Durga Devi Idols", icon: "🙏", description: "Beautiful Durga Devi murtis in brass, marble, and gold plated", links: [
-    { store: "amazon", url: "https://amzn.to/4v2ww7v" }
-  ]},
-  { name: "Agarbatti & Dhoop", icon: "🌸", description: "Premium incense sticks, dhoop cones, and sambrani cups", links: [
-    { store: "amazon", url: "https://amzn.to/4bMePBv" }
-  ]},
-  { name: "Pooja Books & Scriptures", icon: "📚", description: "Bhagavad Gita, Durga Saptashati, Sahasranama and more", links: [
-    { store: "amazon", url: "https://amzn.to/4sPQvVr" }
-  ]},
-  { name: "Kumkum & Turmeric Sets", icon: "🔴", description: "Pure kumkum, turmeric, chandan, and sindoor for daily pooja", links: [
-    { store: "amazon", url: "https://amzn.to/47FfVfX" }
-  ]},
-  { name: "Pooja Dress & Sarees", icon: "👗", description: "Traditional silk sarees and dress for temple visits and festivals", links: [
-    { store: "amazon", url: "https://amzn.to/4v6Dmsp" }
-  ]},
-  { name: "Temple Decoration", icon: "🎊", description: "Torans, flower garlands, LED lights, and festive decorations", links: [
-    { store: "amazon", url: "https://amzn.to/4sIaSDO" }
-  ]}
+  { name: { en: "Pooja Thali Sets", te: "పూజ తాళి సెట్లు", hi: "पूजा थाली सेट", sa: "पूजाथालिसमुच्चयाः" }, icon: "🏵️", description: { en: "Complete brass and silver pooja thali sets with all accessories", te: "అన్ని ఉపకరణాలతో పూర్తి ఇత్తడి మరియు వెండి పూజ తాళి సెట్లు", hi: "सभी सामान के साथ पूर्ण पीतल और चांदी पूजा थाली सेट", sa: "सर्वोपकरणसहितानि पूर्णपीतलरजतपूजाथालिसमुच्चयानि" }, links: [{ store: "amazon", url: "https://amzn.to/4ckbqdb" }] },
+  { name: { en: "Brass Diyas & Lamps", te: "ఇత్తడి దీపాలు & దీపస్తంభాలు", hi: "पीतल दीये और दीपक", sa: "पीतलदीपाः दीपस्तम्भाश्च" }, icon: "🪔", description: { en: "Traditional brass oil lamps, diyas, and deepam stands", te: "సాంప్రదాయ ఇత్తడి నూనె దీపాలు, దీపాలు మరియు దీపస్తంభాలు", hi: "पारंपरिक पीतल तेल दीपक, दीये और दीपम स्टैंड", sa: "पारम्परिकपीतलतैलदीपाः दीपस्तम्भाश्च" }, links: [{ store: "amazon", url: "https://amzn.to/4c0F8mp" }] },
+  { name: { en: "Durga Devi Idols", te: "దుర్గా దేవి విగ్రహాలు", hi: "दुर्गा देवी मूर्तियाँ", sa: "दुर्गादेवीविग्रहाः" }, icon: "🙏", description: { en: "Beautiful Durga Devi murtis in brass, marble, and gold plated", te: "ఇత్తడి, పాలరాయి మరియు బంగారు పూత దుర్గా దేవి విగ్రహాలు", hi: "पीतल, संगमरमर और सोने की दुर्गा देवी मूर्तियाँ", sa: "पीतलसंगमर्मरस्वर्णदुर्गादेवीविग्रहाः" }, links: [{ store: "amazon", url: "https://amzn.to/4v2ww7v" }] },
+  { name: { en: "Agarbatti & Dhoop", te: "అగరబత్తి & ధూపం", hi: "अगरबत्ती और धूप", sa: "अगरबत्ती धूपश्च" }, icon: "🌸", description: { en: "Premium incense sticks, dhoop cones, and sambrani cups", te: "ప్రీమియం అగరబత్తీలు, ధూప కోన్లు మరియు సాంబ్రాణి కప్పులు", hi: "प्रीमियम अगरबत्ती, धूप कोन और सांबरानी कप", sa: "उत्तमधूपदण्डाः धूपशङ्कवः साम्ब्राणीपात्राणि च" }, links: [{ store: "amazon", url: "https://amzn.to/4bMePBv" }] },
+  { name: { en: "Pooja Books & Scriptures", te: "పూజ పుస్తకాలు & గ్రంథాలు", hi: "पूजा पुस्तकें और ग्रंथ", sa: "पूजापुस्तकानि ग्रन्थाश्च" }, icon: "📚", description: { en: "Bhagavad Gita, Durga Saptashati, Sahasranama and more", te: "భగవద్గీత, దుర్గా సప్తశతి, సహస్రనామం మరియు మరిన్ని", hi: "भगवद्गीता, दुर्गा सप्तशती, सहस्रनाम और अधिक", sa: "भगवद्गीता दुर्गासप्तशती सहस्रनामादयश्च" }, links: [{ store: "amazon", url: "https://amzn.to/4sPQvVr" }] },
+  { name: { en: "Kumkum & Turmeric Sets", te: "కుంకుమ & పసుపు సెట్లు", hi: "कुमकुम और हल्दी सेट", sa: "कुङ्कुमहरिद्रासमुच्चयाः" }, icon: "🔴", description: { en: "Pure kumkum, turmeric, chandan, and sindoor for daily pooja", te: "నిత్య పూజ కోసం స్వచ్ఛమైన కుంకుమ, పసుపు, చందనం మరియు సిందూరం", hi: "दैनिक पूजा के लिए शुद्ध कुमकुम, हल्दी, चंदन और सिंदूर", sa: "नित्यपूजार्थं शुद्धकुङ्कुमहरिद्राचन्दनसिन्दूराणि" }, links: [{ store: "amazon", url: "https://amzn.to/47FfVfX" }] },
+  { name: { en: "Pooja Dress & Sarees", te: "పూజ దుస్తులు & చీరలు", hi: "पूजा ड्रेस और साड़ियाँ", sa: "पूजावस्त्राणि शाटिकाश्च" }, icon: "👗", description: { en: "Traditional silk sarees and dress for temple visits and festivals", te: "ఆలయ సందర్శనలు మరియు పండుగలకు సాంప్రదాయ పట్టు చీరలు", hi: "मंदिर दर्शन और त्योहारों के लिए पारंपरिक रेशमी साड़ियाँ", sa: "मन्दिरदर्शनोत्सवेभ्यः पारम्परिककौशेयशाटिकाः" }, links: [{ store: "amazon", url: "https://amzn.to/4v6Dmsp" }] },
+  { name: { en: "Temple Decoration", te: "ఆలయ అలంకరణ", hi: "मंदिर सजावट", sa: "मन्दिरसज्जा" }, icon: "🎊", description: { en: "Torans, flower garlands, LED lights, and festive decorations", te: "తోరణాలు, పూల మాలలు, LED లైట్లు మరియు పండుగ అలంకరణలు", hi: "तोरण, फूल मालाएं, LED लाइट्स और उत्सव सजावट", sa: "तोरणानि पुष्पमालाः LED दीपाः उत्सवसज्जाश्च" }, links: [{ store: "amazon", url: "https://amzn.to/4sIaSDO" }] }
 ];
 var SHOP_COLLECTIONS = [
-  { name: "🪔 Daily Pooja Essentials Kit", description: "Everything you need for daily morning and evening pooja", image: "https://m.media-amazon.com/images/I/71gXnLqFfIL._SL1500_.jpg", items: ["Brass Thali", "Diya", "Agarbatti", "Camphor", "Kumkum", "Cotton Wicks"], link: "https://www.amazon.in/s?k=daily+pooja+kit" },
-  { name: "🎆 Navaratri Special Kit", description: "Complete Navaratri pooja items for 9 days of celebration", image: "https://m.media-amazon.com/images/I/61mIq0jMxvL._SL1000_.jpg", items: ["Durga Idol", "Kalash", "Coconut", "Red Cloth", "Flowers", "Kumkum"], link: "https://www.amazon.in/s?k=navaratri+pooja+kit" },
-  { name: "🏠 New Home Pooja Kit", description: "Griha Pravesh and house warming pooja essentials", image: "https://m.media-amazon.com/images/I/71Yz3GNaURL._SL1500_.jpg", items: ["Kalash", "Mango Leaves", "Coconut", "Turmeric", "Rice", "Ghee Lamp"], link: "https://www.amazon.in/s?k=griha+pravesh+pooja+kit" },
-  { name: "📿 Meditation & Chanting Kit", description: "For daily japa, meditation, and mantra chanting", image: "https://m.media-amazon.com/images/I/71gXnLqFfIL._SL1500_.jpg", items: ["Rudraksha Mala", "Meditation Mat", "Incense", "Singing Bowl", "Books"], link: "https://www.amazon.in/s?k=meditation+pooja+kit" }
+  { name: { en: "🪔 Daily Pooja Essentials Kit", te: "🪔 నిత్య పూజ అవసరాల కిట్", hi: "🪔 दैनिक पूजा आवश्यक किट", sa: "🪔 नित्यपूजावश्यकसामग्री" }, description: { en: "Everything you need for daily morning and evening pooja", te: "నిత్య ఉదయం మరియు సాయంత్రం పూజకు అవసరమైన అన్నీ", hi: "दैनिक सुबह और शाम की पूजा के लिए सब कुछ", sa: "नित्यप्रातःसायंपूजार्थं सर्वमावश्यकम्" }, image: "https://m.media-amazon.com/images/I/71gXnLqFfIL._SL1500_.jpg", items: ["Brass Thali", "Diya", "Agarbatti", "Camphor", "Kumkum", "Cotton Wicks"], link: "https://www.amazon.in/s?k=daily+pooja+kit" },
+  { name: { en: "🎆 Navaratri Special Kit", te: "🎆 నవరాత్రి ప్రత్యేక కిట్", hi: "🎆 नवरात्रि विशेष किट", sa: "🎆 नवरात्रिविशेषसामग्री" }, description: { en: "Complete Navaratri pooja items for 9 days of celebration", te: "9 రోజుల ఉత్సవానికి పూర్తి నవరాత్రి పూజ సామగ్రి", hi: "9 दिनों के उत्सव के लिए पूर्ण नवरात्रि पूजा सामग्री", sa: "नवदिनोत्सवार्थं पूर्णनवरात्रिपूजासामग्री" }, image: "https://m.media-amazon.com/images/I/61mIq0jMxvL._SL1000_.jpg", items: ["Durga Idol", "Kalash", "Coconut", "Red Cloth", "Flowers", "Kumkum"], link: "https://www.amazon.in/s?k=navaratri+pooja+kit" },
+  { name: { en: "🏠 New Home Pooja Kit", te: "🏠 కొత్త ఇల్లు పూజ కిట్", hi: "🏠 नया घर पूजा किट", sa: "🏠 नवगृहपूजासामग्री" }, description: { en: "Griha Pravesh and house warming pooja essentials", te: "గృహ ప్రవేశం మరియు హౌస్ వార్మింగ్ పూజ అవసరాలు", hi: "गृह प्रवेश और हाउस वार्मिंग पूजा आवश्यक सामग्री", sa: "गृहप्रवेशपूजावश्यकसामग्री" }, image: "https://m.media-amazon.com/images/I/71Yz3GNaURL._SL1500_.jpg", items: ["Kalash", "Mango Leaves", "Coconut", "Turmeric", "Rice", "Ghee Lamp"], link: "https://www.amazon.in/s?k=griha+pravesh+pooja+kit" },
+  { name: { en: "📿 Meditation & Chanting Kit", te: "📿 ధ్యానం & జపం కిట్", hi: "📿 ध्यान और जप किट", sa: "📿 ध्यानजपसामग्री" }, description: { en: "For daily japa, meditation, and mantra chanting", te: "నిత్య జపం, ధ్యానం మరియు మంత్ర పఠనం కోసం", hi: "दैनिक जप, ध्यान और मंत्र जाप के लिए", sa: "नित्यजपध्यानमन्त्रपाठार्थम्" }, image: "https://m.media-amazon.com/images/I/71gXnLqFfIL._SL1500_.jpg", items: ["Rudraksha Mala", "Meditation Mat", "Incense", "Singing Bowl", "Books"], link: "https://www.amazon.in/s?k=meditation+pooja+kit" }
 ];
 var SHOP_COMPARE = [
-  { name: "Brass Pooja Thali Set (7 Piece)", image: "https://m.media-amazon.com/images/I/71gXnLqFfIL._SL1500_.jpg", stores: [
-    { store: "amazon", url: "https://www.amazon.in/s?k=brass+pooja+thali+7+piece" },
-    { store: "flipkart", url: "https://www.flipkart.com/search?q=brass+pooja+thali" },
-    { store: "meesho", url: "https://www.meesho.com/search?q=brass+pooja+thali" }
-  ]},
-  { name: "Goddess Durga Brass Idol 8 inch", image: "https://m.media-amazon.com/images/I/71Yz3GNaURL._SL1500_.jpg", stores: [
-    { store: "amazon", url: "https://www.amazon.in/s?k=durga+brass+idol+8+inch" },
-    { store: "flipkart", url: "https://www.flipkart.com/search?q=durga+brass+idol" }
-  ]},
-  { name: "Bhagavad Gita Hardcover Hindi", image: "https://m.media-amazon.com/images/I/61mIq0jMxvL._SL1000_.jpg", stores: [
-    { store: "amazon", url: "https://www.amazon.in/s?k=bhagavad+gita+hardcover+hindi" },
-    { store: "flipkart", url: "https://www.flipkart.com/search?q=bhagavad+gita+hindi" }
-  ]}
+  { name: { en: "Brass Pooja Thali Set (7 Piece)", te: "ఇత్తడి పూజ తాళి సెట్ (7 ముక్కలు)", hi: "पीतल पूजा थाली सेट (7 पीस)", sa: "पीतलपूजाथालिसमुच्चयः (७ खण्डाः)" }, image: "https://m.media-amazon.com/images/I/71gXnLqFfIL._SL1500_.jpg", stores: [{ store: "amazon", url: "https://www.amazon.in/s?k=brass+pooja+thali+7+piece" }, { store: "flipkart", url: "https://www.flipkart.com/search?q=brass+pooja+thali" }, { store: "meesho", url: "https://www.meesho.com/search?q=brass+pooja+thali" }] },
+  { name: { en: "Goddess Durga Brass Idol 8 inch", te: "దుర్గా దేవి ఇత్తడి విగ్రహం 8 అంగుళాలు", hi: "देवी दुर्गा पीतल मूर्ति 8 इंच", sa: "दुर्गादेवीपीतलविग्रहः ८ अङ्गुलम्" }, image: "https://m.media-amazon.com/images/I/71Yz3GNaURL._SL1500_.jpg", stores: [{ store: "amazon", url: "https://www.amazon.in/s?k=durga+brass+idol+8+inch" }, { store: "flipkart", url: "https://www.flipkart.com/search?q=durga+brass+idol" }] },
+  { name: { en: "Bhagavad Gita Hardcover Hindi", te: "భగవద్గీత హార్డ్‌కవర్ హిందీ", hi: "भगवद्गीता हार्डकवर हिंदी", sa: "भगवद्गीता दृढावरणं हिन्दी" }, image: "https://m.media-amazon.com/images/I/61mIq0jMxvL._SL1000_.jpg", stores: [{ store: "amazon", url: "https://www.amazon.in/s?k=bhagavad+gita+hardcover+hindi" }, { store: "flipkart", url: "https://www.flipkart.com/search?q=bhagavad+gita+hindi" }] }
 ];
