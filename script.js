@@ -514,7 +514,7 @@ if (svcGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.servicesPage &&
     if (sv.enabled === false) continue;
     var sCard = document.createElement('div');
     sCard.className = 'service-card';
-    sCard.innerHTML = '<div class="service-icon">' + sv.icon + '</div><h3>' + sv.title + '</h3><p>' + sv.text + '</p>';
+    sCard.innerHTML = '<div class="service-icon">' + sv.icon + '</div><h3>' + ((typeof sv.title==='object')?(sv.title[currentLang]||sv.title.en||''):sv.title) + '</h3><p>' + ((typeof sv.text==='object')?(sv.text[currentLang]||sv.text.en||''):sv.text) + '</p>';
     svcGrid.appendChild(sCard);
   }
 }
@@ -633,7 +633,7 @@ if (misGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.aboutPage && SI
     if (mc.enabled === false) continue;
     var mCard = document.createElement('div');
     mCard.className = 'mission-card';
-    mCard.innerHTML = '<div class="mission-icon">' + mc.icon + '</div><h3>' + mc.title + '</h3><p>' + mc.text + '</p>';
+    mCard.innerHTML = '<div class="mission-icon">' + mc.icon + '</div><h3>' + ((typeof mc.title==='object')?(mc.title[currentLang]||mc.title.en||''):mc.title) + '</h3><p>' + ((typeof mc.text==='object')?(mc.text[currentLang]||mc.text.en||''):mc.text) + '</p>';
     misGrid.appendChild(mCard);
   }
 }
@@ -645,7 +645,7 @@ if (stRow && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.aboutPage && SITE
     if (st.enabled === false) continue;
     var sBox = document.createElement('div');
     sBox.className = 'stat-box';
-    sBox.innerHTML = '<span class="stat-num">' + st.number + '</span><span>' + st.label + '</span>';
+    sBox.innerHTML = '<span class="stat-num">' + st.number + '</span><span>' + ((typeof st.label==='object')?(st.label[currentLang]||st.label.en||''):st.label) + '</span>';
     stRow.appendChild(sBox);
   }
 }
@@ -658,8 +658,8 @@ if (hlGrid && typeof SITE_CONFIG !== 'undefined' && SITE_CONFIG.homePage && SITE
     var card = document.createElement('div');
     card.className = 'highlight-card';
     card.innerHTML = '<div class="highlight-icon">' + hc.icon + '</div>' +
-      '<h3>' + hc.title + '</h3><p>' + hc.text + '</p>' +
-      '<a href="' + hc.link + '" class="highlight-link">' + hc.linkText + '</a>';
+      '<h3>' + ((typeof hc.title==='object')?(hc.title[currentLang]||hc.title.en||''):hc.title) + '</h3><p>' + ((typeof hc.text==='object')?(hc.text[currentLang]||hc.text.en||''):hc.text) + '</p>' +
+      '<a href="' + hc.link + '" class="highlight-link">' + ((typeof hc.linkText==='object')?(hc.linkText[currentLang]||hc.linkText.en||''):hc.linkText) + '</a>';
     hlGrid.appendChild(card);
   }
 }

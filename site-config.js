@@ -191,10 +191,10 @@ var SITE_CONFIG = {
     showMantraTicker: true,
     showHighlightCards: true,
     highlightCards: [
-      { icon: "\ud83e\ude94", title: "Daily Pooja", text: "Morning & evening aarti with special abhishekam", link: "services.html", linkText: "View Services \u2192", enabled: true },
+      { icon: "\ud83e\ude94", title: {en:"Daily Pooja",te:"నిత్య పూజ",hi:"दैनिक पूजा",sa:"नित्यपूजा"}, text: {en:"Morning & evening aarti with special abhishekam",te:"ప్రత్యేక అభిషేకంతో ఉదయం & సాయంత్రం ఆరతి",hi:"विशेष अभिषेक के साथ सुबह और शाम की आरती",sa:"विशेषाभिषेकसहितं प्रातःसायमारार्तिकम्"}, link: "services.html", linkText: {en:"View Services →",te:"సేవలు చూడండి →",hi:"सेवाएं देखें →",sa:"सेवाः पश्यन्तु →"}, enabled: true },
       { icon: "\ud83e\ude99", title: "Temple Hundi", text: "Support daily poojas, Annadanam & temple seva", link: "donate.html", linkText: "Donate Now \u2192", enabled: true },
-      { icon: "\ud83d\udcf8", title: "Gallery", text: "View photos from our festivals & celebrations", link: "gallery.html", linkText: "View Gallery \u2192", enabled: true },
-      { icon: "\ud83d\ude4f", title: "Get in Touch", text: "Reach out for pooja bookings & inquiries", link: "contact.html", linkText: "Contact Us \u2192", enabled: true }
+      { icon: "\ud83d\udcf8", title: {en:"Gallery",te:"గ్యాలరీ",hi:"गैलरी",sa:"चित्रशाला"}, text: {en:"View photos from our festivals & celebrations",te:"మా పండుగలు & వేడుకల ఫోటోలు చూడండి",hi:"हमारे त्योहारों और उत्सवों की तस्वीरें देखें",sa:"अस्माकम् उत्सवानां समारोहानां च चित्राणि पश्यन्तु"}, link: "gallery.html", linkText: {en:"View Gallery →",te:"గ్యాలరీ చూడండి →",hi:"गैलरी देखें →",sa:"चित्रशालां पश्यन्तु →"}, enabled: true },
+      { icon: "\ud83d\ude4f", title: {en:"Get in Touch",te:"సంప్రదించండి",hi:"संपर्क करें",sa:"सम्पर्कं कुर्वन्तु"}, text: {en:"Reach out for pooja bookings & inquiries",te:"పూజ బుకింగ్‌లు & విచారణల కోసం సంప్రదించండి",hi:"पूजा बुकिंग और पूछताछ के लिए संपर्क करें",sa:"पूजापूर्वनिश्चयाय पृच्छायै च सम्पर्कं कुर्वन्तु"}, link: "contact.html", linkText: {en:"Contact Us →",te:"మమ్మల్ని సంప్రదించండి →",hi:"हमसे संपर्क करें →",sa:"अस्मान् सम्पर्कयन्तु →"}, enabled: true }
     ]
   },
   aboutPage: {
@@ -202,16 +202,16 @@ var SITE_CONFIG = {
     showMission: true,
     showStats: true,
     missionCards: [
-      { icon: "\ud83d\ude4f", title: "Devotion", text: "Fostering deep spiritual connection through daily worship, meditation, and sacred rituals.", enabled: true },
-      { icon: "\ud83e\udd1d", title: "Community", text: "Building a united community rooted in compassion, service, and mutual respect.", enabled: true },
-      { icon: "\ud83d\udcd6", title: "Education", text: "Preserving and teaching Vedic knowledge, Sanskrit, and ancient scriptures.", enabled: true },
-      { icon: "\u2764\ufe0f", title: "Seva", text: "Selfless service through Annadanam, healthcare camps, and support for the underprivileged.", enabled: true }
+      { icon: "\ud83d\ude4f", title: {en:"Devotion",te:"భక్తి",hi:"भक्ति",sa:"भक्तिः"}, text: {en:"Fostering deep spiritual connection through daily worship, meditation, and sacred rituals.",te:"నిత్య పూజ, ధ్యానం మరియు పవిత్ర ఆచారాల ద్వారా లోతైన ఆధ్యాత్మిక సంబంధాన్ని పెంపొందించడం.",hi:"दैनिक पूजा, ध्यान और पवित्र अनुष्ठानों के माध्यम से गहरा आध्यात्मिक संबंध बढ़ाना.",sa:"नित्यपूजाध्यानपवित्रविधिभिः गभीरमाध्यात्मिकसम्बन्धं वर्धयितुम्।"}, enabled: true },
+      { icon: "\ud83e\udd1d", title: {en:"Community",te:"సమాజం",hi:"समुदाय",sa:"समाजः"}, text: {en:"Building a united community rooted in compassion, service, and mutual respect.",te:"కరుణ, సేవ మరియు పరస్పర గౌరవంలో పాతుకుపోయిన ఐక్య సమాజాన్ని నిర్మించడం.",hi:"करुणा, सेवा और पारस्परिक सम्मान में निहित एकजुट समुदाय का निर्माण.",sa:"करुणासेवापरस्परसम्मानमूलकमैक्यसमाजनिर्माणम्।"}, enabled: true },
+      { icon: "\ud83d\udcd6", title: {en:"Education",te:"విద్య",hi:"शिक्षा",sa:"शिक्षा"}, text: {en:"Preserving and teaching Vedic knowledge, Sanskrit, and ancient scriptures.",te:"వేద జ్ఞానం, సంస్కృతం మరియు ప్రాచీన గ్రంథాలను సంరక్షించడం మరియు బోధించడం.",hi:"वैदिक ज्ञान, संस्कृत और प्राचीन ग्रंथों का संरक्षण और शिक्षण.",sa:"वैदिकज्ञानसंस्कृतप्राचीनग्रन्थानां संरक्षणं शिक्षणं च।"}, enabled: true },
+      { icon: "\u2764\ufe0f", title: {en:"Seva",te:"సేవ",hi:"सेवा",sa:"सेवा"}, text: {en:"Selfless service through Annadanam, healthcare camps, and support for the underprivileged.",te:"అన్నదానం, ఆరోగ్య శిబిరాలు మరియు అణగారిన వారికి మద్దతు ద్వారా నిస్వార్థ సేవ.",hi:"अन्नदानम, स्वास्थ्य शिविर और वंचितों के समर्थन के माध्यम से निस्वार्थ सेवा.",sa:"अन्नदानस्वास्थ्यशिबिरवञ्चितसहायद्वारा निःस्वार्थसेवा।"}, enabled: true }
     ],
     stats: [
-      { number: "25+", label: "Years of Service", enabled: true },
-      { number: "250+", label: "Daily Devotees", enabled: true },
-      { number: "30+", label: "Annual Events", enabled: true },
-      { number: "10+", label: "Charitable Programs", enabled: true }
+      { number: "25+", label: {en:"Years of Service",te:"సేవా సంవత్సరాలు",hi:"सेवा के वर्ष",sa:"सेवावर्षाणि"}, enabled: true },
+      { number: "250+", label: {en:"Daily Devotees",te:"నిత్య భక్తులు",hi:"दैनिक भक्त",sa:"नित्यभक्ताः"}, enabled: true },
+      { number: "30+", label: {en:"Annual Events",te:"వార్షిక కార్యక్రమాలు",hi:"वार्षिक कार्यक्रम",sa:"वार्षिककार्यक्रमाः"}, enabled: true },
+      { number: "10+", label: {en:"Charitable Programs",te:"దాతృత్వ కార్యక్రమాలు",hi:"धर्मार्थ कार्यक्रम",sa:"धर्मार्थकार्यक्रमाः"}, enabled: true }
     ]
   },
   servicesPage: {
@@ -220,12 +220,12 @@ var SITE_CONFIG = {
     showCTA: true,
     servicesStyle: "default",
     services: [
-      { icon: "\ud83e\ude94", title: "Daily Pooja", text: "Morning and evening aarti with special abhishekam performed by our learned priests.", enabled: true },
-      { icon: "\ud83d\udcff", title: "Archana", text: "Personalized archana with Sahasranama, Lalitha Sahasranama, and Durga Saptashati.", enabled: true },
-      { icon: "\ud83c\udf8a", title: "Festivals", text: "Grand celebrations for Navaratri, Dussehra, Deepavali, Ugadi, and other major festivals.", enabled: true },
-      { icon: "\ud83c\udf5a", title: "Annadanam", text: "Free food distribution to devotees and the needy every day as part of our seva program.", enabled: true },
-      { icon: "\ud83d\udc92", title: "Weddings", text: "Traditional Hindu wedding ceremonies conducted with full Vedic rituals and customs.", enabled: true },
-      { icon: "\ud83d\udcd6", title: "Vedic Classes", text: "Learn Vedas, Shlokas, Sanskrit scriptures, and Bhagavad Gita from experienced scholars.", enabled: false }
+      { icon: "\ud83e\ude94", title: {en:"Daily Pooja",te:"నిత్య పూజ",hi:"दैनिक पूजा",sa:"नित्यपूजा"}, text: {en:"Morning and evening aarti with special abhishekam performed by our learned priests.",te:"మా పండితులచే ప్రత్యేక అభిషేకంతో ఉదయం మరియు సాయంత్రం ఆరతి.",hi:"हमारे विद्वान पुजारियों द्वारा विशेष अभिषेक के साथ सुबह और शाम की आरती.",sa:"विद्वद्भिः पुरोहितैः विशेषाभिषेकसहितं प्रातःसायमारार्तिकम्।"}, enabled: true },
+      { icon: "\ud83d\udcff", title: {en:"Archana",te:"అర్చన",hi:"अर्चना",sa:"अर्चना"}, text: {en:"Personalized archana with Sahasranama, Lalitha Sahasranama, and Durga Saptashati.",te:"సహస్రనామం, లలితా సహస్రనామం మరియు దుర్గా సప్తశతితో వ్యక్తిగత అర్చన.",hi:"सहस्रनाम, ललिता सहस्रनाम और दुर्गा सप्तशती के साथ व्यक्तिगत अर्चना.",sa:"सहस्रनामललितासहस्रनामदुर्गासप्तशतीसहितं वैयक्तिकमर्चनम्।"}, enabled: true },
+      { icon: "\ud83c\udf8a", title: {en:"Festivals",te:"పండుగలు",hi:"त्योहार",sa:"उत्सवाः"}, text: {en:"Grand celebrations for Navaratri, Dussehra, Deepavali, Ugadi, and other major festivals.",te:"నవరాత్రి, దసరా, దీపావళి, ఉగాది మరియు ఇతర ప్రధాన పండుగలకు ఘనమైన వేడుకలు.",hi:"नवरात्रि, दशहरा, दीपावली, उगादी और अन्य प्रमुख त्योहारों के भव्य उत्सव.",sa:"नवरात्रिदशहरादीपावलीयुगादिप्रभृतीनां प्रमुखोत्सवानां भव्यसमारोहाः।"}, enabled: true },
+      { icon: "\ud83c\udf5a", title: {en:"Annadanam",te:"అన్నదానం",hi:"अन्नदानम",sa:"अन्नदानम्"}, text: {en:"Free food distribution to devotees and the needy every day as part of our seva program.",te:"మా సేవా కార్యక్రమంలో భాగంగా ప్రతిరోజూ భక్తులకు మరియు అవసరమైన వారికి ఉచిత ఆహార పంపిణీ.",hi:"हमारे सेवा कार्यक्रम के तहत प्रतिदिन भक्तों और जरूरतमंदों को मुफ्त भोजन वितरण.",sa:"अस्माकं सेवाकार्यक्रमस्य भागत्वेन प्रतिदिनं भक्तेभ्यः आवश्यकेभ्यश्च निःशुल्कान्नवितरणम्।"}, enabled: true },
+      { icon: "\ud83d\udc92", title: {en:"Weddings",te:"వివాహాలు",hi:"विवाह",sa:"विवाहाः"}, text: {en:"Traditional Hindu wedding ceremonies conducted with full Vedic rituals and customs.",te:"పూర్తి వేద ఆచారాలు మరియు సంప్రదాయాలతో సాంప్రదాయ హిందూ వివాహ వేడుకలు.",hi:"पूर्ण वैदिक अनुष्ठानों और रीति-रिवाजों के साथ पारंपरिक हिंदू विवाह समारोह.",sa:"पूर्णवैदिकविधिसम्प्रदायैः सह पारम्परिकहिन्दूविवाहसंस्काराः।"}, enabled: true },
+      { icon: "\ud83d\udcd6", title: {en:"Vedic Classes",te:"వేద తరగతులు",hi:"वैदिक कक्षाएं",sa:"वैदिककक्ष्याः"}, text: {en:"Learn Vedas, Shlokas, Sanskrit scriptures, and Bhagavad Gita from experienced scholars.",te:"అనుభవజ్ఞులైన పండితుల నుండి వేదాలు, శ్లోకాలు, సంస్కృత గ్రంథాలు మరియు భగవద్గీత నేర్చుకోండి.",hi:"अनुभवी विद्वानों से वेद, श्लोक, संस्कृत ग्रंथ और भगवद्गीता सीखें.",sa:"अनुभवशालिभिः विद्वद्भिः वेदान् श्लोकान् संस्कृतग्रन्थान् भगवद्गीतां च अधीयन्ताम्।"}, enabled: false }
     ]
   },
   contactPage: {
