@@ -1,6 +1,6 @@
 var CACHE_NAME = 'temple-v1';
 var urlsToCache = [
-  '/', '/index.html', '/styles.css', '/script.js', '/site-config.js',
+  '/', '/index.html', '/styles.min.css', '/script.min.js', '/site-config.js',
   '/about.html', '/services.html', '/contact.html', '/donate.html',
   '/assets/audio/mantra.mp3'
 ];

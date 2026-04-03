@@ -1,11 +1,14 @@
 var SITE_CONFIG = {
+
   siteName: "Sri Kanaka Durga Devi",
   siteTagline: "Om Dum Durgayei Namah",
   siteTitle: "Sri Kanaka Durga Devi Temple - Vijayawada",
   logoImage: "assets/images/logo.png",
+
   contactName: "VRDS Prasad",
   phone: "8247787529",
   whatsapp: "918247787529",
+
   developerName: "Satya",
   companyName: "Satya Tech Solutions Trust",
   companyUrl: "",
@@ -22,6 +25,7 @@ var SITE_CONFIG = {
     owner: false,
     qr: false
   },
+
   pages: {
     home: "show",
     about: "show",
@@ -39,12 +43,14 @@ var SITE_CONFIG = {
     donate: "show",
     contact: "show",
   },
+
   comingSoonMessages: {
     grandhas: { en: "Sacred Grandhas coming soon!" },
     shop: { en: "Pooja Items Shop coming soon!" },
     puranam: { en: "Temple Legend coming soon!" },
     gallery: { en: "Photo Gallery coming soon!" }
   },
+
   theme: "temple",
   industry: "temple",
   customLabels: {
@@ -58,13 +64,17 @@ var SITE_CONFIG = {
     donate: "Donate",
     contact: "Contact"
   },
+
   languages: ["en", "te", "hi", "sa"],
   defaultLanguage: "en",
+
   social: { facebook: "#", youtube: "#", instagram: "#" },
+
   templateName: "Temple Divine",
   templateVersion: "1.0",
   templateAuthor: "Satya Tech Solutions",
   lastUpdatedDate: "2026-04-02",
+
   footer: {
     showAddress: true,
     address: "Ramarajya Nagar, Upparabaavi Veedi, Beside Chanumolu Venkatrao Flyover, NTR District, Vijayawada - 520012",
@@ -100,10 +110,12 @@ var SITE_CONFIG = {
     showCopyright: true,
     copyrightText: "Copyright 2024 Sri Kanaka Durga Devi Temple, Vijayawada. All Rights Reserved."
   },
+
   donatePage: {
     showQR: true,
     showBank: false
   },
+
     features: {
     floatingWhatsapp: 918247787529,
     backToTop: true,
@@ -168,6 +180,7 @@ var SITE_CONFIG = {
     maintenanceMessage: "We are updating our website. Please check back soon.",
     iconLibrary: "emoji"
   },
+
   header: {
     showTopBar: true,
     topBarMantra: "Ya Devi Sarva Bhuteshu Shakti Rupena Sansthita | Namastasyai Namastasyai Namastasyai Namo Namah",
@@ -185,6 +198,7 @@ var SITE_CONFIG = {
     logoWidth: 55,
     logoHeight: 55
   },
+
   homePage: {
     showCarousel: true,
     carouselPauseOnHover: true,
@@ -192,11 +206,12 @@ var SITE_CONFIG = {
     showHighlightCards: true,
     highlightCards: [
       { icon: "\ud83e\ude94", title: {en:"Daily Pooja",te:"నిత్య పూజ",hi:"दैनिक पूजा",sa:"नित्यपूजा"}, text: {en:"Morning & evening aarti with special abhishekam",te:"ప్రత్యేక అభిషేకంతో ఉదయం & సాయంత్రం ఆరతి",hi:"विशेष अभिषेक के साथ सुबह और शाम की आरती",sa:"विशेषाभिषेकसहितं प्रातःसायमारार्तिकम्"}, link: "services.html", linkText: {en:"View Services →",te:"సేవలు చూడండి →",hi:"सेवाएं देखें →",sa:"सेवाः पश्यन्तु →"}, enabled: true },
-      { icon: "\ud83e\ude99", title: "Temple Hundi", text: "Support daily poojas, Annadanam & temple seva", link: "donate.html", linkText: "Donate Now \u2192", enabled: true },
+      { icon: "\ud83e\ude99", title: {en:"Temple Hundi",te:"ఆలయ హుండీ",hi:"मंदिर हुंडी",sa:"मन्दिरहुण्डी"}, text: {en:"Support daily poojas, Annadanam & temple seva",te:"నిత్య పూజలు, అన్నదానం & ఆలయ సేవకు మద్దతు",hi:"दैनिक पूजा, अन्नदानम और मंदिर सेवा का समर्थन करें",sa:"नित्यपूजान्नदानमन्दिरसेवां समर्थयन्तु"}, link: "donate.html", linkText: {en:"Donate Now \u2192",te:"ఇప్పుడు విరాళం ఇవ్వండి \u2192",hi:"अभी दान करें \u2192",sa:"इदानीं ददातु \u2192"}, enabled: true },
       { icon: "\ud83d\udcf8", title: {en:"Gallery",te:"గ్యాలరీ",hi:"गैलरी",sa:"चित्रशाला"}, text: {en:"View photos from our festivals & celebrations",te:"మా పండుగలు & వేడుకల ఫోటోలు చూడండి",hi:"हमारे त्योहारों और उत्सवों की तस्वीरें देखें",sa:"अस्माकम् उत्सवानां समारोहानां च चित्राणि पश्यन्तु"}, link: "gallery.html", linkText: {en:"View Gallery →",te:"గ్యాలరీ చూడండి →",hi:"गैलरी देखें →",sa:"चित्रशालां पश्यन्तु →"}, enabled: true },
       { icon: "\ud83d\ude4f", title: {en:"Get in Touch",te:"సంప్రదించండి",hi:"संपर्क करें",sa:"सम्पर्कं कुर्वन्तु"}, text: {en:"Reach out for pooja bookings & inquiries",te:"పూజ బుకింగ్‌లు & విచారణల కోసం సంప్రదించండి",hi:"पूजा बुकिंग और पूछताछ के लिए संपर्क करें",sa:"पूजापूर्वनिश्चयाय पृच्छायै च सम्पर्कं कुर्वन्तु"}, link: "contact.html", linkText: {en:"Contact Us →",te:"మమ్మల్ని సంప్రదించండి →",hi:"हमसे संपर्क करें →",sa:"अस्मान् सम्पर्कयन्तु →"}, enabled: true }
     ]
   },
+
   aboutPage: {
     showHistory: true,
     showMission: true,
@@ -214,6 +229,7 @@ var SITE_CONFIG = {
       { number: "10+", label: {en:"Charitable Programs",te:"దాతృత్వ కార్యక్రమాలు",hi:"धर्मार्थ कार्यक्रम",sa:"धर्मार्थकार्यक्रमाः"}, enabled: true }
     ]
   },
+
   servicesPage: {
     showServices: true,
     showTimings: true,
@@ -228,6 +244,7 @@ var SITE_CONFIG = {
       { icon: "\ud83d\udcd6", title: {en:"Vedic Classes",te:"వేద తరగతులు",hi:"वैदिक कक्षाएं",sa:"वैदिककक्ष्याः"}, text: {en:"Learn Vedas, Shlokas, Sanskrit scriptures, and Bhagavad Gita from experienced scholars.",te:"అనుభవజ్ఞులైన పండితుల నుండి వేదాలు, శ్లోకాలు, సంస్కృత గ్రంథాలు మరియు భగవద్గీత నేర్చుకోండి.",hi:"अनुभवी विद्वानों से वेद, श्लोक, संस्कृत ग्रंथ और भगवद्गीता सीखें.",sa:"अनुभवशालिभिः विद्वद्भिः वेदान् श्लोकान् संस्कृतग्रन्थान् भगवद्गीतां च अधीयन्ताम्।"}, enabled: false }
     ]
   },
+
   contactPage: {
     showOwnerProfile: true,
     ownerName: "VRDS Prasad",
@@ -245,12 +262,14 @@ var SITE_CONFIG = {
     ],
     showMap: true
   },
+
   galleryPage: {
     showFilters: true,
     showPagination: true,
     showLightbox: true,
     itemsPerPage: 6
   },
+
   shopPage: {
     style: "categories",
     showFilters: true,
@@ -260,6 +279,7 @@ var SITE_CONFIG = {
     ctaTitle: "Need Help Selecting Pooja Items?",
     ctaText: "Contact us on WhatsApp for guidance on selecting the right items for your pooja or ceremony."
   },
+
   pageStyles: {
     gallery:  { gridStyle: "default", hoverEffect: "default", imageShape: "default" },
     shop:     { gridStyle: "default", hoverEffect: "default", imageShape: "default" },
